@@ -16,7 +16,6 @@ export const metadata: Metadata = {
 
 // Force scroll restoration to work in App Router
 export const dynamic = "force-dynamic"
-export const runtime = 'edge';
 
 export default function RootLayout({
   children,
