@@ -1,0 +1,131 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 200 20% 98%;
+    --foreground: 200 50% 3%;
+    --card: 200 20% 98%;
+    --card-foreground: 200 50% 3%;
+    --popover: 200 20% 98%;
+    --popover-foreground: 200 50% 3%;
+    --primary: 200 100% 50%;
+    --primary-foreground: 200 10% 98%;
+    --secondary: 200 20% 90%;
+    --secondary-foreground: 200 50% 3%;
+    --muted: 200 20% 90%;
+    --muted-foreground: 200 40% 40%;
+    --accent: 200 20% 90%;
+    --accent-foreground: 200 50% 3%;
+    --destructive: 0 100% 50%;
+    --destructive-foreground: 200 10% 98%;
+    --border: 200 20% 90%;
+    --input: 200 20% 90%;
+    --ring: 200 100% 50%;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 200 50% 3%;
+    --foreground: 200 20% 98%;
+    --card: 200 50% 3%;
+    --card-foreground: 200 20% 98%;
+    --popover: 200 50% 3%;
+    --popover-foreground: 200 20% 98%;
+    --primary: 200 100% 50%;
+    --primary-foreground: 200 10% 98%;
+    --secondary: 200 30% 10%;
+    --secondary-foreground: 200 20% 98%;
+    --muted: 200 30% 10%;
+    --muted-foreground: 200 40% 60%;
+    --accent: 200 30% 10%;
+    --accent-foreground: 200 20% 98%;
+    --destructive: 0 100% 50%;
+    --destructive-foreground: 200 10% 98%;
+    --border: 200 30% 10%;
+    --input: 200 30% 10%;
+    --ring: 200 100% 50%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 1s ease-out forwards;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes floatDiagonal {
+  0%,
+  100% {
+    transform: translate(0px, 0px);
+  }
+  50% {
+    transform: translate(5px, -10px);
+  }
+}
+
+.animate-float-diagonal {
+  animation: floatDiagonal 3s ease-in-out infinite;
+}
+
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+.animate-twinkle {
+  animation: twinkle 2s ease-in-out infinite;
+}
+

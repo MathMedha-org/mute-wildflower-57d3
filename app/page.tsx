@@ -14,14 +14,9 @@ export default function HomePage() {
           {/* Content wrapper with padding */}
           <div className="flex flex-col items-center gap-12 px-12 py-12 w-full">
             {/* Logo with animation */}
-            <div
-              className="opacity-0"
-              style={{
-                animation: "fadeIn 1s ease-out forwards",
-              }}
-            >
+            <div className="opacity-0 animate-fadeIn">
               <img
-                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/MathMedha-logo-top-UQxuVeUgjsedBaYEi2a482QDG36Yc3.png"
+                src="/images/MathMedha-logo-top.png"
                 alt="MathMedha Logo"
                 className="w-auto max-w-full h-auto max-h-32 object-contain"
               />
@@ -52,20 +47,6 @@ export default function HomePage() {
           </div>
         </div>
       </div>
-
-      {/* Add keyframe animation for fade in */}
-      <style jsx>{`
-        @keyframes fadeIn {
-          from {
-            opacity: 0;
-            transform: translateY(-20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-      `}</style>
     </div>
   )
 }
