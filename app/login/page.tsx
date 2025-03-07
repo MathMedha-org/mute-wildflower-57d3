@@ -7,7 +7,6 @@ import { useRouter } from "next/navigation"
 import { SpaceBackground } from "@/components/space-background"
 import { ArrowLeft } from "lucide-react"
 
-export const runtime = 'edge';
 
 export default function LoginPage() {
   const router = useRouter()
