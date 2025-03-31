@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
 import {
   Dumbbell,
@@ -13,8 +13,13 @@ import {
   Calendar,
   Star,
   BookOpen,
-  Bell,
+  Clock,
+  CheckCircle,
+  Brain,
+  ZapIcon,
   BarChart2,
+  ActivityIcon,
+  ArrowRight,
 } from "lucide-react"
 
 // Mock data for progress - in a real app this would come from your backend
@@ -109,16 +114,16 @@ const AchievementCard = ({
   progress: number
   date: string
 }) => (
-  <div className="bg-[#0F283D] border border-white/10 rounded-lg p-4 relative overflow-hidden group hover:border-[#50adb6]/30 transition-colors">
+  <div className="bg-[#ffffff] border border-gray-200 rounded-lg p-6 relative overflow-hidden group hover:border-[#fdc500]/30 transition-colors">
     <div className="flex items-start gap-4">
       <div className="w-12 h-12 rounded-lg flex items-center justify-center" style={{ backgroundColor: `${color}20` }}>
         <Icon className="w-6 h-6" style={{ color }} />
       </div>
       <div className="flex-1 min-w-0">
-        <h3 className="text-lg font-semibold text-white mb-1">{title}</h3>
-        <p className="text-sm text-white/70 mb-2">{description}</p>
+        <h3 className="text-lg font-semibold text-gray-800 mb-1">{title}</h3>
+        <p className="text-sm text-gray-600 mb-2">{description}</p>
         <div className="flex items-center gap-2">
-          <div className="flex-1 h-1.5 bg-white/10 rounded-full overflow-hidden">
+          <div className="flex-1 h-1.5 bg-gray-200 rounded-full overflow-hidden">
             <div
               className="h-full rounded-full transition-all duration-500"
               style={{
@@ -131,7 +136,7 @@ const AchievementCard = ({
             {progress}%
           </span>
         </div>
-        <p className="text-xs text-white/50 mt-2">{date}</p>
+        <p className="text-xs text-gray-500 mt-2">{date}</p>
       </div>
     </div>
     {progress === 100 && (
@@ -142,10 +147,47 @@ const AchievementCard = ({
   </div>
 )
 
+// Circular Stat Card Component
+const CircularStatCard = ({
+  title,
+  value,
+  change,
+  icon: Icon,
+  bgColor,
+  hoverBgColor,
+  iconColor,
+}: {
+  title: string
+  value: string
+  change: string
+  icon: any
+  bgColor: string
+  hoverBgColor: string
+  iconColor: string
+}) => (
+  <div className="flex flex-col items-center justify-center">
+    <div
+      className={`w-48 h-48 rounded-full flex flex-col items-center justify-center transition-all duration-300 transform hover:scale-105 cursor-pointer group relative`}
+      style={{ backgroundColor: bgColor }}
+    >
+      <div
+        className="absolute inset-0 rounded-full transition-opacity duration-300 opacity-0 group-hover:opacity-100"
+        style={{ backgroundColor: hoverBgColor }}
+      ></div>
+      <div className="relative z-10 flex flex-col items-center">
+        <Icon className="w-12 h-12 mb-3" style={{ color: iconColor }} />
+        <span className="text-2xl font-bold text-white">{value}</span>
+        <span className="text-sm text-white/80 mt-1">{title}</span>
+      </div>
+    </div>
+    <span className="mt-3 text-sm text-[#4CAF50] font-medium">{change}</span>
+  </div>
+)
+
 // Previous components remain unchanged
 const ProgressBar = ({
   data,
-  color = "#50adb6", // Add color prop with default value
+  color = "#fdc500", // Add color prop with default value
 }: {
   data: { avgSeconds: number; completed: number; total: number }
   color?: string
@@ -153,7 +195,7 @@ const ProgressBar = ({
   <div className="flex flex-col items-center sm:items-start sm:flex-row gap-6 w-full pl-8 sm:pl-0">
     {/* Progress bar container with proper mobile padding */}
     <div className="relative flex justify-center sm:justify-start w-full sm:w-auto sm:pl-8">
-      <div className="h-36 w-8 bg-white/10 rounded-full relative overflow-visible">
+      <div className="h-36 w-8 bg-gray-200 rounded-full relative overflow-visible">
         {/* Color segments */}
         <div className="absolute inset-0 w-full rounded-full overflow-hidden">
           <div
@@ -188,12 +230,12 @@ const ProgressBar = ({
     <div className="flex-1 w-full sm:w-auto">
       <div className="space-y-2 max-w-[300px] mx-auto text-center">
         <div className="flex items-center justify-center">
-          <span className="text-white/80">
+          <span className="text-white">
             Total score: <span style={{ color }}>{data.total}</span>
           </span>
         </div>
         <div className="flex items-center justify-center">
-          <span className="text-white/80">
+          <span className="text-white">
             Avg. time: <span style={{ color }}>{data.avgSeconds}s</span>
           </span>
         </div>
@@ -213,10 +255,10 @@ const OperationProgress = ({
 }) => (
   <div className="space-y-2 w-full">
     <div className="flex justify-between items-center">
-      <span className="text-white/80 text-sm">{title}</span>
-      <span className="text-white font-medium text-sm">{data.completed}%</span>
+      <span className="text-gray-600 text-sm">{title}</span>
+      <span className="text-gray-800 font-medium text-sm">{data.completed}%</span>
     </div>
-    <div className="h-2 bg-white/10 rounded-full overflow-hidden">
+    <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
       <div
         className="h-full rounded-full transition-all duration-500"
         style={{
@@ -238,232 +280,384 @@ const getTimeColor = (seconds: number) => {
 
 export default function DashboardPage() {
   const [showWelcome, setShowWelcome] = useState(true)
+  const [animationStarted, setAnimationStarted] = useState(false)
+
+  useEffect(() => {
+    // Start animations after component mounts
+    setAnimationStarted(true)
+  }, [])
 
   return (
-    <div className="w-full sm:max-w-6xl sm:mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <div className="flex flex-col items-center text-center space-y-12 bg-[#0F283D] p-8 rounded-xl border border-[#50adb6]/20">
-        {/* Welcome Message - only show if showWelcome is true */}
-        {showWelcome && (
-          <div className="w-full max-w-5xl mx-auto mb-0">
-            {" "}
-            {/* Updated line */}
-            <div className="bg-[#0F283D] rounded-lg p-0 relative">
-              {" "}
-              {/* Updated div */}
-              <div className="flex items-center justify-center">
-                <h2 className="text-xl md:text-2xl font-bold text-white">
-                  Welcome, John Doe <span className="text-[#50adb6]">(LightSpeed Legend)</span>
-                </h2>
-              </div>
-              {/* Dismiss button */}
-              <button
-                onClick={() => setShowWelcome(false)}
-                className="absolute top-2 right-2 w-6 h-6 rounded-full bg-white/10 flex items-center justify-center text-white/60 hover:bg-white/20 hover:text-white transition-colors"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="14"
-                  height="14"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M18 6 6 18"></path>
-                  <path d="m6 6 12 12"></path>
-                </svg>
-              </button>
-            </div>
+    <div className="w-full">
+      <style jsx global>{`
+        @keyframes fadeInRight {
+          from {
+            opacity: 0;
+            transform: translateX(100px);
+          }
+          to {
+            opacity: 1;
+            transform: translateX(0);
+          }
+        }
+        
+        @keyframes zoomInDown {
+          from {
+            opacity: 0;
+            transform: scale3d(0.1, 0.1, 0.1) translate3d(0, -1000px, 0);
+            animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+          }
+          60% {
+            opacity: 1;
+            transform: scale3d(0.475, 0.475, 0.475) translate3d(0, 60px, 0);
+            animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);
+          }
+          to {
+            opacity: 1;
+            transform: scale3d(1, 1, 1) translate3d(0, 0, 0);
+          }
+        }
+        
+        @keyframes bounceIn {
+          from,
+          20%,
+          40%,
+          60%,
+          80%,
+          to {
+            animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+          }
+          
+          0% {
+            opacity: 0;
+            transform: scale3d(0.3, 0.3, 0.3);
+          }
+          
+          20% {
+            transform: scale3d(1.1, 1.1, 1.1);
+          }
+          
+          40% {
+            transform: scale3d(0.9, 0.9, 0.9);
+          }
+          
+          60% {
+            opacity: 1;
+            transform: scale3d(1.03, 1.03, 1.03);
+          }
+          
+          80% {
+            transform: scale3d(0.97, 0.97, 0.97);
+          }
+          
+          to {
+            opacity: 1;
+            transform: scale3d(1, 1, 1);
+          }
+        }
+        
+        .fade-in-right {
+          opacity: 0;
+          animation-name: fadeInRight;
+          animation-duration: 1s;
+          animation-delay: 0.8s;
+          animation-fill-mode: forwards;
+        }
+        
+        .zoom-in-down {
+          opacity: 0;
+          animation-name: zoomInDown;
+          animation-duration: 1s;
+          animation-delay: 1.8s;
+          animation-fill-mode: forwards;
+        }
+        
+        .bounce-in {
+          opacity: 0;
+          animation-name: bounceIn;
+          animation-duration: 1s;
+          animation-delay: 0.5s;
+          animation-fill-mode: forwards;
+        }
+      `}</style>
+      <div className="w-full max-w-6xl mx-auto pt-3 sm:pt-4 lg:pt-6 pb-8">
+        <div className="flex flex-col items-center text-center space-y-8 bg-[#ffffff] p-6 rounded-xl">
+          {/* Welcome Message with bounceIn animation */}
+          <div className="mb-2 flex flex-col items-center">
+            <h2 className={`text-3xl font-bold text-[#00509d] ${animationStarted ? "bounce-in" : ""}`}>
+              Welcome, John Doe <span className="text-[#3d7a3a]">(LightSpeed Legend)</span>
+            </h2>
+            <div className={`h-1 w-20 bg-[#fdc500] mt-2 mb-1 ${animationStarted ? "bounce-in" : ""}`}></div>
           </div>
-        )}
-        {/* Navigation Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 w-full max-w-5xl px-4">
-          <Link href="/dashboard/practice" className="group block transform transition-transform hover:scale-105">
-            <div className="bg-[#50adb6] hover:bg-[#3d8a91] rounded-lg p-6 h-full transition-colors duration-500">
-              <div className="flex flex-col items-center gap-6">
-                <div className="flex justify-center">
-                  <div className="w-24 h-24 rounded-full bg-white/20 flex items-center justify-center transform group-hover:scale-110 transition-transform duration-300">
-                    <Dumbbell className="h-12 w-12 text-white" strokeWidth={1.5} />
-                  </div>
-                </div>
-                <div className="space-y-2 text-center">
-                  <h3 className="text-2xl font-semibold text-white">Practice</h3>
-                  <p className="text-lg text-white/80">Master your math skills</p>
-                </div>
-                <p className="text-sm text-white/90 leading-relaxed">
-                  Practice various math concepts at your own pace with interactive exercises and immediate feedback.
-                </p>
-              </div>
-            </div>
-          </Link>
-          <Link href="/dashboard/games" className="group block transform transition-transform hover:scale-105">
-            <div className="bg-[#f6aa54] hover:bg-[#e59843] rounded-lg p-6 h-full transition-colors duration-500">
-              <div className="flex flex-col items-center gap-6">
-                <div className="flex justify-center">
-                  <div className="w-24 h-24 rounded-full bg-white/20 flex items-center justify-center transform group-hover:scale-110 transition-transform duration-300">
-                    <GamepadIcon className="h-12 w-12 text-white" strokeWidth={1.5} />
-                  </div>
-                </div>
-                <div className="space-y-2 text-center">
-                  <h3 className="text-2xl font-semibold text-white">Games</h3>
-                  <p className="text-lg text-white/80">Learn through play</p>
-                </div>
-                <p className="text-sm text-white/90 leading-relaxed">
-                  Explore our collection of educational math games, including the Space Math Quiz adventure.
-                </p>
-              </div>
-            </div>
-          </Link>
-          <Link href="/dashboard/homework" className="group block transform transition-transform hover:scale-105">
-            <div className="bg-[#e8594a] hover:bg-[#d64a3d] rounded-lg p-6 h-full transition-colors duration-500">
-              <div className="flex flex-col items-center gap-6">
-                <div className="flex justify-center relative">
-                  <div className="w-24 h-24 rounded-full bg-white/20 flex items-center justify-center transform group-hover:scale-110 transition-transform duration-300">
-                    <BookOpen className="h-12 w-12 text-white" strokeWidth={1.5} />
-                  </div>
-                  {/* Notification icon with count */}
-                  <div className="absolute -top-2 -right-4" aria-label="2 pending assignments">
-                    <div className="relative">
-                      <Bell className="h-8 w-8 text-white" />
-                      <div className="absolute -top-2 -right-2 bg-[#f6aa54] text-white w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold shadow-lg border-2 border-white">
-                        2
+
+          {/* Cards Section - With centered icons */}
+          <div className="w-full mt-6 mb-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {/* Practice Card */}
+              <Link href="/dashboard/practice" className="block h-full">
+                <div className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 transform hover:-translate-y-1 h-full flex flex-col">
+                  <div className="h-3 bg-[#00509d]"></div>
+                  <div className="p-4 pb-5 flex flex-col items-center justify-between h-full">
+                    {/* Icon centered vertically */}
+                    <div className="flex-1 flex items-center justify-center py-3">
+                      <div className="w-20 h-20 rounded-full bg-[#00509d]/10 flex items-center justify-center transform group-hover:scale-110 transition-transform duration-300">
+                        <Dumbbell className="h-10 w-10 text-[#00509d]" strokeWidth={1.5} />
+                      </div>
+                    </div>
+
+                    {/* Text content at the bottom */}
+                    <div className="text-center mt-2">
+                      <h3 className="text-xl font-bold text-[#00509d] mb-2">Practice</h3>
+                      <h4 className="text-base font-medium text-gray-700 mb-2">Master your math skills</h4>
+                      <p className="text-gray-600 mb-4">
+                        Practice various math concepts at your own pace with interactive exercises and feedback.
+                      </p>
+                      <div className="inline-flex items-center text-[#00509d] font-medium hover:text-[#003f88] transition-colors">
+                        Start practicing <ArrowRight className="ml-2 h-4 w-4" />
                       </div>
                     </div>
                   </div>
                 </div>
-                <div className="space-y-2 text-center">
-                  <h3 className="text-2xl font-semibold text-white">Homework</h3>
-                  <p className="text-lg text-white/80">Complete assignments</p>
+              </Link>
+
+              {/* Games Card */}
+              <Link href="/dashboard/games" className="block h-full">
+                <div className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 transform hover:-translate-y-1 h-full flex flex-col">
+                  <div className="h-3 bg-[#fdc500]"></div>
+                  <div className="p-4 pb-5 flex flex-col items-center justify-between h-full">
+                    {/* Icon centered vertically */}
+                    <div className="flex-1 flex items-center justify-center py-3">
+                      <div className="w-20 h-20 rounded-full bg-[#fdc500]/10 flex items-center justify-center transform group-hover:scale-110 transition-transform duration-300">
+                        <GamepadIcon className="h-10 w-10 text-[#fdc500]" strokeWidth={1.5} />
+                      </div>
+                    </div>
+
+                    {/* Text content at the bottom */}
+                    <div className="text-center mt-2">
+                      <h3 className="text-xl font-bold text-[#00509d] mb-2">Games</h3>
+                      <h4 className="text-base font-medium text-gray-700 mb-2">Learn through play</h4>
+                      <p className="text-gray-600 mb-4">
+                        Explore our collection of educational math games, including the Space Math Quiz adventure.
+                      </p>
+                      <div className="inline-flex items-center text-[#fdc500] font-medium hover:text-[#e3b200] transition-colors">
+                        Play now <ArrowRight className="ml-2 h-4 w-4" />
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <p className="text-sm text-white/90 leading-relaxed">
-                  View and complete your assigned math practice tasks and track your progress.
-                </p>
+              </Link>
+
+              {/* Homework Card */}
+              <Link href="/dashboard/homework" className="block h-full">
+                <div className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 transform hover:-translate-y-1 h-full flex flex-col">
+                  <div className="h-3 bg-[#e8594a]"></div>
+                  <div className="p-4 pb-5 flex flex-col items-center justify-between h-full">
+                    {/* Icon centered vertically */}
+                    <div className="flex-1 flex items-center justify-center py-3 relative">
+                      <div className="w-20 h-20 rounded-full bg-[#e8594a]/10 flex items-center justify-center transform group-hover:scale-110 transition-transform duration-300">
+                        <BookOpen className="h-10 w-10 text-[#e8594a]" strokeWidth={1.5} />
+                        {/* Notification badge */}
+                        <div className="absolute top-0 right-0 bg-[#00509d] text-white w-7 h-7 rounded-full flex items-center justify-center text-sm font-bold shadow-lg border-2 border-white">
+                          2
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Text content at the bottom */}
+                    <div className="text-center mt-2">
+                      <h3 className="text-xl font-bold text-[#00509d] mb-2">Homework</h3>
+                      <h4 className="text-base font-medium text-gray-700 mb-2">Complete assignments</h4>
+                      <p className="text-gray-600 mb-4">
+                        View and complete your assigned math practice tasks and track your progress.
+                      </p>
+                      <div className="inline-flex items-center text-[#e8594a] font-medium hover:text-[#d64a3d] transition-colors">
+                        Complete assignments <ArrowRight className="ml-2 h-4 w-4" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Stats Overview - Updated to larger circular design with full-width gray background */}
+      <div className="w-screen bg-[#f8f8f8] py-8 -mx-[50vw] left-[50%] right-[50%] relative">
+        <div className="max-w-6xl mx-auto flex flex-wrap justify-center gap-8">
+          <CircularStatCard
+            title="Practice Time"
+            value="12.5 hrs"
+            change="+2.3 hrs this week"
+            icon={Clock}
+            bgColor="#00509d"
+            hoverBgColor="#003f88"
+            iconColor="white"
+          />
+
+          <CircularStatCard
+            title="Accuracy"
+            value="87%"
+            change="+5% from last week"
+            icon={CheckCircle}
+            bgColor="#fdc500"
+            hoverBgColor="#ffd500"
+            iconColor="white"
+          />
+
+          <CircularStatCard
+            title="Problems Solved"
+            value="1,284"
+            change="+168 this week"
+            icon={Brain}
+            bgColor="#e8594a"
+            hoverBgColor="#d64a3d"
+            iconColor="white"
+          />
+
+          <CircularStatCard
+            title="Average Time"
+            value="3.2s"
+            change="0.5s faster this week"
+            icon={ZapIcon}
+            bgColor="#4f8a4c"
+            hoverBgColor="#3d7a3a"
+            iconColor="white"
+          />
+        </div>
+      </div>
+
+      <div className="w-full max-w-6xl mx-auto py-8">
+        <div className="flex flex-col items-center text-center space-y-12 bg-[#ffffff] p-6 rounded-xl">
+          {/* Operations Progress Overview */}
+          <div className="w-full space-y-6">
+            <h2 className="text-2xl md:text-3xl font-bold text-[#00509d] text-center mb-8">
+              Operations Progress Overview
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-4">
+                <OperationProgress
+                  title="Addition"
+                  data={{ completed: progressData.addition.completed, total: progressData.addition.total }}
+                  color="#fdc500"
+                />
+                <OperationProgress
+                  title="Subtraction"
+                  data={{ completed: progressData.subtraction.completed, total: progressData.subtraction.total }}
+                  color="#fdc500"
+                />
+              </div>
+              <div className="space-y-4">
+                <OperationProgress
+                  title="Multiplication"
+                  data={{ completed: progressData.multiplication.completed, total: progressData.multiplication.total }}
+                  color="#fdc500"
+                />
+                <OperationProgress
+                  title="Division"
+                  data={{ completed: progressData.division.completed, total: progressData.division.total }}
+                  color="#fdc500"
+                />
               </div>
             </div>
-          </Link>
-        </div>
-
-        {/* Stats Overview */}
-        <div className="w-full max-w-5xl grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 px-4">
-          <div className="bg-[#0F283D] border border-[#50adb6]/30 rounded-lg p-6">
-            <h3 className="text-sm text-white/80 mb-2">Total Practice Time</h3>
-            <div className="flex flex-col">
-              <span className="text-2xl font-bold text-white">12.5 hrs</span>
-              <span className="text-sm text-[#4CAF50]">+2.3 hrs this week</span>
-            </div>
-          </div>
-
-          <div className="bg-[#0F283D] border border-[#50adb6]/30 rounded-lg p-6">
-            <h3 className="text-sm text-white/80 mb-2">Average Accuracy</h3>
-            <div className="flex flex-col">
-              <span className="text-2xl font-bold text-white">87%</span>
-              <span className="text-sm text-[#4CAF50]">+5% from last week</span>
-            </div>
-          </div>
-
-          <div className="bg-[#0F283D] border border-[#50adb6]/30 rounded-lg p-6">
-            <h3 className="text-sm text-white/80 mb-2">Problems Solved</h3>
-            <div className="flex flex-col">
-              <span className="text-2xl font-bold text-white">1,284</span>
-              <span className="text-sm text-[#4CAF50]">+168 this week</span>
-            </div>
-          </div>
-
-          <div className="bg-[#0F283D] border border-[#50adb6]/30 rounded-lg p-6">
-            <h3 className="text-sm text-white/80 mb-2">Average Time</h3>
-            <div className="flex flex-col">
-              <span className="text-2xl font-bold text-white">3.2s</span>
-              <span className="text-sm text-[#4CAF50]">0.5s faster this week</span>
-            </div>
           </div>
         </div>
+      </div>
 
-        {/* Operations Progress Overview */}
-        <div className="w-full max-w-5xl space-y-6 px-4">
-          <h2 className="text-xl font-semibold text-[#50adb6] text-left">Operations Progress Overview</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-4">
-              <OperationProgress
-                title="Addition"
-                data={{ completed: progressData.addition.completed, total: progressData.addition.total }}
-                color="#50adb6"
-              />
-              <OperationProgress
-                title="Subtraction"
-                data={{ completed: progressData.subtraction.completed, total: progressData.subtraction.total }}
-                color="#50adb6"
-              />
+      {/* Progress Section with full-width background */}
+      <div className="w-screen bg-[#00509d] py-8 -mx-[50vw] left-[50%] right-[50%] relative">
+        <div className="max-w-6xl mx-auto">
+          {/* Section Heading */}
+          <div className="flex items-center justify-center mb-8">
+            <ActivityIcon className="w-7 h-7 text-[#fdc500] mr-3" />
+            <h2 className="text-2xl md:text-3xl font-bold text-white">Math Operations Performance</h2>
+          </div>
+
+          {/* Mobile view: individual boxes with gaps */}
+          <div className="lg:hidden grid grid-cols-1 sm:grid-cols-2 gap-5 w-full px-4">
+            {/* Addition Progress */}
+            <div className="p-6 bg-[#00509d] border border-[#3b7fc9]">
+              <h3 className="text-xl font-semibold text-white mb-4 text-center">Addition</h3>
+              <ProgressBar data={progressData.addition} color="#fdc500" />
             </div>
-            <div className="space-y-4">
-              <OperationProgress
-                title="Multiplication"
-                data={{ completed: progressData.multiplication.completed, total: progressData.multiplication.total }}
-                color="#f6aa54"
-              />
-              <OperationProgress
-                title="Division"
-                data={{ completed: progressData.division.completed, total: progressData.division.total }}
-                color="#f6aa54"
-              />
+
+            {/* Subtraction Progress */}
+            <div className="p-6 bg-[#00509d] border border-[#3b7fc9]">
+              <h3 className="text-xl font-semibold text-white mb-4 text-center">Subtraction</h3>
+              <ProgressBar data={progressData.subtraction} color="#fdc500" />
+            </div>
+
+            {/* Multiplication Progress */}
+            <div className="p-6 bg-[#00509d] border border-[#3b7fc9]">
+              <h3 className="text-xl font-semibold text-white mb-4 text-center">Multiplication</h3>
+              <ProgressBar data={progressData.multiplication} color="#fdc500" />
+            </div>
+
+            {/* Division Progress */}
+            <div className="p-6 bg-[#00509d] border border-[#3b7fc9]">
+              <h3 className="text-xl font-semibold text-white mb-4 text-center">Division</h3>
+              <ProgressBar data={progressData.division} color="#fdc500" />
+            </div>
+          </div>
+
+          {/* Desktop view: connected boxes with dividers */}
+          <div className="hidden lg:grid grid-cols-4 w-full px-4">
+            {/* Addition Progress */}
+            <div className="p-6 bg-[#00509d] border border-[#3b7fc9]">
+              <h3 className="text-xl font-semibold text-white mb-4 text-center">Addition</h3>
+              <ProgressBar data={progressData.addition} color="#fdc500" />
+            </div>
+
+            {/* Subtraction Progress */}
+            <div className="p-6 bg-[#00509d] border-l-0 border border-[#3b7fc9]">
+              <h3 className="text-xl font-semibold text-white mb-4 text-center">Subtraction</h3>
+              <ProgressBar data={progressData.subtraction} color="#fdc500" />
+            </div>
+
+            {/* Multiplication Progress */}
+            <div className="p-6 bg-[#00509d] border-l-0 border border-[#3b7fc9]">
+              <h3 className="text-xl font-semibold text-white mb-4 text-center">Multiplication</h3>
+              <ProgressBar data={progressData.multiplication} color="#fdc500" />
+            </div>
+
+            {/* Division Progress */}
+            <div className="p-6 bg-[#00509d] border-l-0 border border-[#3b7fc9]">
+              <h3 className="text-xl font-semibold text-white mb-4 text-center">Division</h3>
+              <ProgressBar data={progressData.division} color="#fdc500" />
             </div>
           </div>
         </div>
+      </div>
 
-        {/* Progress Section */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 w-full max-w-5xl">
-          {/* Addition Progress */}
-          <div className="bg-[#0F283D] border border-[#50adb6]/30 rounded-lg p-6">
-            <h3 className="text-xl font-semibold text-[#50adb6] mb-4 text-center">Addition</h3>
-            <ProgressBar data={progressData.addition} color="#50adb6" />
+      <div className="w-full max-w-6xl mx-auto py-8">
+        <div className="flex flex-col items-center text-center space-y-12 bg-[#ffffff] p-6 rounded-xl">
+          {/* Recent Achievements */}
+          <div className="w-full space-y-6">
+            <div className="flex items-center justify-between">
+              <h2 className="text-xl font-semibold text-[#00509d] text-left">Recent Achievements</h2>
+              <Link
+                href="/dashboard/achievements"
+                className="text-sm font-bold text-[#00509d] hover:text-[#003f88] transition-colors"
+              >
+                View All
+              </Link>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {achievements.map((achievement) => (
+                <AchievementCard key={achievement.title} {...achievement} />
+              ))}
+            </div>
           </div>
 
-          {/* Subtraction Progress */}
-          <div className="bg-[#0F283D] border border-[#50adb6]/30 rounded-lg p-6">
-            <h3 className="text-xl font-semibold text-[#50adb6] mb-4 text-center">Subtraction</h3>
-            <ProgressBar data={progressData.subtraction} color="#50adb6" />
-          </div>
-
-          {/* Multiplication Progress */}
-          <div className="bg-[#0F283D] border border-[#f6aa54]/30 rounded-lg p-6">
-            <h3 className="text-xl font-semibold text-[#f6aa54] mb-4 text-center">Multiplication</h3>
-            <ProgressBar data={progressData.multiplication} color="#f6aa54" />
-          </div>
-
-          {/* Division Progress */}
-          <div className="bg-[#0F283D] border border-[#f6aa54]/30 rounded-lg p-6">
-            <h3 className="text-xl font-semibold text-[#f6aa54] mb-4 text-center">Division</h3>
-            <ProgressBar data={progressData.division} color="#f6aa54" />
-          </div>
-        </div>
-
-        {/* Recent Achievements */}
-        <div className="w-full max-w-5xl space-y-6 px-4">
-          <div className="flex items-center justify-between">
-            <h2 className="text-xl font-semibold text-[#50adb6] text-left">Recent Achievements</h2>
-            <Link
-              href="/dashboard/achievements"
-              className="text-sm text-[#50adb6] hover:text-[#3d8a91] transition-colors"
-            >
-              View All
+          {/* View Full Progress Button */}
+          <div className="w-full flex justify-center mt-8">
+            <Link href="/dashboard/progress">
+              <div className="flex items-center gap-2 bg-[#00509d] hover:bg-[#003f88] text-white font-semibold py-3 px-6 rounded-lg transition-colors shadow-lg">
+                <BarChart2 className="w-5 h-5" />
+                <span>View Full Progress</span>
+              </div>
             </Link>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {achievements.map((achievement) => (
-              <AchievementCard key={achievement.title} {...achievement} />
-            ))}
-          </div>
-        </div>
-
-        {/* View Full Progress Button */}
-        <div className="w-full max-w-5xl flex justify-center mt-8">
-          <Link href="/dashboard/progress">
-            <div className="flex items-center gap-2 bg-[#50adb6] hover:bg-[#3d8a91] text-white font-semibold py-3 px-6 rounded-lg transition-colors shadow-lg">
-              <BarChart2 className="w-5 h-5" />
-              <span>View Full Progress</span>
-            </div>
-          </Link>
         </div>
       </div>
     </div>

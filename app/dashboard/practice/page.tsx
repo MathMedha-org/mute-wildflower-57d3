@@ -8,19 +8,19 @@ export default function PracticePage() {
   const router = useRouter()
 
   return (
-    <div className="w-full sm:max-w-6xl sm:mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <div className="flex flex-col space-y-8 bg-[#0F283D] p-8 rounded-xl border border-[#50adb6]/20">
+    <div className="w-full sm:max-w-6xl sm:mx-auto pt-3 sm:pt-4 lg:pt-6 pb-8">
+      <div className="flex flex-col space-y-8 bg-white p-6 rounded-xl">
         <div className="relative flex items-start justify-center">
           <Link
             href="/dashboard"
             scroll={true}
-            className="absolute left-0 top-0 w-10 h-10 rounded-full bg-[#50adb6] flex items-center justify-center text-white hover:bg-[#3d8a91] transition-colors"
+            className="absolute left-0 top-0 w-10 h-10 rounded-full bg-[#00509d] flex items-center justify-center text-white hover:bg-[#003f88] transition-colors"
           >
             <ArrowLeft size={20} strokeWidth={3} />
           </Link>
           <div className="text-center mb-4">
-            <h1 className="text-3xl font-bold text-[#50adb6]">Practice</h1>
-            <p className="text-white/80">Choose a topic to practice and improve your math skills.</p>
+            <h1 className="text-3xl font-bold text-[#00509d]">Practice</h1>
+            <p className="text-gray-600">Choose a topic to practice and improve your math skills.</p>
           </div>
         </div>
 
@@ -33,8 +33,8 @@ export default function PracticePage() {
               difficulty: "Easy",
               problems: 20,
               icon: Calculator,
-              bgColor: "bg-[#50adb6]",
-              hoverColor: "hover:bg-[#3d8a91]",
+              bgColor: "bg-[#00509d]",
+              hoverColor: "hover:bg-[#003f88]",
               path: "/dashboard/practice/addition-subtraction",
             },
             {
@@ -44,8 +44,8 @@ export default function PracticePage() {
               difficulty: "Medium",
               problems: 25,
               icon: Brain,
-              bgColor: "bg-[#f6aa54]",
-              hoverColor: "hover:bg-[#e59843]",
+              bgColor: "bg-[#fdc500]",
+              hoverColor: "hover:bg-[#ffd500]",
               path: "/dashboard/practice/multiplication-division",
             },
             {

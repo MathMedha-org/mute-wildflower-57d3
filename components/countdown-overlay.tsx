@@ -1,6 +1,7 @@
 "use client"
 
 import type React from "react"
+
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { Dialog, DialogContent } from "@/components/ui/dialog"
@@ -23,7 +24,7 @@ export function CountdownOverlay({
   subtitle = "Please wait for your classmates to come on an epic adventure with you!",
   studentsCount = 20,
   redirectPath,
-  color = "#50adb6",
+  color = "#00509d",
 }: CountdownOverlayProps) {
   const [countdown, setCountdown] = useState(15)
   const router = useRouter()
@@ -51,7 +52,7 @@ export function CountdownOverlay({
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
       <DialogContent
-        className="sm:max-w-md bg-[#0F283D] border-none"
+        className="sm:max-w-md bg-white border-none shadow-md"
         style={{ "--close-button-color": color } as React.CSSProperties}
       >
         <button
@@ -72,7 +73,7 @@ export function CountdownOverlay({
           <h2 className="text-2xl font-bold mb-2" style={{ color: color }}>
             {title}
           </h2>
-          <p className="text-white/80 text-center mb-2">{subtitle}</p>
+          <p className="text-gray-500 text-center mb-2">{subtitle}</p>
           <p className="font-semibold mt-4" style={{ color: color }}>
             Students joined: {studentsCount}
           </p>

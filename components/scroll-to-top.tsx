@@ -8,6 +8,9 @@ export function ScrollToTop() {
   const [isVisible, setIsVisible] = useState(false)
 
   // Change the page check to include both dashboard and progress pages
+  // Replaced:
+  // const isProgressPage = pathname === "/dashboard/progress"
+  // With:
   const shouldShowButton = pathname === "/dashboard/progress" || pathname === "/dashboard"
 
   useEffect(() => {
@@ -46,6 +49,10 @@ export function ScrollToTop() {
   }
 
   // Only render on the dashboard and progress pages
+  // Replaced:
+  // Only render on the progress page
+  // if (!isProgressPage) return null
+  // With:
   if (!shouldShowButton) return null
 
   return (
@@ -53,12 +60,25 @@ export function ScrollToTop() {
       {isVisible && (
         <button
           onClick={scrollToTop}
-          className="fixed bottom-16 right-4 w-14 h-14 flex items-center justify-center z-[60] hover:scale-110 transition-transform duration-200 animate-float"
+          className="fixed bottom-16 right-4 w-14 h-14 flex items-center justify-center z-[60] hover:scale-110 transition-transform duration-200"
           aria-label="Scroll to top"
+          style={{
+            animation: "float 2s ease-in-out infinite",
+          }}
         >
-          <img src="/images/totop.webp" alt="Scroll to top" className="w-full h-full object-contain drop-shadow-lg" />
+          <img
+            src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/astronaut-new-2-Z9x9M5EccqWTqSNwH02535f45A2WRS.png"
+            alt="Astronaut - Scroll to top"
+            className="w-full h-full object-contain drop-shadow-lg"
+          />
         </button>
       )}
+      <style jsx global>{`
+        @keyframes float {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-10px); }
+        }
+      `}</style>
     </>
   )
 }

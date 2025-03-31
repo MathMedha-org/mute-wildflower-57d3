@@ -126,7 +126,7 @@ export function MainNav() {
             <Link
               href="/dashboard/games"
               scroll={true}
-              className="w-10 h-10 rounded-full bg-[#50adb6] flex items-center justify-center text-white hover:bg-[#3d8a91] transition-colors"
+              className="w-10 h-10 rounded-full bg-[#003f88] flex items-center justify-center text-white hover:bg-[#002d63] transition-colors"
             >
               <ArrowLeft size={20} strokeWidth={3} />
             </Link>
@@ -146,7 +146,7 @@ export function MainNav() {
             </button>
             <button
               onClick={toggleKeypad}
-              className="hidden lg:flex w-10 h-10 rounded-full bg-[#50adb6] items-center justify-center text-white hover:bg-[#3d8a91] transition-colors"
+              className="hidden lg:flex w-10 h-10 rounded-full bg-[#4f8a4c] items-center justify-center text-white hover:bg-[#3d6b3a] transition-colors"
               aria-label={isKeypadVisible ? "Hide keypad" : "Show keypad"}
             >
               {isKeypadVisible ? (
@@ -209,11 +209,11 @@ export function MainNav() {
               href="/dashboard/practice"
               scroll={true}
               className={cn(
-                "flex items-center gap-2 text-white hover:text-[#e8594a] transition-colors uppercase",
-                pathname.startsWith("/dashboard/practice") && "text-[#e8594a]",
+                "flex items-center gap-2 text-white hover:text-[#50adb6] transition-colors uppercase",
+                pathname.startsWith("/dashboard/practice") && "text-[#90e0ef] font-semibold",
               )}
             >
-              <div className="w-10 h-10 lg:w-7 lg:h-7 rounded-full bg-[#50adb6] flex items-center justify-center text-white">
+              <div className="w-10 h-10 lg:w-7 lg:h-7 rounded-full bg-[#003f88] flex items-center justify-center text-white">
                 <Dumbbell size={16} strokeWidth={2} />
               </div>
               <span className="hidden lg:inline">Practice</span>
@@ -222,8 +222,8 @@ export function MainNav() {
               href="/dashboard/games"
               scroll={true}
               className={cn(
-                "flex items-center gap-2 text-white hover:text-[#e8594a] transition-colors uppercase",
-                pathname.startsWith("/dashboard/games") && "text-[#e8594a]",
+                "flex items-center gap-2 text-white hover:text-[#f6aa54] transition-colors uppercase",
+                pathname.startsWith("/dashboard/games") && "text-[#f6aa54]",
               )}
             >
               <div className="w-10 h-10 lg:w-7 lg:h-7 rounded-full bg-[#f6aa54] flex items-center justify-center text-white">
@@ -248,8 +248,8 @@ export function MainNav() {
               href="/dashboard/explore-ranks"
               scroll={true}
               className={cn(
-                "flex items-center gap-2 text-white hover:text-[#e8594a] transition-colors uppercase",
-                pathname.startsWith("/dashboard/explore-ranks") && "text-[#e8594a]",
+                "flex items-center gap-2 text-white hover:text-[#4f8a4c] transition-colors uppercase",
+                pathname.startsWith("/dashboard/explore-ranks") && "text-[#4f8a4c]",
               )}
             >
               <div className="w-10 h-10 lg:w-7 lg:h-7 rounded-full bg-[#4f8a4c] flex items-center justify-center text-white">
@@ -275,7 +275,7 @@ export function MainNav() {
               {isUserMenuOpen && (
                 <div
                   ref={userMenuRef}
-                  className="fixed min-w-[12rem] shadow-lg bg-[#0F283D] border-l border-r border-b border-[#50adb6] m-0 overflow-hidden z-50 animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 duration-200"
+                  className="fixed min-w-[12rem] shadow-lg bg-[#00509d] border-l border-r border-b border-[#fdc500] m-0 overflow-hidden z-50 animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 duration-200"
                   style={{
                     top: `${dropdownPosition.top}px`,
                     right: `${dropdownPosition.right}px`,
@@ -288,7 +288,7 @@ export function MainNav() {
                     <Link
                       href="/dashboard/profile"
                       onClick={() => setIsUserMenuOpen(false)}
-                      className="flex items-center gap-2 px-4 py-2 text-base text-white hover:bg-[#50adb6]/20"
+                      className="flex items-center gap-2 px-4 py-2 text-base text-white hover:bg-[#003f88]"
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -310,7 +310,7 @@ export function MainNav() {
                     <Link
                       href="/dashboard/progress"
                       onClick={() => setIsUserMenuOpen(false)}
-                      className="flex items-center gap-2 px-4 py-2 text-base text-white hover:bg-[#50adb6]/20"
+                      className="flex items-center gap-2 px-4 py-2 text-base text-white hover:bg-[#003f88]"
                     >
                       <BarChart2 className="h-5 w-5" />
                       Progress
@@ -318,7 +318,7 @@ export function MainNav() {
                     <Link
                       href="/dashboard/settings"
                       onClick={() => setIsUserMenuOpen(false)}
-                      className="flex items-center gap-2 px-4 py-2 text-base text-white hover:bg-[#50adb6]/20"
+                      className="flex items-center gap-2 px-4 py-2 text-base text-white hover:bg-[#003f88]"
                     >
                       <Settings className="h-5 w-5" />
                       Settings
@@ -326,7 +326,7 @@ export function MainNav() {
                     <Link
                       href="/dashboard/adventure"
                       onClick={() => setIsUserMenuOpen(false)}
-                      className="flex items-center gap-2 px-4 py-2 text-base text-white hover:bg-[#50adb6]/20"
+                      className="flex items-center gap-2 px-4 py-2 text-base text-white hover:bg-[#003f88]"
                     >
                       <Rocket className="h-5 w-5" />
                       Adventure
@@ -334,14 +334,14 @@ export function MainNav() {
                     <Link
                       href="/dashboard/downloads"
                       onClick={() => setIsUserMenuOpen(false)}
-                      className="flex items-center gap-2 px-4 py-2 text-base text-white hover:bg-[#50adb6]/20"
+                      className="flex items-center gap-2 px-4 py-2 text-base text-white hover:bg-[#003f88]"
                     >
                       <Download className="h-5 w-5" />
                       Downloads
                     </Link>
                     <button
                       onClick={handleLogout}
-                      className="flex items-center gap-2 px-4 py-2 text-base text-white hover:bg-[#e8594a]/10 w-full text-left"
+                      className="flex items-center gap-2 px-4 py-2 text-base text-white hover:bg-[#e8594a]/20 w-full text-left"
                     >
                       <LogOut className="h-5 w-5 text-[#e8594a]" strokeWidth={3} />
                       <span className="text-[#e8594a] font-bold">Logout</span>
@@ -383,7 +383,7 @@ export function MainNav() {
                 {/* Mobile User Menu Panel */}
                 <div
                   className={cn(
-                    "lg:hidden fixed inset-y-0 right-0 w-[300px] bg-[#0F283D] border-l border-[#50adb6]",
+                    "lg:hidden fixed inset-y-0 right-0 w-[300px] bg-[#00509d] border-l border-[#fdc500]",
                     "transform transition-transform duration-300 ease-in-out z-[100]",
                     "flex flex-col",
                     isUserMenuOpen ? "translate-x-0" : "translate-x-full",
@@ -392,7 +392,7 @@ export function MainNav() {
                   onClick={(e) => e.stopPropagation()}
                 >
                   {/* Header with close button */}
-                  <div className="sticky top-0 flex items-center justify-between p-4 bg-[#0F283D] border-b border-[#50adb6]">
+                  <div className="sticky top-0 flex items-center justify-between p-4 bg-[#00509d] border-b border-[#fdc500]">
                     <div className="flex items-center gap-2">
                       <Avatar className="h-10 w-10 bg-[#50adb6]">
                         <AvatarImage src="/placeholder.svg" alt="User" />
@@ -403,19 +403,19 @@ export function MainNav() {
                     </div>
                     <button
                       onClick={() => setIsUserMenuOpen(false)}
-                      className="w-10 h-10 rounded-full bg-[#50adb6] flex items-center justify-center text-white"
+                      className="w-10 h-10 rounded-full bg-[#003f88] hover:bg-[#003070] flex items-center justify-center text-white transition-colors"
                     >
                       <X size={20} strokeWidth={3} />
                     </button>
                   </div>
 
                   {/* Menu Items */}
-                  <div className="flex-1 overflow-y-auto bg-[#0F283D] p-6">
+                  <div className="flex-1 overflow-y-auto bg-[#00509d] p-6">
                     <div className="flex flex-col space-y-2">
                       <Link
                         href="/dashboard/profile"
                         onClick={() => setIsUserMenuOpen(false)}
-                        className="flex items-center gap-3 py-2 px-2 text-white hover:bg-[#50adb6]/10 transition-colors"
+                        className="flex items-center gap-3 py-2 px-2 text-white hover:bg-[#003f88] transition-colors"
                       >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -437,7 +437,7 @@ export function MainNav() {
                       <Link
                         href="/dashboard/progress"
                         onClick={() => setIsUserMenuOpen(false)}
-                        className="flex items-center gap-3 py-2 px-2 text-white hover:bg-[#50adb6]/10 transition-colors"
+                        className="flex items-center gap-3 py-2 px-2 text-white hover:bg-[#003f88] transition-colors"
                       >
                         <BarChart2 size={20} strokeWidth={2} className="text-white" />
                         <span className="text-lg">Progress</span>
@@ -445,7 +445,7 @@ export function MainNav() {
                       <Link
                         href="/dashboard/settings"
                         onClick={() => setIsUserMenuOpen(false)}
-                        className="flex items-center gap-3 py-2 px-2 text-white hover:bg-[#50adb6]/10 transition-colors"
+                        className="flex items-center gap-3 py-2 px-2 text-white hover:bg-[#003f88] transition-colors"
                       >
                         <Settings size={20} strokeWidth={2} className="text-white" />
                         <span className="text-lg">Settings</span>
@@ -453,7 +453,7 @@ export function MainNav() {
                       <Link
                         href="/dashboard/adventure"
                         onClick={() => setIsUserMenuOpen(false)}
-                        className="flex items-center gap-3 py-2 px-2 text-white hover:bg-[#50adb6]/10 transition-colors"
+                        className="flex items-center gap-3 py-2 px-2 text-white hover:bg-[#003f88] transition-colors"
                       >
                         <Rocket size={20} strokeWidth={2} className="text-white" />
                         <span className="text-lg">Adventure</span>
@@ -461,7 +461,7 @@ export function MainNav() {
                       <Link
                         href="/dashboard/downloads"
                         onClick={() => setIsUserMenuOpen(false)}
-                        className="flex items-center gap-3 py-2 px-2 text-white hover:bg-[#50adb6]/10 transition-colors"
+                        className="flex items-center gap-3 py-2 px-2 text-white hover:bg-[#003f88] transition-colors"
                       >
                         <Download size={20} strokeWidth={2} className="text-white" />
                         <span className="text-lg">Downloads</span>
@@ -471,7 +471,7 @@ export function MainNav() {
 
                       <button
                         onClick={handleLogout}
-                        className="flex items-center gap-3 py-2 px-2 text-white hover:bg-[#e8594a]/10 transition-colors w-full text-left"
+                        className="flex items-center gap-3 py-2 px-2 text-white hover:bg-[#e8594a]/20 transition-colors w-full text-left"
                       >
                         <LogOut size={20} strokeWidth={3} className="text-[#e8594a]" />
                         <span className="text-lg text-[#e8594a] font-bold">Logout</span>
@@ -480,7 +480,7 @@ export function MainNav() {
                   </div>
 
                   {/* Footer */}
-                  <div className="p-6 bg-[#0F283D] border-t border-[#50adb6]">
+                  <div className="p-6 bg-[#00509d] border-t border-[#fdc500]">
                     <p className="text-white/60 text-sm text-center">Space Math Quiz v1.0</p>
                   </div>
                 </div>
@@ -491,7 +491,7 @@ export function MainNav() {
       </nav>
       {/* Settings Confirmation Dialog */}
       <Dialog open={isSettingsDialogOpen} onOpenChange={setIsSettingsDialogOpen}>
-        <DialogContent className="bg-[#0F283D] border-[#f6aa54] text-white">
+        <DialogContent className="bg-[#00509d] border-[#003f88] text-white">
           <DialogHeader>
             <DialogTitle className="text-[#f6aa54] text-xl">Leave Quiz?</DialogTitle>
             <DialogDescription className="text-white/80">
@@ -501,7 +501,7 @@ export function MainNav() {
           <div className="flex justify-end gap-3 mt-4">
             <button
               onClick={() => setIsSettingsDialogOpen(false)}
-              className="px-4 py-2 rounded-md bg-[#50adb6] text-white hover:bg-[#3d8a91] transition-colors"
+              className="px-4 py-2 rounded-md bg-[#4f8a4c] text-white hover:bg-[#3d6b3a] transition-colors"
             >
               Stay in Quiz
             </button>

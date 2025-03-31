@@ -187,20 +187,20 @@ export default function DownloadsPage() {
   }
 
   return (
-    <div className="w-full sm:max-w-6xl sm:mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div className="w-full sm:max-w-6xl sm:mx-auto pt-3 sm:pt-4 lg:pt-6 pb-8 py-12">
       <ScrollToTop />
-      <div className="flex flex-col space-y-8 bg-[#0F283D] p-8 rounded-xl border border-[#50adb6]/20">
+      <div className="flex flex-col space-y-8 p-6">
         {/* Header with back button and centered title */}
         <div className="relative flex items-start justify-center">
           <Link
             href="/dashboard"
-            className="absolute left-0 top-0 w-10 h-10 rounded-full bg-[#50adb6] flex items-center justify-center text-white hover:bg-[#3d8a91] transition-colors"
+            className="absolute left-0 top-0 w-10 h-10 rounded-full bg-[#00509d] flex items-center justify-center text-white hover:bg-[#003f88] transition-colors"
           >
             <ArrowLeft size={20} strokeWidth={3} />
           </Link>
           <div className="text-center mb-4 sm:mb-8 pt-8 sm:pt-0">
-            <h1 className="text-3xl font-bold text-[#50adb6]">Downloads</h1>
-            <p className="text-white/80">Access and download your certificates and learning materials</p>
+            <h1 className="text-3xl font-bold text-[#00509d]">Downloads</h1>
+            <p className="text-gray-600">Access and download your certificates and learning materials</p>
           </div>
         </div>
 
@@ -215,15 +215,15 @@ export default function DownloadsPage() {
           {/* Certificates Tab */}
           <TabsContent value="certificates" className="space-y-6 pt-6">
             {/* Your Certificates Section */}
-            <div className="bg-[#0F283D] border border-[#50adb6]/30 rounded-lg p-6">
-              <h3 className="text-xl font-semibold text-[#50adb6] mb-6">Your Certificates</h3>
+            <div className="border border-[#00509d]/30 rounded-lg p-6">
+              <h3 className="text-xl font-semibold text-[#00509d] mb-6">Your Certificates</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {downloadData.certificates.map((certificate) => (
                   <div
                     key={certificate.id}
-                    className="bg-[#0F283D] border border-[#f6aa54]/20 rounded-lg p-4 hover:border-[#f6aa54] transition-colors"
+                    className="bg-white border border-[#00509d]/20 rounded-lg p-4 hover:border-[#00509d] transition-colors shadow-sm"
                   >
-                    <div className="aspect-[1.414/1] w-full bg-[#0F283D] rounded-lg overflow-hidden mb-4">
+                    <div className="aspect-[1.414/1] w-full bg-gray-50 rounded-lg overflow-hidden mb-4">
                       <img
                         src="/placeholder.svg?height=300&width=424"
                         alt={certificate.name}
@@ -232,15 +232,15 @@ export default function DownloadsPage() {
                     </div>
                     <div className="flex justify-between items-start">
                       <div>
-                        <h4 className="text-white font-medium">{certificate.name}</h4>
-                        <p className="text-white/60 text-sm mt-1">Issued on {certificate.date}</p>
+                        <h4 className="text-gray-800 font-medium">{certificate.name}</h4>
+                        <p className="text-gray-500 text-sm mt-1">Issued on {certificate.date}</p>
                         <div className="flex items-center gap-2 mt-2">
-                          <FileText size={14} className="text-[#50adb6]" />
-                          <span className="text-white/60 text-xs">{certificate.fileSize}</span>
+                          <FileText size={14} className="text-[#00509d]" />
+                          <span className="text-gray-500 text-xs">{certificate.fileSize}</span>
                         </div>
                       </div>
                       <div className="flex items-center gap-2">
-                        <button className="flex items-center gap-2 px-4 py-2 bg-[#f6aa54] text-white rounded-md hover:bg-[#e59843] transition-colors">
+                        <button className="flex items-center gap-2 px-4 py-2 bg-[#00509d] text-white rounded-md hover:bg-[#003f88] transition-colors">
                           <Download size={16} />
                           <span>Download</span>
                         </button>
@@ -252,27 +252,27 @@ export default function DownloadsPage() {
 
               {downloadData.certificates.length === 0 && (
                 <div className="text-center py-8">
-                  <Award className="w-12 h-12 text-[#50adb6]/30 mx-auto mb-4" />
-                  <p className="text-white/60">You haven't earned any certificates yet.</p>
-                  <p className="text-white/40 text-sm mt-2">Complete learning modules to earn certificates.</p>
+                  <Award className="w-12 h-12 text-[#00509d]/30 mx-auto mb-4" />
+                  <p className="text-gray-500">You haven't earned any certificates yet.</p>
+                  <p className="text-gray-400 text-sm mt-2">Complete learning modules to earn certificates.</p>
                 </div>
               )}
             </div>
 
             {/* Upcoming Certificates Section */}
-            <div className="bg-[#0F283D] border border-[#e8594a]/30 rounded-lg p-6">
-              <h3 className="text-xl font-semibold text-[#e8594a] mb-6">Upcoming Certificates</h3>
+            <div className="border border-[#00509d]/30 rounded-lg p-6">
+              <h3 className="text-xl font-semibold text-[#00509d] mb-6">Upcoming Certificates</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {downloadData.upcomingCertificates.map((certificate) => (
-                  <div key={certificate.id} className="bg-[#0F283D] border border-white/10 rounded-lg p-4 opacity-70">
-                    <div className="aspect-[1.414/1] w-full bg-[#0F283D] rounded-lg overflow-hidden mb-4 flex items-center justify-center">
-                      <Lock className="w-16 h-16 text-white/20" />
+                  <div key={certificate.id} className="bg-gray-50 border border-gray-200 rounded-lg p-4 opacity-70">
+                    <div className="aspect-[1.414/1] w-full bg-gray-100 rounded-lg overflow-hidden mb-4 flex items-center justify-center">
+                      <Lock className="w-16 h-16 text-gray-300" />
                     </div>
-                    <h4 className="text-white/60 font-medium">{certificate.name}</h4>
-                    <p className="text-white/40 text-sm mt-1">{certificate.requirements}</p>
+                    <h4 className="text-gray-600 font-medium">{certificate.name}</h4>
+                    <p className="text-gray-500 text-sm mt-1">{certificate.requirements}</p>
                     <div className="mt-4 flex justify-between items-center">
                       <div className="flex items-center gap-2 flex-1">
-                        <div className="h-1.5 bg-white/10 rounded-full overflow-hidden flex-1">
+                        <div className="h-1.5 bg-gray-200 rounded-full overflow-hidden flex-1">
                           <div
                             className="h-full rounded-full"
                             style={{
@@ -281,9 +281,9 @@ export default function DownloadsPage() {
                             }}
                           />
                         </div>
-                        <span className="text-white/60 text-sm">{certificate.progress}%</span>
+                        <span className="text-gray-600 text-sm">{certificate.progress}%</span>
                       </div>
-                      <button className="flex items-center gap-2 px-4 py-2 bg-[#50adb6]/30 text-white/50 rounded-md cursor-not-allowed ml-4">
+                      <button className="flex items-center gap-2 px-4 py-2 bg-[#00509d]/30 text-gray-400 rounded-md cursor-not-allowed ml-4">
                         <Lock size={14} />
                         <span>Locked</span>
                       </button>
@@ -296,16 +296,16 @@ export default function DownloadsPage() {
 
           {/* Worksheets Tab */}
           <TabsContent value="worksheets" className="space-y-6 pt-6">
-            <div className="bg-[#0F283D] border border-[#50adb6]/30 rounded-lg p-6">
-              <h3 className="text-xl font-semibold text-[#50adb6] mb-6">Generate Custom Worksheets</h3>
+            <div className="border border-[#00509d]/30 rounded-lg p-6">
+              <h3 className="text-xl font-semibold text-[#00509d] mb-6">Generate Custom Worksheets</h3>
 
               {/* Worksheet Generator */}
-              <div className="bg-[#163c5a] border border-[#50adb6]/20 rounded-lg p-4 mb-6">
-                <h4 className="text-lg font-medium text-white mb-4">Worksheet Generator</h4>
+              <div className="bg-gray-50 border border-[#00509d]/20 rounded-lg p-4 mb-6">
+                <h4 className="text-lg font-medium text-[#00509d] mb-4">Worksheet Generator</h4>
 
                 {/* Operation Type Selection */}
                 <div className="mb-4">
-                  <label className="block text-white/80 text-sm font-medium mb-2">Select Operation</label>
+                  <label className="block text-gray-700 text-sm font-medium mb-2">Select Operation</label>
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                     {["Multiplication", "Division", "Addition", "Subtraction"].map((operation) => (
                       <button
@@ -313,8 +313,8 @@ export default function DownloadsPage() {
                         onClick={() => setSelectedOperation(operation)}
                         className={`p-3 transition-all ${
                           selectedOperation === operation
-                            ? "bg-[#50adb6] text-white shadow-lg"
-                            : "bg-[#0F283D] text-white hover:bg-[#3d8a91]"
+                            ? "bg-[#00509d] text-white shadow-lg"
+                            : "bg-white text-gray-700 hover:bg-[#00509d]/10"
                         }`}
                       >
                         {operation}
@@ -326,16 +326,16 @@ export default function DownloadsPage() {
                 {/* Conditional Options Based on Operation Type */}
                 {(selectedOperation === "Multiplication" || selectedOperation === "Division") && (
                   <div className="mb-4">
-                    <label className="block text-white/80 text-sm font-medium mb-2">Select Tables</label>
-                    <div className="grid grid-cols-[repeat(auto-fill,minmax(60px,1fr))] gap-2">
+                    <label className="block text-gray-700 text-sm font-medium mb-2">Select Tables</label>
+                    <div className="grid grid-cols-[repeat(auto-fill,minmax(120px,1fr))] gap-2">
                       {Array.from({ length: 19 }, (_, i) => i + 2).map((num) => (
                         <button
                           key={num}
                           onClick={() => handleTableToggle(num)}
-                          className={`h-10 w-full text-lg font-medium transition-all flex items-center justify-center ${
+                          className={`h-12 w-full text-lg font-medium transition-all flex items-center justify-center ${
                             selectedTables.includes(num)
-                              ? "bg-[#50adb6] text-white shadow-lg"
-                              : "bg-[#0F283D] text-white hover:bg-[#3d8a91]"
+                              ? "bg-[#00509d] text-white shadow-lg"
+                              : "bg-white text-gray-700 hover:bg-[#00509d]/10"
                           }`}
                         >
                           {num}
@@ -347,7 +347,7 @@ export default function DownloadsPage() {
 
                 {(selectedOperation === "Addition" || selectedOperation === "Subtraction") && (
                   <div className="mb-4">
-                    <label className="block text-white/80 text-sm font-medium mb-2">Select Complexity</label>
+                    <label className="block text-gray-700 text-sm font-medium mb-2">Select Complexity</label>
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2">
                       {[
                         "Single & two-digit",
@@ -364,8 +364,8 @@ export default function DownloadsPage() {
                           onClick={() => handleComplexityToggle(option)}
                           className={`p-3 transition-all text-sm ${
                             selectedComplexity.includes(option)
-                              ? "bg-[#50adb6] text-white shadow-lg"
-                              : "bg-[#0F283D] text-white hover:bg-[#3d8a91]"
+                              ? "bg-[#00509d] text-white shadow-lg"
+                              : "bg-white text-gray-700 hover:bg-[#00509d]/10"
                           }`}
                         >
                           {option}
@@ -377,7 +377,7 @@ export default function DownloadsPage() {
 
                 {/* Additional Options */}
                 <div className="mb-4">
-                  <label className="block text-white/80 text-sm font-medium mb-2">Number of Problems</label>
+                  <label className="block text-gray-700 text-sm font-medium mb-2">Number of Problems</label>
                   <div className="grid grid-cols-4 gap-2">
                     {[10, 20, 30, 50].map((count) => (
                       <button
@@ -385,8 +385,8 @@ export default function DownloadsPage() {
                         onClick={() => setProblemCount(count)}
                         className={`p-3 transition-all ${
                           problemCount === count
-                            ? "bg-[#f6aa54] text-white shadow-lg"
-                            : "bg-[#0F283D] text-white hover:bg-[#e59843]"
+                            ? "bg-[#00509d] text-white shadow-lg"
+                            : "bg-white text-gray-700 hover:bg-[#00509d]/10"
                         }`}
                       >
                         {count}
@@ -399,7 +399,7 @@ export default function DownloadsPage() {
                 <div className="flex justify-center mt-6">
                   <button
                     onClick={handleGenerateWorksheet}
-                    className="flex items-center gap-2 px-6 py-3 bg-[#e8594a] text-white rounded-md hover:bg-[#d64a3d] transition-colors"
+                    className="flex items-center gap-2 px-6 py-3 bg-[#00509d] text-white rounded-md hover:bg-[#003f88] transition-colors"
                     disabled={!isGenerateEnabled()}
                   >
                     <FileText size={18} />
@@ -408,20 +408,20 @@ export default function DownloadsPage() {
                 </div>
               </div>
 
-              <h3 className="text-xl font-semibold text-[#50adb6] mb-6">Your Worksheets</h3>
+              <h3 className="text-xl font-semibold text-[#00509d] mb-6">Your Worksheets</h3>
               <div className="space-y-4">
                 {downloadData.worksheets.map((worksheet) => (
                   <div
                     key={worksheet.id}
-                    className="flex flex-col sm:flex-row justify-between items-start sm:items-center p-4 border border-[#50adb6]/20 rounded-lg hover:border-[#50adb6]/50 transition-colors"
+                    className="flex flex-col sm:flex-row justify-between items-start sm:items-center p-4 border border-[#00509d]/20 rounded-lg hover:border-[#00509d]/50 transition-colors"
                   >
                     <div className="flex items-center gap-3 mb-3 sm:mb-0">
-                      <div className="w-10 h-10 rounded-full bg-[#50adb6]/20 flex items-center justify-center text-[#50adb6]">
+                      <div className="w-10 h-10 rounded-full bg-[#00509d]/20 flex items-center justify-center text-[#00509d]">
                         <FileText size={20} />
                       </div>
                       <div>
-                        <h4 className="text-white font-medium">{worksheet.name}</h4>
-                        <div className="flex items-center gap-4 text-white/60 text-sm mt-1">
+                        <h4 className="text-gray-800 font-medium">{worksheet.name}</h4>
+                        <div className="flex items-center gap-4 text-gray-500 text-sm mt-1">
                           <span>{worksheet.date}</span>
                           <span>•</span>
                           <span>{worksheet.type}</span>
@@ -430,7 +430,7 @@ export default function DownloadsPage() {
                         </div>
                       </div>
                     </div>
-                    <button className="flex items-center gap-2 px-4 py-2 bg-[#50adb6] text-white rounded-md hover:bg-[#3d8a91] transition-colors w-full sm:w-auto justify-center">
+                    <button className="flex items-center gap-2 px-4 py-2 bg-[#00509d] text-white rounded-md hover:bg-[#003f88] transition-colors w-full sm:w-auto justify-center">
                       <Download size={16} />
                       <span>Download</span>
                     </button>
@@ -440,9 +440,9 @@ export default function DownloadsPage() {
 
               {downloadData.worksheets.length === 0 && (
                 <div className="text-center py-8">
-                  <FileText className="w-12 h-12 text-[#50adb6]/30 mx-auto mb-4" />
-                  <p className="text-white/60">No worksheets available.</p>
-                  <p className="text-white/40 text-sm mt-2">Generate a worksheet using the options above.</p>
+                  <FileText className="w-12 h-12 text-[#00509d]/30 mx-auto mb-4" />
+                  <p className="text-gray-500">No worksheets available.</p>
+                  <p className="text-gray-400 text-sm mt-2">Generate a worksheet using the options above.</p>
                 </div>
               )}
             </div>
@@ -450,17 +450,17 @@ export default function DownloadsPage() {
 
           {/* Progress Reports Tab */}
           <TabsContent value="reports" className="space-y-6 pt-6">
-            <div className="bg-[#0F283D] border border-[#50adb6]/30 rounded-lg p-6">
-              <h3 className="text-xl font-semibold text-[#50adb6] mb-6">Generate Progress Report</h3>
+            <div className="border border-[#00509d]/30 rounded-lg p-6">
+              <h3 className="text-xl font-semibold text-[#00509d] mb-6">Generate Progress Report</h3>
 
               {/* Report Generator */}
-              <div className="bg-[#163c5a] border border-[#50adb6]/20 rounded-lg p-4 mb-6">
-                <h4 className="text-lg font-medium text-white mb-4">Report Generator</h4>
+              <div className="bg-gray-50 border border-[#00509d]/20 rounded-lg p-4 mb-6">
+                <h4 className="text-lg font-medium text-[#00509d] mb-4">Report Generator</h4>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {/* Month Selection */}
                   <div>
-                    <label className="block text-white/80 text-sm font-medium mb-2">Select Month</label>
+                    <label className="block text-gray-700 text-sm font-medium mb-2">Select Month</label>
                     <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
                       {["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"].map(
                         (month, index) => (
@@ -469,8 +469,8 @@ export default function DownloadsPage() {
                             onClick={() => setSelectedMonth(index)}
                             className={`p-2 transition-all ${
                               selectedMonth === index
-                                ? "bg-[#50adb6] text-white shadow-lg"
-                                : "bg-[#0F283D] text-white hover:bg-[#3d8a91]"
+                                ? "bg-[#00509d] text-white shadow-lg"
+                                : "bg-white text-gray-700 hover:bg-[#00509d]/10"
                             }`}
                           >
                             {month}
@@ -482,7 +482,7 @@ export default function DownloadsPage() {
 
                   {/* Year Selection */}
                   <div>
-                    <label className="block text-white/80 text-sm font-medium mb-2">Select Year</label>
+                    <label className="block text-gray-700 text-sm font-medium mb-2">Select Year</label>
                     <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
                       {[
                         new Date().getFullYear(),
@@ -495,8 +495,8 @@ export default function DownloadsPage() {
                           onClick={() => setSelectedYear(year)}
                           className={`p-2 transition-all ${
                             selectedYear === year
-                              ? "bg-[#f6aa54] text-white shadow-lg"
-                              : "bg-[#0F283D] text-white hover:bg-[#e59843]"
+                              ? "bg-[#00509d] text-white shadow-lg"
+                              : "bg-white text-gray-700 hover:bg-[#00509d]/10"
                           }`}
                         >
                           {year}
@@ -513,8 +513,8 @@ export default function DownloadsPage() {
                     disabled={isGeneratingReport}
                     className={`flex items-center gap-2 px-6 py-3 rounded-md transition-colors ${
                       isGeneratingReport
-                        ? "bg-[#f6aa54]/50 text-white/70 cursor-not-allowed"
-                        : "bg-[#f6aa54] text-white hover:bg-[#e59843]"
+                        ? "bg-[#00509d]/50 text-white/70 cursor-not-allowed"
+                        : "bg-[#00509d] text-white hover:bg-[#003f88]"
                     }`}
                   >
                     <Calendar size={18} />
@@ -523,20 +523,20 @@ export default function DownloadsPage() {
                 </div>
               </div>
 
-              <h3 className="text-xl font-semibold text-[#50adb6] mb-6">Monthly Progress Reports</h3>
+              <h3 className="text-xl font-semibold text-[#00509d] mb-6">Monthly Progress Reports</h3>
               <div className="space-y-4">
                 {downloadData.progressReports.map((report) => (
                   <div
                     key={report.id}
-                    className="flex flex-col sm:flex-row justify-between items-start sm:items-center p-4 border border-[#50adb6]/20 rounded-lg hover:border-[#50adb6]/50 transition-colors"
+                    className="flex flex-col sm:flex-row justify-between items-start sm:items-center p-4 border border-[#00509d]/20 rounded-lg hover:border-[#00509d]/50 transition-colors"
                   >
                     <div className="flex items-center gap-3 mb-3 sm:mb-0">
-                      <div className="w-10 h-10 rounded-full bg-[#f6aa54]/20 flex items-center justify-center text-[#f6aa54]">
+                      <div className="w-10 h-10 rounded-full bg-[#00509d]/20 flex items-center justify-center text-[#00509d]">
                         <CheckCircle size={20} />
                       </div>
                       <div>
-                        <h4 className="text-white font-medium">{report.name}</h4>
-                        <div className="flex items-center gap-4 text-white/60 text-sm mt-1">
+                        <h4 className="text-gray-800 font-medium">{report.name}</h4>
+                        <div className="flex items-center gap-4 text-gray-500 text-sm mt-1">
                           <span>{report.date}</span>
                           <span>•</span>
                           <span>{report.type}</span>
@@ -545,7 +545,7 @@ export default function DownloadsPage() {
                         </div>
                       </div>
                     </div>
-                    <button className="flex items-center gap-2 px-4 py-2 bg-[#f6aa54] text-white rounded-md hover:bg-[#e59843] transition-colors w-full sm:w-auto justify-center">
+                    <button className="flex items-center gap-2 px-4 py-2 bg-[#00509d] text-white rounded-md hover:bg-[#003f88] transition-colors w-full sm:w-auto justify-center">
                       <Download size={16} />
                       <span>Download</span>
                     </button>
@@ -555,9 +555,9 @@ export default function DownloadsPage() {
 
               {downloadData.progressReports.length === 0 && (
                 <div className="text-center py-8">
-                  <CheckCircle className="w-12 h-12 text-[#50adb6]/30 mx-auto mb-4" />
-                  <p className="text-white/60">No progress reports available yet.</p>
-                  <p className="text-white/40 text-sm mt-2">Generate a report using the options above.</p>
+                  <CheckCircle className="w-12 h-12 text-[#00509d]/30 mx-auto mb-4" />
+                  <p className="text-gray-500">No progress reports available yet.</p>
+                  <p className="text-gray-400 text-sm mt-2">Generate a report using the options above.</p>
                 </div>
               )}
             </div>

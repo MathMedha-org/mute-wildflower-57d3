@@ -1,10 +1,7 @@
 "use client"
-
-import { TableHeader } from "@/components/ui/table"
 import { useState } from "react"
 import Link from "next/link"
 import { ArrowLeft, Award, Trophy, Timer, Check, X } from "lucide-react"
-import { Table, TableBody, TableCell, TableHead, TableRow } from "@/components/ui/table"
 
 interface Question {
   question: string
@@ -42,24 +39,24 @@ export default function ResultsPage() {
   })
 
   return (
-    <div className="w-full sm:max-w-6xl sm:mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <div className="flex flex-col space-y-8 bg-[#0F283D] p-8 rounded-xl border border-[#50adb6]/20">
+    <div className="w-full sm:max-w-6xl sm:mx-auto pt-3 sm:pt-4 lg:pt-6 pb-8">
+      <div className="flex flex-col space-y-8 bg-white p-6 rounded-xl">
         {/* Header with back button and centered title */}
         <div className="flex items-center relative">
           <Link
             href="/dashboard/games"
-            className="w-10 h-10 rounded-full bg-[#50adb6] flex items-center justify-center text-white hover:bg-[#3d8a91] transition-colors absolute left-0"
+            className="w-10 h-10 rounded-full bg-[#00509d] flex items-center justify-center text-white hover:bg-[#003f88] transition-colors absolute left-0"
           >
             <ArrowLeft size={20} strokeWidth={3} />
           </Link>
-          <h1 className="text-3xl font-bold text-[#50adb6] flex-1 text-center">Quiz Results</h1>
+          <h1 className="text-3xl font-bold text-[#00509d] flex-1 text-center">Quiz Results</h1>
         </div>
 
         <div className="space-y-8">
           {/* First Row - Summary */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* Stars, Badges, and Planets */}
-            <div className="bg-[#163c5a] rounded-xl p-6">
+            <div className="bg-white rounded-xl p-6 border border-gray-200">
               <div className="grid grid-cols-3 gap-4">
                 <div className="flex flex-col items-center gap-2">
                   <div className="w-16 h-16 flex items-center justify-center">
@@ -79,7 +76,7 @@ export default function ResultsPage() {
                       className="w-full h-full object-contain"
                     />
                   </div>
-                  <div className="text-3xl font-bold text-[#50adb6]">{results.badges.length}</div>
+                  <div className="text-3xl font-bold text-[#00509d]">{results.badges.length}</div>
                 </div>
                 <div className="flex flex-col items-center gap-2">
                   <div className="w-16 h-16 flex items-center justify-center">
@@ -95,45 +92,45 @@ export default function ResultsPage() {
             </div>
 
             {/* Performance Stats */}
-            <div className="bg-[#163c5a] rounded-xl p-6">
-              <h2 className="text-xl font-semibold text-[#50adb6] mb-4">Performance Stats</h2>
+            <div className="bg-white rounded-xl p-6 border border-gray-200">
+              <h2 className="text-xl font-semibold text-[#00509d] mb-4">Performance Stats</h2>
               <div className="grid grid-cols-2 gap-4">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-[#50adb6]/20 flex items-center justify-center">
-                    <Trophy className="w-5 h-5 text-[#50adb6]" />
+                  <div className="w-10 h-10 rounded-full bg-[#00509d]/10 flex items-center justify-center">
+                    <Trophy className="w-5 h-5 text-[#00509d]" />
                   </div>
                   <div>
-                    <div className="text-sm text-white/60">Accuracy</div>
-                    <div className="text-lg font-semibold text-white">
+                    <div className="text-sm text-gray-500">Accuracy</div>
+                    <div className="text-lg font-semibold text-gray-800">
                       {Math.round((results.correctAnswers / results.totalQuestions) * 100)}%
                     </div>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-[#f6aa54]/20 flex items-center justify-center">
+                  <div className="w-10 h-10 rounded-full bg-[#f6aa54]/10 flex items-center justify-center">
                     <Timer className="w-5 h-5 text-[#f6aa54]" />
                   </div>
                   <div>
-                    <div className="text-sm text-white/60">Avg. Time</div>
-                    <div className="text-lg font-semibold text-white">{results.averageTime}s</div>
+                    <div className="text-sm text-gray-500">Avg. Time</div>
+                    <div className="text-lg font-semibold text-gray-800">{results.averageTime}s</div>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-[#e8594a]/20 flex items-center justify-center">
+                  <div className="w-10 h-10 rounded-full bg-[#e8594a]/10 flex items-center justify-center">
                     <Award className="w-5 h-5 text-[#e8594a]" />
                   </div>
                   <div>
-                    <div className="text-sm text-white/60">Longest Streak</div>
-                    <div className="text-lg font-semibold text-white">{results.longestStreak}</div>
+                    <div className="text-sm text-gray-500">Longest Streak</div>
+                    <div className="text-lg font-semibold text-gray-800">{results.longestStreak}</div>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-[#50adb6]/20 flex items-center justify-center">
-                    <Check className="w-5 h-5 text-[#50adb6]" />
+                  <div className="w-10 h-10 rounded-full bg-[#00509d]/10 flex items-center justify-center">
+                    <Check className="w-5 h-5 text-[#00509d]" />
                   </div>
                   <div>
-                    <div className="text-sm text-white/60">Correct</div>
-                    <div className="text-lg font-semibold text-white">
+                    <div className="text-sm text-gray-500">Correct</div>
+                    <div className="text-lg font-semibold text-gray-800">
                       {results.correctAnswers}/{results.totalQuestions}
                     </div>
                   </div>
@@ -143,33 +140,33 @@ export default function ResultsPage() {
           </div>
 
           {/* Questions Table */}
-          <div className="relative overflow-hidden rounded-lg border border-[#50adb6]/30">
-            <div className="max-h-[600px] overflow-y-auto scrollbar-thin scrollbar-thumb-[#50adb6] scrollbar-track-transparent">
-              <Table>
-                <TableHeader className="bg-[#0F283D]/50">
-                  <TableRow>
-                    <TableHead className="text-[#50adb6] w-[50px] text-base">No.</TableHead>
-                    <TableHead className="text-[#50adb6] text-base">Question</TableHead>
-                    <TableHead className="text-[#50adb6] text-base">Your Answer</TableHead>
-                    <TableHead className="text-[#50adb6] hidden sm:table-cell text-base">Correct Answer</TableHead>
-                    <TableHead className="text-[#50adb6] hidden sm:table-cell text-base">Time</TableHead>
-                    <TableHead className="text-[#50adb6] w-[50px] text-base">Status</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
+          <div className="relative overflow-hidden rounded-lg border border-gray-200">
+            <div className="max-h-[600px] overflow-y-auto relative">
+              <table className="w-full">
+                <thead className="bg-[#00509d] sticky top-0 z-20">
+                  <tr>
+                    <th className="text-white w-[50px] text-base text-left p-4">No.</th>
+                    <th className="text-white text-base text-left p-4">Question</th>
+                    <th className="text-white text-base text-left p-4">Your Answer</th>
+                    <th className="text-white hidden sm:table-cell text-base text-left p-4">Correct Answer</th>
+                    <th className="text-white hidden sm:table-cell text-base text-left p-4">Time</th>
+                    <th className="text-white w-[50px] text-base text-left p-4">Status</th>
+                  </tr>
+                </thead>
+                <tbody>
                   {results.questions.map((q, index) => (
-                    <TableRow key={index} className="hover:bg-[#0F283D]/30">
-                      <TableCell className="text-white font-medium text-base">{index + 1}</TableCell>
-                      <TableCell className="text-white text-base">{q.question}</TableCell>
-                      <TableCell className={`${q.isCorrect ? "text-[#50adb6]" : "text-[#e8594a]"} text-base`}>
+                    <tr key={index} className="hover:bg-gray-50 border-b border-gray-200">
+                      <td className="text-gray-800 font-medium text-base p-4">{index + 1}</td>
+                      <td className="text-gray-800 text-base p-4">{q.question}</td>
+                      <td className={`${q.isCorrect ? "text-[#00509d]" : "text-[#e8594a]"} text-base p-4`}>
                         {q.userAnswer}
-                      </TableCell>
-                      <TableCell className="text-[#50adb6] hidden sm:table-cell text-base">{q.correctAnswer}</TableCell>
-                      <TableCell className="text-white/60 hidden sm:table-cell text-base">{q.timeSpent}s</TableCell>
-                      <TableCell>
+                      </td>
+                      <td className="text-[#00509d] hidden sm:table-cell text-base p-4">{q.correctAnswer}</td>
+                      <td className="text-gray-500 hidden sm:table-cell text-base p-4">{q.timeSpent}s</td>
+                      <td className="p-4">
                         <div
                           className={`w-8 h-8 rounded-full ${
-                            q.isCorrect ? "bg-[#50adb6]" : "bg-[#e8594a]"
+                            q.isCorrect ? "bg-[#00509d]" : "bg-[#e8594a]"
                           } flex items-center justify-center`}
                         >
                           {q.isCorrect ? (
@@ -178,11 +175,11 @@ export default function ResultsPage() {
                             <X className="w-5 h-5 text-white" />
                           )}
                         </div>
-                      </TableCell>
-                    </TableRow>
+                      </td>
+                    </tr>
                   ))}
-                </TableBody>
-              </Table>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
@@ -191,13 +188,13 @@ export default function ResultsPage() {
         <div className="flex justify-center gap-4">
           <Link
             href="/dashboard/play/space-quiz"
-            className="px-6 py-3 bg-[#50adb6] text-white rounded-lg hover:bg-[#3d8a91] transition-colors"
+            className="px-6 py-3 bg-[#00509d] text-white rounded-lg hover:bg-[#003f88] transition-colors"
           >
             Try Again
           </Link>
           <Link
             href="/dashboard"
-            className="px-6 py-3 bg-[#f6aa54] text-white rounded-lg hover:bg-[#e59843] transition-colors"
+            className="px-6 py-3 bg-[#e8594a] text-white rounded-lg hover:bg-[#d04a3e] transition-colors"
           >
             Unlock Adventure
           </Link>

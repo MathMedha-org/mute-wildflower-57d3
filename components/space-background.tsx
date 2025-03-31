@@ -4,11 +4,11 @@ import { useMemo, useEffect, useState } from "react"
 
 const generateStars = (count: number) => {
   const starImages = [
-    "/images/star1.png",
-    "/images/stardark.png",
-    "/images/starplus.png",
-    "/images/starred.png",
-    "/images/startthick.png",
+    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/star1-M7kuVghLNJr8wlInkmxyUhGsRNkN0T.png",
+    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/stardark-pYL3p8dvIlVE3bbwkM7OIAxyhySTpX.png",
+    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/starplus-VFtKzFvZHpUCvwrQaoqCap2NgXeSpA.png",
+    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/starred-XylzQvPiRbr16TLum5Tgjv7I64Uroy.png",
+    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/startthick-YTIvKJRtEkfGNJaQobGl1zxZpJ9zYo.png",
   ]
   const circleColors = ["#55adb8", "#e45a47", "#0f273e"]
   const circleSizes = [8, 12, 16]
@@ -77,24 +77,42 @@ const generateStars = (count: number) => {
 
 export function SpaceBackground() {
   const [viewBoxSize, setViewBoxSize] = useState(1000)
-  const stars = useMemo(() => generateStars(50), [])
+  const stars = useMemo(() => generateStars(00), [])
 
   const planets = useMemo(
     () => [
+      /*{
+        name: "Mercury",
+        size: viewBoxSize * 0.15,
+        x: 70,
+        y: 80,
+        imageUrl:
+          "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/PlanetMercury-new-5gfvNnpxPKapf4pRLEmCvJOV98IRgS.png",
+      },
       {
         name: "Venus",
         size: viewBoxSize * 0.12,
         x: 95,
         y: 65,
-        imageUrl: "/images/PlanetVenus-new.png",
+        imageUrl:
+          "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/PlanetVenus-new-n782DfV26Qc4GVxQzkfVH202MsKr6Q.png",
       },
       {
         name: "Mars",
         size: viewBoxSize * 0.08,
         x: 15,
         y: 67,
-        imageUrl: "/images/planetMars-new.png",
+        imageUrl:
+          "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/planetMars-new-15bGgKhmvPMI0nkv67okVy8CPZ7zLS.png",
       },
+      {
+        name: "Jupiter",
+        size: viewBoxSize * 0.15,
+        x: 115,
+        y: 45,
+        imageUrl:
+          "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/PlanetJupiter-new-k59GAemqTd30XTyQWnnh9ctpSn9X22.png",
+      },*/
     ],
     [viewBoxSize],
   )
@@ -113,37 +131,56 @@ export function SpaceBackground() {
   }, [])
 
   return (
-    <div className="fixed inset-x-0 top-[0.5rem] bottom-0 overflow-hidden pointer-events-none">
+    <div
+      className="fixed inset-x-0 top-[0.5rem] bottom-0 overflow-hidden pointer-events-none"
+      style={{ backgroundColor: "#fff" }}
+    >
       {/* Fixed position moon */}
       <div
-        className="fixed top-20 left-6"
+        className="fixed top-20 left-6 hidden"
         style={{ width: `${viewBoxSize * 0.05}px`, height: `${viewBoxSize * 0.05}px` }}
       >
-        <img src="/images/moon.png" alt="Moon" className="w-full h-full object-contain" />
+        <img
+          src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/moon-9vzPcZ7zT1ivWy3kYHTMzQJ3zjiByO.png"
+          alt="Moon"
+          className="w-full h-full object-contain"
+        />
       </div>
 
       {/* Fixed position earth */}
       <div
-        className="fixed top-64 left-12"
+        className="fixed top-64 left-12 hidden"
         style={{ width: `${viewBoxSize * 0.08}px`, height: `${viewBoxSize * 0.08}px` }}
       >
-        <img src="/images/PlanetEarth-new.png" alt="Earth" className="w-full h-full object-contain" />
+        <img
+          src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/PlanetEarth-new-aG11YKqAnLBL4DT4JVm6tsW3wIgsn6.png"
+          alt="Earth"
+          className="w-full h-full object-contain"
+        />
       </div>
 
       {/* Fixed position uranus */}
       <div
-        className="fixed top-20 right-6"
+        className="fixed top-20 right-6 hidden"
         style={{ width: `${viewBoxSize * 0.08}px`, height: `${viewBoxSize * 0.08}px` }}
       >
-        <img src="/images/planetUranus-new.png" alt="Uranus" className="w-full h-full object-contain" />
+        <img
+          src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/planetUranus-new-QpCLsWQCA0iMiP3nZJw2vDRQ3FsErb.png"
+          alt="Uranus"
+          className="w-full h-full object-contain"
+        />
       </div>
 
       {/* Fixed position jupiter */}
       <div
-        className="fixed top-64 right-10"
+        className="fixed top-64 right-4 hidden"
         style={{ width: `${viewBoxSize * 0.08}px`, height: `${viewBoxSize * 0.08}px` }}
       >
-        <img src="/images/PlanetJupiter-new.png" alt="Jupiter" className="w-full h-full object-contain" />
+        <img
+          src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/PlanetJupiter-new-k59GAemqTd30XTyQWnnh9ctpSn9X22.png"
+          alt="Jupiter"
+          className="w-full h-full object-contain"
+        />
       </div>
 
       {/* Stars with subtle animation */}
@@ -179,6 +216,13 @@ export function SpaceBackground() {
           className="absolute bottom-0 left-0 w-full h-full"
           preserveAspectRatio="xMidYMax meet"
         >
+          <defs>
+            {/*<radialGradient id="sunGlow" cx="0.5" cy="0.5" r="0.5">
+              <stop offset="0%" stopColor="#f6aa1c" stopOpacity="0.3" />
+              <stop offset="100%" stopColor="#f6aa1c" stopOpacity="0" />
+            </radialGradient>*/}
+          </defs>
+
           {/* Planets */}
           {planets.map((planet) => {
             const x = (planet.x / 100) * viewBoxSize
@@ -196,28 +240,54 @@ export function SpaceBackground() {
             )
           })}
 
-          {/* Smiling Sun */}
-          <g transform={`translate(${viewBoxSize / 2} ${viewBoxSize})`}>
-            <image
-              href="/images/sun.png"
-              x={-viewBoxSize * 0.07}
-              y={-viewBoxSize * 0.07}
-              width={viewBoxSize * 0.14}
-              height={viewBoxSize * 0.14}
-            />
-          </g>
+          {/* Smiling Sun - Hidden */}
+          {/* Removed the smiling sun element */}
         </svg>
       </div>
 
       {/* Fixed position astronaut */}
-      <div className="fixed bottom-1 right-1 w-[130px] h-[130px] animate-float">
-        <img src="/images/astronaut-new-2.png" alt="Astronaut" className="w-full h-full object-contain" />
+      <div
+        className="fixed bottom-1 right-1 w-[100px] h-[100px] animate-float hidden"
+        style={{
+          animation: "float 3s ease-in-out infinite",
+        }}
+      >
+        <img
+          src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/astronaut-new-2-Z9x9M5EccqWTqSNwH02535f45A2WRS.png"
+          alt="Astronaut"
+          className="w-full h-full object-contain"
+        />
       </div>
 
       {/* Fixed position rocket */}
-      <div className="fixed bottom-1 left-1 w-[130px] h-[130px] animate-float-diagonal">
-        <img src="/images/rocket-new-1.png" alt="Rocket" className="w-full h-full object-contain" />
+      <div
+        className="fixed bottom-1 left-1 w-[100px] h-[100px] animate-float-diagonal hidden"
+        style={{
+          animation: "floatDiagonal 3s ease-in-out infinite",
+        }}
+      >
+        <img
+          src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/rocket-new-1-oWuUbYpXqOhLlEdxvVEK81OeCfQGqw.png"
+          alt="Rocket"
+          className="w-full h-full object-contain"
+        />
       </div>
+
+      {/* Add keyframe animations */}
+      <style jsx>{`
+        @keyframes float {
+          0%, 100% { transform: translateY(0px); }
+          50% { transform: translateY(-10px); }
+        }
+        @keyframes floatDiagonal {
+          0%, 100% { transform: translate(0px, 0px); }
+          50% { transform: translate(5px, -10px); }
+        }
+        @keyframes twinkle {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0.3; }
+        }
+      `}</style>
     </div>
   )
 }

@@ -49,12 +49,6 @@ module.exports = {
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
-      animation: {
-        "fade-in": "fadeIn 1s ease-out forwards",
-        float: "float 3s ease-in-out infinite",
-        "float-diagonal": "floatDiagonal 3s ease-in-out infinite",
-        twinkle: "twinkle 2s ease-in-out infinite",
-      },
     },
   },
   plugins: [require("tailwind-scrollbar-hide"), require("tailwindcss-animate")],

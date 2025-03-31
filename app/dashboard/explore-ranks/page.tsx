@@ -1,11 +1,13 @@
 "use client"
 
+import { TableHeader } from "@/components/ui/table"
+
 import { useState } from "react"
 import { format } from "date-fns"
 import { CalendarIcon, ArrowLeft, X, Play } from "lucide-react"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import { Table, TableBody, TableCell, TableHead, TableRow } from "@/components/ui/table"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import Link from "next/link"
@@ -159,12 +161,12 @@ const MonthPicker = ({
   const years = Array.from({ length: 5 }, (_, i) => currentYear - i)
 
   return (
-    <div className="p-4 bg-[#163c5a] rounded-lg w-[280px]">
+    <div className="p-4 bg-white rounded-lg w-[280px] border border-gray-200">
       {/* Close button */}
       <div className="flex justify-end mb-4">
         <button
           onClick={onClose}
-          className="w-8 h-8 rounded-full bg-[#50adb6] flex items-center justify-center text-white hover:bg-[#3d8a91] transition-colors"
+          className="w-8 h-8 rounded-full bg-[#00509d] flex items-center justify-center text-white hover:bg-[#003f88] transition-colors"
         >
           <X size={16} strokeWidth={2.5} />
         </button>
@@ -172,7 +174,7 @@ const MonthPicker = ({
 
       {/* Years */}
       <div className="mb-4">
-        <div className="text-sm font-medium text-white/70 mb-2">Year</div>
+        <div className="text-sm font-medium text-gray-600 mb-2">Year</div>
         <div className="grid grid-cols-3 gap-2">
           {years.map((year) => (
             <button
@@ -180,7 +182,7 @@ const MonthPicker = ({
               onClick={() => onChange(new Date(year, selectedDate.getMonth()))}
               className={cn(
                 "px-2 py-1.5 text-sm rounded-md transition-colors",
-                year === selectedDate.getFullYear() ? "bg-[#50adb6] text-white" : "text-white/70 hover:bg-[#50adb6]/20",
+                year === selectedDate.getFullYear() ? "bg-[#00509d] text-white" : "text-gray-700 hover:bg-[#00509d]/10",
               )}
             >
               {year}
@@ -191,7 +193,7 @@ const MonthPicker = ({
 
       {/* Months */}
       <div>
-        <div className="text-sm font-medium text-white/70 mb-2">Month</div>
+        <div className="text-sm font-medium text-gray-600 mb-2">Month</div>
         <div className="grid grid-cols-3 gap-2">
           {months.map((month, index) => (
             <button
@@ -199,7 +201,7 @@ const MonthPicker = ({
               onClick={() => onChange(new Date(selectedDate.getFullYear(), index))}
               className={cn(
                 "px-2 py-1.5 text-sm rounded-md transition-colors",
-                index === selectedDate.getMonth() ? "bg-[#50adb6] text-white" : "text-white/70 hover:bg-[#50adb6]/20",
+                index === selectedDate.getMonth() ? "bg-[#00509d] text-white" : "text-gray-700 hover:bg-[#00509d]/10",
               )}
             >
               {month}
@@ -269,40 +271,23 @@ export default function ExplorePage() {
   })
 
   return (
-    <div className="w-full sm:max-w-6xl sm:mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <div className="flex flex-col space-y-8 bg-[#0F283D] p-8 rounded-xl border border-[#50adb6]/20">
+    <div className="w-full sm:max-w-6xl sm:mx-auto pt-3 sm:pt-4 lg:pt-6 pb-8">
+      <div className="flex flex-col space-y-8 bg-white p-6 rounded-xl">
         {/* Header with back button and centered title */}
-        <div className="sm:flex sm:items-center sm:relative">
-          {/* Mobile view: buttons in a row, title below */}
-          <div className="flex justify-between items-center mb-4 sm:hidden">
-            <Link
-              href="/dashboard/progress"
-              className="w-10 h-10 rounded-full bg-[#50adb6] flex items-center justify-center text-white hover:bg-[#3d8a91] transition-colors"
-            >
-              <ArrowLeft size={20} strokeWidth={3} />
-            </Link>
-            <Link
-              href="/dashboard/play/space-quiz"
-              className="flex items-center gap-2 px-4 py-2 rounded-full bg-[#e8594a] text-white hover:bg-[#d64a3d] transition-colors"
-            >
-              <Play size={20} strokeWidth={3} fill="currentColor" />
-              <span>Play</span>
-            </Link>
-          </div>
-
-          {/* Title for mobile */}
-          <h1 className="text-3xl font-bold text-[#50adb6] text-center sm:flex-1 sm:text-center">Explore Ranks</h1>
-
-          {/* Desktop/tablet view: back button on left, title centered, play button on right */}
+        <div className="relative flex items-start justify-center">
           <Link
             href="/dashboard/progress"
-            className="hidden sm:flex w-10 h-10 rounded-full bg-[#50adb6] items-center justify-center text-white hover:bg-[#3d8a91] transition-colors absolute left-0"
+            className="absolute left-0 top-0 w-10 h-10 rounded-full bg-[#00509d] flex items-center justify-center text-white hover:bg-[#003f88] transition-colors"
           >
             <ArrowLeft size={20} strokeWidth={3} />
           </Link>
+          <div className="text-center mb-4 sm:mb-8 pt-8 sm:pt-0">
+            <h1 className="text-3xl font-bold text-[#00509d]">Explore Ranks</h1>
+            <p className="text-gray-600">View your progress and compare ranks.</p>
+          </div>
           <Link
             href="/dashboard/play/space-quiz"
-            className="hidden sm:flex items-center gap-2 px-4 py-2 rounded-full bg-[#e8594a] text-white hover:bg-[#d64a3d] transition-colors absolute right-0"
+            className="absolute right-0 top-0 flex items-center gap-2 px-4 py-2 rounded-full bg-[#e63946] text-white hover:bg-[#c1121f] transition-colors"
           >
             <Play size={20} strokeWidth={3} fill="currentColor" />
             <span>Play</span>
@@ -311,8 +296,8 @@ export default function ExplorePage() {
 
         {/* First Accordion - Calendar and Tabs */}
         <Accordion type="single" collapsible className="w-full">
-          <AccordionItem value="calendar-tabs" className="border-[#50adb6]/30">
-            <AccordionTrigger className="text-[#50adb6] text-lg font-semibold hover:text-[#50adb6]/80 hover:no-underline">
+          <AccordionItem value="calendar-tabs" className="border-gray-200">
+            <AccordionTrigger className="text-[#00509d] text-lg font-semibold hover:text-[#003f88] hover:no-underline">
               Check Your Ranking and Class Rank
             </AccordionTrigger>
             <AccordionContent>
@@ -324,11 +309,11 @@ export default function ExplorePage() {
                       <div
                         className={cn(
                           "flex w-[280px] items-center justify-start rounded-md border px-4 py-2 text-left font-normal",
-                          "bg-[#163c5a] border-[#50adb6]/30 text-white",
-                          "hover:bg-[#0F283D] hover:border-[#50adb6] cursor-pointer",
+                          "bg-[#00509d] border-[#00509d] text-white",
+                          "hover:bg-[#003f88] hover:border-[#003f88] cursor-pointer",
                         )}
                       >
-                        <CalendarIcon className="mr-2 h-4 w-4" />
+                        <CalendarIcon className="mr-2 h-4 w-4 text-white" />
                         {format(rankingDate, "MMMM yyyy")}
                       </div>
                     </PopoverTrigger>
@@ -354,40 +339,40 @@ export default function ExplorePage() {
 
                   {/* Class Ranks Content */}
                   <TabsContent value="class">
-                    <div className="mb-4 p-4 bg-[#0F283D] border border-[#50adb6]/30 rounded-lg">
+                    <div className="mb-4 p-4 bg-gray-50 border border-gray-200 rounded-lg">
                       <div className="flex items-center gap-2">
-                        <span className="text-white/70">Your rank in class:</span>
-                        <span className="text-[#50adb6] font-bold text-lg">25</span>
+                        <span className="text-gray-600">Your rank in class:</span>
+                        <span className="text-[#00509d] font-bold text-lg">25</span>
                       </div>
                     </div>
-                    <div className="relative overflow-hidden rounded-lg border border-[#50adb6]/30">
+                    <div className="relative overflow-hidden rounded-lg border border-gray-200">
                       {rankingMonthData.classRanks.length > 0 ? (
-                        <div className="max-h-[600px] overflow-y-auto scrollbar-thin scrollbar-thumb-[#50adb6] scrollbar-track-transparent">
+                        <div className="max-h-[600px] overflow-y-auto scrollbar-thin scrollbar-thumb-[#00509d] scrollbar-track-transparent">
                           <Table>
-                            <TableHeader className="bg-[#0F283D]/50">
+                            <TableHeader className="bg-gray-50">
                               <TableRow>
-                                <TableHead className="text-[#50adb6] w-[50px] text-base">Rank</TableHead>
-                                <TableHead className="text-[#50adb6] text-base">Name</TableHead>
-                                <TableHead className="text-[#50adb6] text-base">Total Score</TableHead>
-                                <TableHead className="text-[#50adb6] text-base">Avg. Correct</TableHead>
-                                <TableHead className="text-[#50adb6] text-base">Section</TableHead>
+                                <TableHead className="text-[#00509d] w-[50px] text-base">Rank</TableHead>
+                                <TableHead className="text-[#00509d] text-base">Name</TableHead>
+                                <TableHead className="text-[#00509d] text-base">Total Score</TableHead>
+                                <TableHead className="text-[#00509d] text-base">Avg. Correct</TableHead>
+                                <TableHead className="text-[#00509d] text-base">Section</TableHead>
                               </TableRow>
                             </TableHeader>
                             <TableBody>
                               {rankingMonthData.classRanks.map((result, index) => (
-                                <TableRow key={index} className="hover:bg-[#0F283D]/30">
-                                  <TableCell className="text-white font-medium text-base">{result.rank}</TableCell>
-                                  <TableCell className="text-white text-base">{result.name}</TableCell>
-                                  <TableCell className="text-white text-base">{result.totalScore}</TableCell>
-                                  <TableCell className="text-[#50adb6] text-base">{result.avgCorrect}%</TableCell>
-                                  <TableCell className="text-white text-base">{result.section}</TableCell>
+                                <TableRow key={index} className="hover:bg-gray-50">
+                                  <TableCell className="text-gray-800 font-medium text-base">{result.rank}</TableCell>
+                                  <TableCell className="text-gray-800 text-base">{result.name}</TableCell>
+                                  <TableCell className="text-gray-800 text-base">{result.totalScore}</TableCell>
+                                  <TableCell className="text-[#00509d] text-base">{result.avgCorrect}%</TableCell>
+                                  <TableCell className="text-gray-800 text-base">{result.section}</TableCell>
                                 </TableRow>
                               ))}
                             </TableBody>
                           </Table>
                         </div>
                       ) : (
-                        <div className="text-center py-8 text-white/60">
+                        <div className="text-center py-8 text-gray-500">
                           No results available for {format(rankingDate, "MMMM yyyy")}
                         </div>
                       )}
@@ -403,52 +388,52 @@ export default function ExplorePage() {
                       </TabsList>
 
                       <TabsContent value="class">
-                        <div className="mb-4 p-4 bg-[#0F283D] border border-[#f6aa54]/30 rounded-lg">
+                        <div className="mb-4 p-4 bg-gray-50 border border-gray-200 rounded-lg">
                           <div className="flex items-center gap-2">
-                            <span className="text-white/70">Your class rank in school:</span>
-                            <span className="text-[#f6aa54] font-bold text-lg">3</span>
+                            <span className="text-gray-600">Your class rank in school:</span>
+                            <span className="text-[#00509d] font-bold text-lg">3</span>
                           </div>
                         </div>
-                        <div className="relative overflow-hidden rounded-lg border border-[#f6aa54]/30">
+                        <div className="relative overflow-hidden rounded-lg border border-gray-200">
                           {rankingMonthData.schoolRanks.length > 0 ? (
-                            <div className="max-h-[600px] overflow-y-auto scrollbar-thin scrollbar-thumb-[#f6aa54] scrollbar-track-transparent">
+                            <div className="max-h-[600px] overflow-y-auto scrollbar-thin scrollbar-thumb-[#00509d] scrollbar-track-transparent">
                               <Table>
-                                <TableHeader className="bg-[#0F283D]/50">
+                                <TableHeader className="bg-gray-50">
                                   <TableRow>
-                                    <TableHead className="text-[#f6aa54] w-[50px] text-base">Rank</TableHead>
-                                    <TableHead className="text-[#f6aa54] text-base">Class</TableHead>
-                                    <TableHead className="text-[#f6aa54] text-base">Total Score</TableHead>
-                                    <TableHead className="text-[#f6aa54] text-base">Avg. Correct</TableHead>
-                                    <TableHead className="text-[#f6aa54] text-base">Grade</TableHead>
+                                    <TableHead className="text-[#00509d] w-[50px] text-base">Rank</TableHead>
+                                    <TableHead className="text-[#00509d] text-base">Class</TableHead>
+                                    <TableHead className="text-[#00509d] text-base">Total Score</TableHead>
+                                    <TableHead className="text-[#00509d] text-base">Avg. Correct</TableHead>
+                                    <TableHead className="text-[#00509d] text-base">Grade</TableHead>
                                   </TableRow>
                                 </TableHeader>
                                 <TableBody>
-                                  <TableRow className="hover:bg-[#0F283D]/30">
-                                    <TableCell className="text-white font-medium text-base">1</TableCell>
-                                    <TableCell className="text-white text-base">Class 5A</TableCell>
-                                    <TableCell className="text-white text-base">2450</TableCell>
-                                    <TableCell className="text-[#f6aa54] text-base">95%</TableCell>
-                                    <TableCell className="text-white text-base">5th</TableCell>
+                                  <TableRow className="hover:bg-gray-50">
+                                    <TableCell className="text-gray-800 font-medium text-base">1</TableCell>
+                                    <TableCell className="text-gray-800 text-base">Class 5A</TableCell>
+                                    <TableCell className="text-gray-800 text-base">2450</TableCell>
+                                    <TableCell className="text-[#00509d] text-base">95%</TableCell>
+                                    <TableCell className="text-gray-800 text-base">5th</TableCell>
                                   </TableRow>
-                                  <TableRow className="hover:bg-[#0F283D]/30">
-                                    <TableCell className="text-white font-medium text-base">2</TableCell>
-                                    <TableCell className="text-white text-base">Class 5C</TableCell>
-                                    <TableCell className="text-white text-base">2380</TableCell>
-                                    <TableCell className="text-[#f6aa54] text-base">92%</TableCell>
-                                    <TableCell className="text-white text-base">5th</TableCell>
+                                  <TableRow className="hover:bg-gray-50">
+                                    <TableCell className="text-gray-800 font-medium text-base">2</TableCell>
+                                    <TableCell className="text-gray-800 text-base">Class 5C</TableCell>
+                                    <TableCell className="text-gray-800 text-base">2380</TableCell>
+                                    <TableCell className="text-[#00509d] text-base">92%</TableCell>
+                                    <TableCell className="text-gray-800 text-base">5th</TableCell>
                                   </TableRow>
-                                  <TableRow className="hover:bg-[#0F283D]/30">
-                                    <TableCell className="text-white font-medium text-base">3</TableCell>
-                                    <TableCell className="text-white text-base">Class 5B</TableCell>
-                                    <TableCell className="text-white text-base">2340</TableCell>
-                                    <TableCell className="text-[#f6aa54] text-base">90%</TableCell>
-                                    <TableCell className="text-white text-base">5th</TableCell>
+                                  <TableRow className="hover:bg-gray-50">
+                                    <TableCell className="text-gray-800 font-medium text-base">3</TableCell>
+                                    <TableCell className="text-gray-800 text-base">Class 5B</TableCell>
+                                    <TableCell className="text-gray-800 text-base">2340</TableCell>
+                                    <TableCell className="text-[#00509d] text-base">90%</TableCell>
+                                    <TableCell className="text-gray-800 text-base">5th</TableCell>
                                   </TableRow>
                                 </TableBody>
                               </Table>
                             </div>
                           ) : (
-                            <div className="text-center py-8 text-white/60">
+                            <div className="text-center py-8 text-gray-500">
                               No results available for {format(rankingDate, "MMMM yyyy")}
                             </div>
                           )}
@@ -456,42 +441,45 @@ export default function ExplorePage() {
                       </TabsContent>
 
                       <TabsContent value="all">
-                        <div className="mb-4 p-4 bg-[#0F283D] border border-[#f6aa54]/30 rounded-lg">
+                        <div className="mb-4 p-4 bg-gray-50 border border-gray-200 rounded-lg">
                           <div className="flex items-center gap-2">
-                            <span className="text-white/70">Your rank in school:</span>
-                            <span className="text-[#f6aa54] font-bold text-lg">42</span>
+                            <span className="text-gray-600">Your rank in school:</span>
+                            <span className="text-[#00509d] font-bold text-lg">42</span>
                           </div>
                         </div>
-                        <div className="relative overflow-hidden rounded-lg border border-[#f6aa54]/30">
+                        <div className="relative overflow-hidden rounded-lg border border-gray-200">
                           {rankingMonthData.schoolRanks.length > 0 ? (
-                            <div className="max-h-[600px] overflow-y-auto scrollbar-thin scrollbar-thumb-[#f6aa54] scrollbar-track-transparent">
+                            <div className="max-h-[600px] overflow-y-auto scrollbar-thin scrollbar-thumb-[#00509d] scrollbar-track-transparent">
                               <Table>
-                                <TableHeader className="bg-[#0F283D]/50">
+                                <TableHeader className="bg-gray-50">
                                   <TableRow>
-                                    <TableHead className="text-[#f6aa54] w-[50px] text-base">Rank</TableHead>
-                                    <TableHead className="text-[#f6aa54] text-base">Name</TableHead>
-                                    <TableHead className="text-[#f6aa54] text-base">Total Score</TableHead>
-                                    <TableHead className="text-[#f6aa54] text-base">Avg. Correct</TableHead>
-                                    <TableHead className="text-[#f6aa54] text-base">Grade</TableHead>
-                                    <TableHead className="text-[#f6aa54] text-base">School</TableHead>
+                                    <TableHead className="text-[#00509d] w-[50px] text-base">Rank</TableHead>
+                                    <TableHead className="text-[#00509d] text-base">Name</TableHead>
+                                    <TableHead className="text-[#00509d]  text-base">Name</TableHead>
+                                    <TableHead className="text-[#00509d] text-base">Total Score</TableHead>
+                                    <TableHead className="text-[#00509d] text-base">Avg. Correct</TableHead>
+                                    <TableHead className="text-[#00509d] text-base">Grade</TableHead>
+                                    <TableHead className="text-[#00509d] text-base">School</TableHead>
                                   </TableRow>
                                 </TableHeader>
                                 <TableBody>
                                   {rankingMonthData.schoolRanks.map((result, index) => (
-                                    <TableRow key={index} className="hover:bg-[#0F283D]/30">
-                                      <TableCell className="text-white font-medium text-base">{result.rank}</TableCell>
-                                      <TableCell className="text-white text-base">{result.name}</TableCell>
-                                      <TableCell className="text-white text-base">{result.totalScore}</TableCell>
-                                      <TableCell className="text-[#f6aa54] text-base">{result.avgCorrect}%</TableCell>
-                                      <TableCell className="text-white text-base">{result.grade}</TableCell>
-                                      <TableCell className="text-white text-base">{result.schoolName}</TableCell>
+                                    <TableRow key={index} className="hover:bg-gray-50">
+                                      <TableCell className="text-gray-800 font-medium text-base">
+                                        {result.rank}
+                                      </TableCell>
+                                      <TableCell className="text-gray-800 text-base">{result.name}</TableCell>
+                                      <TableCell className="text-gray-800 text-base">{result.totalScore}</TableCell>
+                                      <TableCell className="text-[#00509d] text-base">{result.avgCorrect}%</TableCell>
+                                      <TableCell className="text-gray-800 text-base">{result.grade}</TableCell>
+                                      <TableCell className="text-gray-800 text-base">{result.schoolName}</TableCell>
                                     </TableRow>
                                   ))}
                                 </TableBody>
                               </Table>
                             </div>
                           ) : (
-                            <div className="text-center py-8 text-white/60">
+                            <div className="text-center py-8 text-gray-500">
                               No results available for {format(rankingDate, "MMMM yyyy")}
                             </div>
                           )}
@@ -502,45 +490,45 @@ export default function ExplorePage() {
 
                   {/* World Ranks Content */}
                   <TabsContent value="world">
-                    <div className="mb-4 p-4 bg-[#0F283D] border border-[#e8594a]/30 rounded-lg">
+                    <div className="mb-4 p-4 bg-gray-50 border border-gray-200 rounded-lg">
                       <div className="flex items-center gap-2">
-                        <span className="text-white/70">Your rank in world:</span>
-                        <span className="text-[#e8594a] font-bold text-lg">156</span>
+                        <span className="text-gray-600">Your rank in world:</span>
+                        <span className="text-[#00509d] font-bold text-lg">156</span>
                       </div>
                     </div>
 
-                    <div className="relative overflow-hidden rounded-lg border border-[#e8594a]/30">
+                    <div className="relative overflow-hidden rounded-lg border border-gray-200">
                       {filteredWorldRanks.length > 0 ? (
-                        <div className="max-h-[600px] overflow-y-auto scrollbar-thin scrollbar-thumb-[#e8594a] scrollbar-track-transparent">
+                        <div className="max-h-[600px] overflow-y-auto scrollbar-thin scrollbar-thumb-[#00509d] scrollbar-track-transparent">
                           <Table>
-                            <TableHeader className="bg-[#0F283D]/50">
+                            <TableHeader className="bg-gray-50">
                               <TableRow>
-                                <TableHead className="text-[#e8594a] w-[50px] text-base">Rank</TableHead>
-                                <TableHead className="text-[#e8594a] text-base">Name</TableHead>
-                                <TableHead className="text-[#e8594a] text-base">Total Score</TableHead>
-                                <TableHead className="text-[#e8594a] text-base">Avg. Score</TableHead>
-                                <TableHead className="text-[#e8594a] text-base">School</TableHead>
-                                <TableHead className="text-[#e8594a] text-base">Grade</TableHead>
-                                <TableHead className="text-[#e8594a] text-base">Country</TableHead>
+                                <TableHead className="text-[#00509d] w-[50px] text-base">Rank</TableHead>
+                                <TableHead className="text-[#00509d] text-base">Name</TableHead>
+                                <TableHead className="text-[#00509d] text-base">Total Score</TableHead>
+                                <TableHead className="text-[#00509d] text-base">Avg. Score</TableHead>
+                                <TableHead className="text-[#00509d] text-base">School</TableHead>
+                                <TableHead className="text-[#00509d] text-base">Grade</TableHead>
+                                <TableHead className="text-[#00509d] text-base">Country</TableHead>
                               </TableRow>
                             </TableHeader>
                             <TableBody>
                               {filteredWorldRanks.map((result, index) => (
-                                <TableRow key={index} className="hover:bg-[#0F283D]/30">
-                                  <TableCell className="text-white font-medium text-base">{result.rank}</TableCell>
-                                  <TableCell className="text-white text-base">{result.name}</TableCell>
-                                  <TableCell className="text-white text-base">{result.totalScore}</TableCell>
-                                  <TableCell className="text-[#e8594a] text-base">{result.avgScore}%</TableCell>
-                                  <TableCell className="text-white text-base">{result.schoolName}</TableCell>
-                                  <TableCell className="text-white text-base">{result.grade}</TableCell>
-                                  <TableCell className="text-white text-base">{result.country}</TableCell>
+                                <TableRow key={index} className="hover:bg-gray-50">
+                                  <TableCell className="text-gray-800 font-medium text-base">{result.rank}</TableCell>
+                                  <TableCell className="text-gray-800 text-base">{result.name}</TableCell>
+                                  <TableCell className="text-gray-800 text-base">{result.totalScore}</TableCell>
+                                  <TableCell className="text-[#00509d] text-base">{result.avgScore}%</TableCell>
+                                  <TableCell className="text-gray-800 text-base">{result.schoolName}</TableCell>
+                                  <TableCell className="text-gray-800 text-base">{result.grade}</TableCell>
+                                  <TableCell className="text-gray-800 text-base">{result.country}</TableCell>
                                 </TableRow>
                               ))}
                             </TableBody>
                           </Table>
                         </div>
                       ) : (
-                        <div className="text-center py-8 text-white/60">
+                        <div className="text-center py-8 text-gray-500">
                           {rankingMonthData.worldRanks.length === 0
                             ? `No results available for ${format(rankingDate, "MMMM yyyy")}`
                             : "No results match the selected filters"}
@@ -556,8 +544,8 @@ export default function ExplorePage() {
 
         {/* Second Accordion - Filters */}
         <Accordion type="single" collapsible className="w-full">
-          <AccordionItem value="filters" className="border-[#50adb6]/30">
-            <AccordionTrigger className="text-[#50adb6] text-lg font-semibold hover:text-[#50adb6]/80 hover:no-underline">
+          <AccordionItem value="filters" className="border-gray-200">
+            <AccordionTrigger className="text-[#00509d] text-lg font-semibold hover:text-[#003f88] hover:no-underline">
               Compare School Ranks
             </AccordionTrigger>
             <AccordionContent>
@@ -569,11 +557,11 @@ export default function ExplorePage() {
                       <div
                         className={cn(
                           "flex w-[280px] items-center justify-start rounded-md border px-4 py-2 text-left font-normal",
-                          "bg-[#163c5a] border-[#50adb6]/30 text-white",
-                          "hover:bg-[#0F283D] hover:border-[#50adb6] cursor-pointer",
+                          "bg-[#00509d] border-[#00509d] text-white",
+                          "hover:bg-[#003f88] hover:border-[#003f88] cursor-pointer",
                         )}
                       >
-                        <CalendarIcon className="mr-2 h-4 w-4" />
+                        <CalendarIcon className="mr-2 h-4 w-4 text-white" />
                         {format(compareDate, "MMMM yyyy")}
                       </div>
                     </PopoverTrigger>
@@ -590,13 +578,13 @@ export default function ExplorePage() {
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
                   <Select value={selectedSchool1} onValueChange={setSelectedSchool1}>
-                    <SelectTrigger className="bg-[#163c5a] border-[#50adb6]/30 text-white">
+                    <SelectTrigger className="bg-[#00509d] border-[#00509d] text-white focus:ring-[#003f88] focus:border-[#003f88]">
                       <SelectValue placeholder="Select School 1" />
                     </SelectTrigger>
-                    <SelectContent className="bg-[#163c5a] border-[#50adb6]/30">
+                    <SelectContent className="bg-white border-gray-200">
                       <SelectItem value="All Schools">All Schools</SelectItem>
                       {schools.map((school) => (
-                        <SelectItem key={school} value={school} className="text-white">
+                        <SelectItem key={school} value={school} className="text-gray-800">
                           {school}
                         </SelectItem>
                       ))}
@@ -604,13 +592,13 @@ export default function ExplorePage() {
                   </Select>
 
                   <Select value={selectedSchool2} onValueChange={setSelectedSchool2}>
-                    <SelectTrigger className="bg-[#163c5a] border-[#50adb6]/30 text-white">
+                    <SelectTrigger className="bg-[#00509d] border-[#00509d] text-white focus:ring-[#003f88] focus:border-[#003f88]">
                       <SelectValue placeholder="Select School 2" />
                     </SelectTrigger>
-                    <SelectContent className="bg-[#163c5a] border-[#50adb6]/30">
+                    <SelectContent className="bg-white border-gray-200">
                       <SelectItem value="All Schools">All Schools</SelectItem>
                       {schools.map((school) => (
-                        <SelectItem key={school} value={school} className="text-white">
+                        <SelectItem key={school} value={school} className="text-gray-800">
                           {school}
                         </SelectItem>
                       ))}
@@ -618,13 +606,13 @@ export default function ExplorePage() {
                   </Select>
 
                   <Select value={selectedState} onValueChange={setSelectedState}>
-                    <SelectTrigger className="bg-[#163c5a] border-[#50adb6]/30 text-white">
+                    <SelectTrigger className="bg-[#00509d] border-[#00509d] text-white focus:ring-[#003f88] focus:border-[#003f88]">
                       <SelectValue placeholder="Select State" />
                     </SelectTrigger>
-                    <SelectContent className="bg-[#163c5a] border-[#50adb6]/30">
+                    <SelectContent className="bg-white border-gray-200">
                       <SelectItem value="All States">All States</SelectItem>
                       {countries.map((country) => (
-                        <SelectItem key={country} value={country} className="text-white">
+                        <SelectItem key={country} value={country} className="text-gray-800">
                           {country}
                         </SelectItem>
                       ))}
@@ -632,7 +620,7 @@ export default function ExplorePage() {
                   </Select>
 
                   <button
-                    className="w-full h-10 bg-[#e8594a] hover:bg-[#d64a3d] text-white rounded-md transition-colors flex items-center justify-center gap-2"
+                    className="w-full h-10 bg-[#fdc500] hover:bg-[#e3b300] text-white rounded-md transition-colors flex items-center justify-center gap-2"
                     onClick={() => console.log("Search clicked", { selectedSchool1, selectedSchool2, selectedState })}
                   >
                     <svg

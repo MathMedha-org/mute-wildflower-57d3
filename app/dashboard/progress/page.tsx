@@ -25,7 +25,6 @@ import {
   Hash,
 } from "lucide-react"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { cn } from "@/lib/utils"
 import { ScrollToTop } from "@/components/scroll-to-top"
 
@@ -166,10 +165,12 @@ const MonthPicker = ({
   selectedDate,
   onChange,
   onClose,
+  colorScheme = "blue",
 }: {
   selectedDate: Date
   onChange: (date: Date) => void
   onClose: () => void
+  colorScheme?: "blue" | "amber" | "red"
 }) => {
   const months = [
     "January",
@@ -196,8 +197,11 @@ const MonthPicker = ({
     callback()
   }
 
+  const bgColor = colorScheme === "amber" ? "#f6aa54" : colorScheme === "red" ? "#e8594a" : "#00509d"
+  const hoverColor = colorScheme === "amber" ? "#e59843" : colorScheme === "red" ? "#d04b3e" : "#003f88"
+
   return (
-    <div className="p-4 bg-[#163c5a] rounded-lg w-[280px]">
+    <div className={`p-4 bg-[${bgColor}] rounded-lg w-[280px]`}>
       {/* Years */}
       <div className="mb-4">
         <div className="text-sm font-medium text-white/70 mb-2">Year</div>
@@ -209,7 +213,9 @@ const MonthPicker = ({
               onClick={(e) => handleButtonClick(e, () => onChange(new Date(year, selectedDate.getMonth())))}
               className={cn(
                 "px-2 py-1.5 text-sm rounded-md transition-colors",
-                year === selectedDate.getFullYear() ? "bg-[#50adb6] text-white" : "text-white/70 hover:bg-[#50adb6]/20",
+                year === selectedDate.getFullYear()
+                  ? `bg-[${hoverColor}] text-white`
+                  : `text-white/70 hover:bg-[${hoverColor}]/20`,
               )}
             >
               {year}
@@ -229,7 +235,9 @@ const MonthPicker = ({
               onClick={(e) => handleButtonClick(e, () => onChange(new Date(selectedDate.getFullYear(), index)))}
               className={cn(
                 "px-2 py-1.5 text-sm rounded-md transition-colors",
-                index === selectedDate.getMonth() ? "bg-[#50adb6] text-white" : "text-white/70 hover:bg-[#50adb6]/20",
+                index === selectedDate.getMonth()
+                  ? `bg-[${hoverColor}] text-white`
+                  : `text-white/70 hover:bg-[${hoverColor}]/20`,
               )}
             >
               {month}
@@ -243,7 +251,7 @@ const MonthPicker = ({
         <button
           type="button"
           onClick={(e) => handleButtonClick(e, onClose)}
-          className="px-4 py-2 bg-[#50adb6] text-white rounded-md hover:bg-[#3d8a91] transition-colors"
+          className={`px-4 py-2 bg-[${hoverColor}] text-white rounded-md hover:bg-[${hoverColor}]/80 transition-colors`}
         >
           Done
         </button>
@@ -272,10 +280,10 @@ const NavLink = ({
   return (
     <button
       onClick={(e) => scrollToSection(e, targetId)}
-      className={`flex flex-col items-center justify-center p-3 rounded-lg transition-all hover:bg-[#0F283D]/80 hover:scale-105`}
+      className={`flex flex-col items-center justify-center p-3 rounded-lg transition-all hover:bg-[#00509d]/10 hover:scale-105`}
     >
       <div className={`w-10 h-10 rounded-full ${color} flex items-center justify-center text-white mb-1`}>{icon}</div>
-      <span className="text-xs text-white/80 text-center">{label}</span>
+      <span className="text-xs text-gray-600 text-center">{label}</span>
     </button>
   )
 }
@@ -326,28 +334,28 @@ export default function ReportsPage() {
   }
 
   return (
-    <div className="w-full sm:max-w-6xl sm:mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div className="w-full sm:max-w-6xl sm:mx-auto pt-3 sm:pt-4 lg:pt-6 pb-8">
       <ScrollToTop />
-      <div className="flex flex-col space-y-8 bg-[#0F283D] p-8 rounded-xl border border-[#50adb6]/20">
+      <div className="flex flex-col space-y-6 sm:space-y-8 p-6">
         {/* Header with back button and centered title */}
         <div className="relative flex items-start justify-center">
           <Link
             href="/dashboard"
-            className="absolute left-0 top-0 w-10 h-10 rounded-full bg-[#50adb6] flex items-center justify-center text-white hover:bg-[#3d8a91] transition-colors"
+            className="absolute left-0 top-0 w-10 h-10 rounded-full bg-[#00509d] flex items-center justify-center text-white hover:bg-[#003f88] transition-colors"
           >
             <ArrowLeft size={20} strokeWidth={3} />
           </Link>
           <div className="text-center mb-4 sm:mb-8 pt-8 sm:pt-0">
-            <h1 className="text-3xl font-bold text-[#50adb6]">Progress</h1>
-            <p className="text-white/80">Track your learning journey and performance</p>
+            <h1 className="text-3xl font-bold text-[#00509d]">Progress</h1>
+            <p className="text-[#00509d]/80">Track your learning journey and performance</p>
           </div>
         </div>
 
         {/* Quick Navigation */}
-        <div className="bg-[#163c5a] rounded-lg p-4 border border-[#50adb6]/30">
-          <h2 className="text-lg font-semibold text-[#50adb6] mb-3 text-center">Quick Navigation</h2>
-          <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-7 gap-2">
-            <NavLink icon={<BarChart2 size={20} />} label="Summary" color="bg-[#50adb6]" targetId="summary-section" />
+        <div className="bg-white rounded-lg p-4 border border-[#00509d]/30 shadow-sm">
+          <h2 className="text-lg font-semibold text-[#00509d] mb-3 text-center">Quick Navigation</h2>
+          <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-7 gap-1 sm:gap-2">
+            <NavLink icon={<BarChart2 size={20} />} label="Summary" color="bg-[#00509d]" targetId="summary-section" />
             <NavLink
               icon={<Calculator size={20} />}
               label="Math Operations"
@@ -364,7 +372,7 @@ export default function ReportsPage() {
             <NavLink
               icon={<Hash size={20} />}
               label="Times Tables"
-              color="bg-[#50adb6]"
+              color="bg-[#00509d]"
               targetId="times-tables-section"
             />
             <NavLink
@@ -376,154 +384,160 @@ export default function ReportsPage() {
             <NavLink
               icon={<GraduationCap size={20} />}
               label="Learning Path"
-              color="bg-[#50adb6]"
+              color="bg-[#00509d]"
               targetId="learning-path-section"
             />
           </div>
         </div>
 
         {/* Summary Section */}
-        <div id="summary-section" className="bg-[#0F283D] border border-[#50adb6]/30 rounded-lg p-6 scroll-mt-8">
-          <h2 className="text-xl font-semibold text-[#50adb6] mb-4">Summary</h2>
+        <div id="summary-section" className="bg-white border border-[#00509d]/30 rounded-lg p-6 scroll-mt-8 shadow-sm">
+          <h2 className="text-xl font-semibold text-[#00509d] mb-4">Summary</h2>
 
           <Tabs defaultValue="total" className="w-full">
-            <TabsList className="grid w-full grid-cols-3">
-              <TabsTrigger value="total">Total</TabsTrigger>
-              <TabsTrigger value="today">Today</TabsTrigger>
-              <TabsTrigger value="lastWeek">Last Week</TabsTrigger>
+            <TabsList className="grid w-full grid-cols-3 bg-[#00509d]/10">
+              <TabsTrigger value="total" className="data-[state=active]:bg-[#00509d] data-[state=active]:text-white">
+                Total
+              </TabsTrigger>
+              <TabsTrigger value="today" className="data-[state=active]:bg-[#00509d] data-[state=active]:text-white">
+                Today
+              </TabsTrigger>
+              <TabsTrigger value="lastWeek" className="data-[state=active]:bg-[#00509d] data-[state=active]:text-white">
+                Last Week
+              </TabsTrigger>
             </TabsList>
 
             {/* Total Stats */}
             <TabsContent value="total" className="pt-6">
-              <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-                <div className="bg-[#0F283D] border border-[#50adb6]/30 rounded-lg p-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-2 sm:gap-4">
+                <div className="bg-white border border-[#00509d]/30 rounded-lg p-4 shadow-sm">
                   <div className="flex items-center gap-2 mb-2">
-                    <Clock size={18} className="text-[#50adb6]" />
-                    <h3 className="text-sm text-white/80">Time Spent</h3>
+                    <Clock size={18} className="text-[#00509d]" />
+                    <h3 className="text-sm text-[#00509d]">Time Spent</h3>
                   </div>
-                  <div className="text-2xl font-bold text-white">{summaryData.total.timeSpent}</div>
+                  <div className="text-2xl font-bold text-[#00509d]">{summaryData.total.timeSpent}</div>
                 </div>
 
-                <div className="bg-[#0F283D] border border-[#50adb6]/30 rounded-lg p-4">
+                <div className="bg-white border border-[#00509d]/30 rounded-lg p-4 shadow-sm">
                   <div className="flex items-center gap-2 mb-2">
                     <Star size={18} className="text-[#f6aa54]" />
-                    <h3 className="text-sm text-white/80">Stars Earned</h3>
+                    <h3 className="text-sm text-[#f6aa54]">Stars Earned</h3>
                   </div>
-                  <div className="text-2xl font-bold text-white">{summaryData.total.starsEarned}</div>
+                  <div className="text-2xl font-bold text-[#f6aa54]">{summaryData.total.starsEarned}</div>
                 </div>
 
-                <div className="bg-[#0F283D] border border-[#50adb6]/30 rounded-lg p-4">
+                <div className="bg-white border border-[#00509d]/30 rounded-lg p-4 shadow-sm">
                   <div className="flex items-center gap-2 mb-2">
                     <Award size={18} className="text-[#e8594a]" />
-                    <h3 className="text-sm text-white/80">Badges Earned</h3>
+                    <h3 className="text-sm text-[#e8594a]">Badges Earned</h3>
                   </div>
-                  <div className="text-2xl font-bold text-white">{summaryData.total.badgesEarned}</div>
+                  <div className="text-2xl font-bold text-[#e8594a]">{summaryData.total.badgesEarned}</div>
                 </div>
 
-                <div className="bg-[#0F283D] border border-[#50adb6]/30 rounded-lg p-4">
+                <div className="bg-white border border-[#00509d]/30 rounded-lg p-4 shadow-sm">
                   <div className="flex items-center gap-2 mb-2">
                     <CheckCircle size={18} className="text-[#4CAF50]" />
-                    <h3 className="text-sm text-white/80">Correct Answers</h3>
+                    <h3 className="text-sm text-[#4CAF50]">Correct Answers</h3>
                   </div>
-                  <div className="text-2xl font-bold text-white">{summaryData.total.correctAnswers}</div>
+                  <div className="text-2xl font-bold text-[#4CAF50]">{summaryData.total.correctAnswers}</div>
                 </div>
 
-                <div className="bg-[#0F283D] border border-[#50adb6]/30 rounded-lg p-4">
+                <div className="bg-white border border-[#00509d]/30 rounded-lg p-4 shadow-sm">
                   <div className="flex items-center gap-2 mb-2">
                     <XCircle size={18} className="text-[#e8594a]" />
-                    <h3 className="text-sm text-white/80">Wrong Answers</h3>
+                    <h3 className="text-sm text-[#e8594a]">Wrong Answers</h3>
                   </div>
-                  <div className="text-2xl font-bold text-white">{summaryData.total.wrongAnswers}</div>
+                  <div className="text-2xl font-bold text-[#e8594a]">{summaryData.total.wrongAnswers}</div>
                 </div>
               </div>
             </TabsContent>
 
             {/* Today Stats */}
             <TabsContent value="today" className="pt-6">
-              <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-                <div className="bg-[#0F283D] border border-[#50adb6]/30 rounded-lg p-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-2 sm:gap-4">
+                <div className="bg-white border border-[#00509d]/30 rounded-lg p-4 shadow-sm">
                   <div className="flex items-center gap-2 mb-2">
-                    <Clock size={18} className="text-[#50adb6]" />
-                    <h3 className="text-sm text-white/80">Time Spent</h3>
+                    <Clock size={18} className="text-[#00509d]" />
+                    <h3 className="text-sm text-[#00509d]">Time Spent</h3>
                   </div>
-                  <div className="text-2xl font-bold text-white">{summaryData.today.timeSpent}</div>
+                  <div className="text-2xl font-bold text-[#00509d]">{summaryData.today.timeSpent}</div>
                 </div>
 
-                <div className="bg-[#0F283D] border border-[#50adb6]/30 rounded-lg p-4">
+                <div className="bg-white border border-[#00509d]/30 rounded-lg p-4 shadow-sm">
                   <div className="flex items-center gap-2 mb-2">
                     <Star size={18} className="text-[#f6aa54]" />
-                    <h3 className="text-sm text-white/80">Stars Earned</h3>
+                    <h3 className="text-sm text-[#f6aa54]">Stars Earned</h3>
                   </div>
-                  <div className="text-2xl font-bold text-white">{summaryData.today.starsEarned}</div>
+                  <div className="text-2xl font-bold text-[#f6aa54]">{summaryData.today.starsEarned}</div>
                 </div>
 
-                <div className="bg-[#0F283D] border border-[#50adb6]/30 rounded-lg p-4">
+                <div className="bg-white border border-[#00509d]/30 rounded-lg p-4 shadow-sm">
                   <div className="flex items-center gap-2 mb-2">
                     <Award size={18} className="text-[#e8594a]" />
-                    <h3 className="text-sm text-white/80">Badges Earned</h3>
+                    <h3 className="text-sm text-[#e8594a]">Badges Earned</h3>
                   </div>
-                  <div className="text-2xl font-bold text-white">{summaryData.today.badgesEarned}</div>
+                  <div className="text-2xl font-bold text-[#e8594a]">{summaryData.today.badgesEarned}</div>
                 </div>
 
-                <div className="bg-[#0F283D] border border-[#50adb6]/30 rounded-lg p-4">
+                <div className="bg-white border border-[#00509d]/30 rounded-lg p-4 shadow-sm">
                   <div className="flex items-center gap-2 mb-2">
                     <CheckCircle size={18} className="text-[#4CAF50]" />
-                    <h3 className="text-sm text-white/80">Correct Answers</h3>
+                    <h3 className="text-sm text-[#4CAF50]">Correct Answers</h3>
                   </div>
-                  <div className="text-2xl font-bold text-white">{summaryData.today.correctAnswers}</div>
+                  <div className="text-2xl font-bold text-[#4CAF50]">{summaryData.today.correctAnswers}</div>
                 </div>
 
-                <div className="bg-[#0F283D] border border-[#50adb6]/30 rounded-lg p-4">
+                <div className="bg-white border border-[#00509d]/30 rounded-lg p-4 shadow-sm">
                   <div className="flex items-center gap-2 mb-2">
                     <XCircle size={18} className="text-[#e8594a]" />
-                    <h3 className="text-sm text-white/80">Wrong Answers</h3>
+                    <h3 className="text-sm text-[#e8594a]">Wrong Answers</h3>
                   </div>
-                  <div className="text-2xl font-bold text-white">{summaryData.today.wrongAnswers}</div>
+                  <div className="text-2xl font-bold text-[#e8594a]">{summaryData.today.wrongAnswers}</div>
                 </div>
               </div>
             </TabsContent>
 
             {/* Last Week Stats */}
             <TabsContent value="lastWeek" className="pt-6">
-              <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-                <div className="bg-[#0F283D] border border-[#50adb6]/30 rounded-lg p-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-2 sm:gap-4">
+                <div className="bg-white border border-[#00509d]/30 rounded-lg p-4 shadow-sm">
                   <div className="flex items-center gap-2 mb-2">
-                    <Clock size={18} className="text-[#50adb6]" />
-                    <h3 className="text-sm text-white/80">Time Spent</h3>
+                    <Clock size={18} className="text-[#00509d]" />
+                    <h3 className="text-sm text-[#00509d]">Time Spent</h3>
                   </div>
-                  <div className="text-2xl font-bold text-white">{summaryData.lastWeek.timeSpent}</div>
+                  <div className="text-2xl font-bold text-[#00509d]">{summaryData.lastWeek.timeSpent}</div>
                 </div>
 
-                <div className="bg-[#0F283D] border border-[#50adb6]/30 rounded-lg p-4">
+                <div className="bg-white border border-[#00509d]/30 rounded-lg p-4 shadow-sm">
                   <div className="flex items-center gap-2 mb-2">
                     <Star size={18} className="text-[#f6aa54]" />
-                    <h3 className="text-sm text-white/80">Stars Earned</h3>
+                    <h3 className="text-sm text-[#f6aa54]">Stars Earned</h3>
                   </div>
-                  <div className="text-2xl font-bold text-white">{summaryData.lastWeek.starsEarned}</div>
+                  <div className="text-2xl font-bold text-[#f6aa54]">{summaryData.lastWeek.starsEarned}</div>
                 </div>
 
-                <div className="bg-[#0F283D] border border-[#50adb6]/30 rounded-lg p-4">
+                <div className="bg-white border border-[#00509d]/30 rounded-lg p-4 shadow-sm">
                   <div className="flex items-center gap-2 mb-2">
                     <Award size={18} className="text-[#e8594a]" />
-                    <h3 className="text-sm text-white/80">Badges Earned</h3>
+                    <h3 className="text-sm text-[#e8594a]">Badges Earned</h3>
                   </div>
-                  <div className="text-2xl font-bold text-white">{summaryData.lastWeek.badgesEarned}</div>
+                  <div className="text-2xl font-bold text-[#e8594a]">{summaryData.lastWeek.badgesEarned}</div>
                 </div>
 
-                <div className="bg-[#0F283D] border border-[#50adb6]/30 rounded-lg p-4">
+                <div className="bg-white border border-[#00509d]/30 rounded-lg p-4 shadow-sm">
                   <div className="flex items-center gap-2 mb-2">
                     <CheckCircle size={18} className="text-[#4CAF50]" />
-                    <h3 className="text-sm text-white/80">Correct Answers</h3>
+                    <h3 className="text-sm text-[#4CAF50]">Correct Answers</h3>
                   </div>
-                  <div className="text-2xl font-bold text-white">{summaryData.lastWeek.correctAnswers}</div>
+                  <div className="text-2xl font-bold text-[#4CAF50]">{summaryData.lastWeek.correctAnswers}</div>
                 </div>
 
-                <div className="bg-[#0F283D] border border-[#50adb6]/30 rounded-lg p-4">
+                <div className="bg-white border border-[#00509d]/30 rounded-lg p-4 shadow-sm">
                   <div className="flex items-center gap-2 mb-2">
                     <XCircle size={18} className="text-[#e8594a]" />
-                    <h3 className="text-sm text-white/80">Wrong Answers</h3>
+                    <h3 className="text-sm text-[#e8594a]">Wrong Answers</h3>
                   </div>
-                  <div className="text-2xl font-bold text-white">{summaryData.lastWeek.wrongAnswers}</div>
+                  <div className="text-2xl font-bold text-[#e8594a]">{summaryData.lastWeek.wrongAnswers}</div>
                 </div>
               </div>
             </TabsContent>
@@ -533,7 +547,7 @@ export default function ReportsPage() {
         {/* Math Operations Progress Section */}
         <div
           id="math-operations-section"
-          className="bg-[#0F283D] border border-[#4CAF50]/30 rounded-lg p-6 scroll-mt-8"
+          className="bg-white border border-[#4CAF50]/30 rounded-lg p-6 scroll-mt-8 shadow-sm"
         >
           <h2 className="text-xl font-semibold text-[#4CAF50] mb-4">Math Operations Progress</h2>
 
@@ -543,16 +557,16 @@ export default function ReportsPage() {
               {/* Addition Progress */}
               <div className="space-y-2">
                 <div className="flex justify-between items-center">
-                  <span className="text-white font-medium">Addition</span>
+                  <span className="text-[#4CAF50] font-medium">Addition</span>
                   <span className="text-[#4CAF50] font-medium">75%</span>
                 </div>
-                <div className="h-2.5 bg-white/10 rounded-full overflow-hidden">
+                <div className="h-2.5 bg-gray-100 rounded-full overflow-hidden">
                   <div
                     className="h-full rounded-full transition-all duration-500 bg-[#4CAF50]"
                     style={{ width: "75%" }}
                   />
                 </div>
-                <div className="flex justify-between text-xs text-white/60">
+                <div className="flex justify-between text-xs text-[#4CAF50]/80">
                   <span>Total problems: 500</span>
                   <span>Avg. time: 1.8s</span>
                 </div>
@@ -561,16 +575,16 @@ export default function ReportsPage() {
               {/* Subtraction Progress */}
               <div className="space-y-2">
                 <div className="flex justify-between items-center">
-                  <span className="text-white font-medium">Subtraction</span>
+                  <span className="text-[#f6aa54] font-medium">Subtraction</span>
                   <span className="text-[#f6aa54] font-medium">45%</span>
                 </div>
-                <div className="h-2.5 bg-white/10 rounded-full overflow-hidden">
+                <div className="h-2.5 bg-gray-100 rounded-full overflow-hidden">
                   <div
                     className="h-full rounded-full transition-all duration-500 bg-[#f6aa54]"
                     style={{ width: "45%" }}
                   />
                 </div>
-                <div className="flex justify-between text-xs text-white/60">
+                <div className="flex justify-between text-xs text-[#f6aa54]/80">
                   <span>Total problems: 300</span>
                   <span>Avg. time: 4.8s</span>
                 </div>
@@ -582,16 +596,16 @@ export default function ReportsPage() {
               {/* Multiplication Progress */}
               <div className="space-y-2">
                 <div className="flex justify-between items-center">
-                  <span className="text-white font-medium">Multiplication</span>
-                  <span className="text-[#50adb6] font-medium">60%</span>
+                  <span className="text-[#00509d] font-medium">Multiplication</span>
+                  <span className="text-[#00509d] font-medium">60%</span>
                 </div>
-                <div className="h-2.5 bg-white/10 rounded-full overflow-hidden">
+                <div className="h-2.5 bg-gray-100 rounded-full overflow-hidden">
                   <div
-                    className="h-full rounded-full transition-all duration-500 bg-[#50adb6]"
+                    className="h-full rounded-full transition-all duration-500 bg-[#00509d]"
                     style={{ width: "60%" }}
                   />
                 </div>
-                <div className="flex justify-between text-xs text-white/60">
+                <div className="flex justify-between text-xs text-[#00509d]/80">
                   <span>Total problems: 450</span>
                   <span>Avg. time: 2.5s</span>
                 </div>
@@ -600,16 +614,16 @@ export default function ReportsPage() {
               {/* Division Progress */}
               <div className="space-y-2">
                 <div className="flex justify-between items-center">
-                  <span className="text-white font-medium">Division</span>
+                  <span className="text-[#e8594a] font-medium">Division</span>
                   <span className="text-[#e8594a] font-medium">30%</span>
                 </div>
-                <div className="h-2.5 bg-white/10 rounded-full overflow-hidden">
+                <div className="h-2.5 bg-gray-100 rounded-full overflow-hidden">
                   <div
                     className="h-full rounded-full transition-all duration-500 bg-[#e8594a]"
                     style={{ width: "30%" }}
                   />
                 </div>
-                <div className="flex justify-between text-xs text-white/60">
+                <div className="flex justify-between text-xs text-[#e8594a]/80">
                   <span>Total problems: 200</span>
                   <span>Avg. time: 5.2s</span>
                 </div>
@@ -620,12 +634,12 @@ export default function ReportsPage() {
           {/* Overall Math Progress */}
           <div className="mt-6 pt-6 border-t border-[#4CAF50]/20">
             <div className="flex justify-between items-center mb-2">
-              <span className="text-white font-medium">Overall Math Progress</span>
-              <span className="text-white font-medium">52%</span>
+              <span className="text-[#4CAF50] text-sm">Overall Math Progress</span>
+              <span className="text-[#4CAF50] font-medium text-sm">52%</span>
             </div>
-            <div className="h-3 bg-white/10 rounded-full overflow-hidden">
+            <div className="h-3 bg-gray-100 rounded-full overflow-hidden">
               <div
-                className="h-full rounded-full transition-all duration-500 bg-gradient-to-r from-[#4CAF50] via-[#50adb6] to-[#e8594a]"
+                className="h-full rounded-full transition-all duration-500 bg-gradient-to-r from-[#4CAF50] via-[#00509d] to-[#e8594a]"
                 style={{ width: "52%" }}
               />
             </div>
@@ -633,8 +647,8 @@ export default function ReportsPage() {
         </div>
 
         {/* Full Reports Section */}
-        <div id="reports-section" className="bg-[#0F283D] border border-[#f6aa54]/30 rounded-lg p-6 scroll-mt-8">
-          <h2 className="text-xl font-semibold text-[#f6aa54] mb-4">Full Reports</h2>
+        <div id="reports-section" className="bg-white border border-[#00509d]/30 rounded-lg p-6 scroll-mt-8 shadow-sm">
+          <h2 className="text-xl font-semibold text-[#00509d] mb-4">Full Reports</h2>
           {/* Month selector with navigation */}
           <div className="flex items-center justify-between mb-6">
             <button
@@ -643,7 +657,7 @@ export default function ReportsPage() {
                 e.preventDefault()
                 setReportsDate(navigateMonth(reportsDate, "prev"))
               }}
-              className="w-10 h-10 rounded-full bg-[#f6aa54]/20 flex items-center justify-center text-[#f6aa54] hover:bg-[#f6aa54]/30 transition-colors"
+              className="w-10 h-10 rounded-full bg-[#00509d]/20 flex items-center justify-center text-[#00509d] hover:bg-[#00509d]/30 transition-colors"
             >
               <ChevronLeft size={20} />
             </button>
@@ -656,15 +670,15 @@ export default function ReportsPage() {
                   e.stopPropagation()
                   setIsReportsCalendarOpen(!isReportsCalendarOpen)
                 }}
-                className="flex items-center justify-center gap-2 rounded-md border px-4 py-2 text-center font-medium bg-[#163c5a] border-[#f6aa54]/30 text-white hover:bg-[#0F283D] hover:border-[#f6aa54] cursor-pointer"
+                className="flex items-center justify-center gap-2 rounded-md border px-4 py-2 text-center font-medium bg-[#00509d] border-[#00509d]/30 text-white hover:bg-[#003f88] hover:border-[#00509d] cursor-pointer"
               >
-                <Calendar className="h-4 w-4 text-[#f6aa54]" />
+                <Calendar className="h-4 w-4 text-white" />
                 {format(reportsDate, "MMMM yyyy")}
               </button>
 
               {isReportsCalendarOpen && (
                 <div className="absolute z-50 mt-1 left-1/2 transform -translate-x-1/2">
-                  <div className="bg-[#163c5a] rounded-lg shadow-lg border border-[#f6aa54]/30">
+                  <div className="bg-[#00509d] rounded-lg shadow-lg border border-[#00509d]/30">
                     <MonthPicker
                       selectedDate={reportsDate}
                       onChange={(newDate) => {
@@ -672,6 +686,7 @@ export default function ReportsPage() {
                         setIsReportsCalendarOpen(false)
                       }}
                       onClose={() => setIsReportsCalendarOpen(false)}
+                      colorScheme="blue"
                     />
                   </div>
                 </div>
@@ -684,77 +699,86 @@ export default function ReportsPage() {
                 e.preventDefault()
                 setReportsDate(navigateMonth(reportsDate, "next"))
               }}
-              className="w-10 h-10 rounded-full bg-[#f6aa54]/20 flex items-center justify-center text-[#f6aa54] hover:bg-[#f6aa54]/30 transition-colors"
+              className="w-10 h-10 rounded-full bg-[#00509d]/20 flex items-center justify-center text-[#00509d] hover:bg-[#00509d]/30 transition-colors"
             >
               <ChevronRight size={20} />
             </button>
           </div>
           {/* Monthly summary */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-            <div className="bg-[#0F283D] border border-[#f6aa54]/20 rounded-lg p-4">
+            <div className="bg-white border border-[#00509d]/20 rounded-lg p-4 shadow-sm">
               <div className="flex items-center gap-2 mb-2">
-                <Clock size={18} className="text-[#f6aa54]" />
-                <h3 className="text-sm text-white/80">Time Spent</h3>
+                <Clock size={18} className="text-[#00509d]" />
+                <h3 className="text-sm text-[#00509d]">Time Spent</h3>
               </div>
-              <div className="text-2xl font-bold text-white">
+              <div className="text-2xl font-bold text-[#00509d]">
                 {Math.floor(monthlySummary.timeSpent / 60)} hrs {monthlySummary.timeSpent % 60} min
               </div>
             </div>
 
-            <div className="bg-[#0F283D] border border-[#f6aa54]/20 rounded-lg p-4">
+            <div className="bg-white border border-[#00509d]/20 rounded-lg p-4 shadow-sm">
               <div className="flex items-center gap-2 mb-2">
-                <Star size={18} className="text-[#f6aa54]" />
-                <h3 className="text-sm text-white/80">Stars Earned</h3>
+                <Star size={18} className="text-[#00509d]" />
+                <h3 className="text-sm text-[#00509d]">Stars Earned</h3>
               </div>
-              <div className="text-2xl font-bold text-white">{monthlySummary.starsEarned}</div>
+              <div className="text-2xl font-bold text-[#00509d]">{monthlySummary.starsEarned}</div>
             </div>
 
-            <div className="bg-[#0F283D] border border-[#f6aa54]/20 rounded-lg p-4">
+            <div className="bg-white border border-[#00509d]/20 rounded-lg p-4 shadow-sm">
               <div className="flex items-center gap-2 mb-2">
                 <CheckCircle size={18} className="text-[#4CAF50]" />
-                <h3 className="text-sm text-white/80">Correct Answers</h3>
+                <h3 className="text-sm text-[#4CAF50]">Correct Answers</h3>
               </div>
-              <div className="text-2xl font-bold text-white">{monthlySummary.correctAnswers}</div>
+              <div className="text-2xl font-bold text-[#4CAF50]">{monthlySummary.correctAnswers}</div>
             </div>
 
-            <div className="bg-[#0F283D] border border-[#f6aa54]/20 rounded-lg p-4">
+            <div className="bg-white border border-[#00509d]/20 rounded-lg p-4 shadow-sm">
               <div className="flex items-center gap-2 mb-2">
                 <XCircle size={18} className="text-[#e8594a]" />
-                <h3 className="text-sm text-white/80">Wrong Answers</h3>
+                <h3 className="text-sm text-[#e8594a]">Wrong Answers</h3>
               </div>
-              <div className="text-2xl font-bold text-white">{monthlySummary.wrongAnswers}</div>
+              <div className="text-2xl font-bold text-[#e8594a]">{monthlySummary.wrongAnswers}</div>
             </div>
           </div>
           {/* Reports table */}
-          <div className="relative overflow-hidden rounded-lg border border-[#f6aa54]/30">
-            <div className="max-h-[400px] overflow-y-auto scrollbar-thin scrollbar-thumb-[#f6aa54] scrollbar-track-transparent">
-              <Table>
-                <TableHeader className="bg-[#0F283D]/50 sticky top-0">
-                  <TableRow>
-                    <TableHead className="text-[#f6aa54] w-[180px]">Date/Time</TableHead>
-                    <TableHead className="text-[#f6aa54] w-[120px]">Time Spent</TableHead>
-                    <TableHead className="text-[#f6aa54]">Game Type</TableHead>
-                    <TableHead className="text-[#f6aa54] text-right">Score</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
+          <div className="relative overflow-hidden rounded-lg border border-[#00509d]/30">
+            {/* Fixed header */}
+            <div className="bg-gray-50 border-b border-[#00509d]/30">
+              <div className="overflow-x-auto">
+                <table className="w-full">
+                  <thead>
+                    <tr>
+                      <th className="text-[#00509d] w-[180px] p-3 text-left font-medium">Date/Time</th>
+                      <th className="text-[#00509d] w-[120px] p-3 text-left font-medium">Time Spent</th>
+                      <th className="text-[#00509d] p-3 text-left font-medium">Game Type</th>
+                      <th className="text-[#00509d] p-3 text-right font-medium">Score</th>
+                    </tr>
+                  </thead>
+                </table>
+              </div>
+            </div>
+
+            {/* Scrollable content */}
+            <div className="max-h-[400px] overflow-y-auto overflow-x-auto scrollbar-thin scrollbar-thumb-[#00509d] scrollbar-track-transparent">
+              <table className="w-full">
+                <tbody>
                   {reportData.map((report) => (
-                    <TableRow key={report.id} className="hover:bg-[#0F283D]/30">
-                      <TableCell className="text-white font-medium">
+                    <tr key={report.id} className="hover:bg-gray-50 border-b border-[#00509d]/10 last:border-0">
+                      <td className="text-[#00509d]/90 font-medium p-3 w-[180px]">
                         {format(report.date, "MMM d, yyyy h:mm a")}
-                      </TableCell>
-                      <TableCell className="text-white">{report.timeSpent}</TableCell>
-                      <TableCell className="text-white">{report.gameType}</TableCell>
-                      <TableCell className="text-white text-right">{report.score}</TableCell>
-                    </TableRow>
+                      </td>
+                      <td className="text-[#00509d]/90 p-3 w-[120px]">{report.timeSpent}</td>
+                      <td className="text-[#00509d]/90 p-3">{report.gameType}</td>
+                      <td className="text-[#00509d]/90 text-right p-3">{report.score}</td>
+                    </tr>
                   ))}
-                </TableBody>
-              </Table>
+                </tbody>
+              </table>
             </div>
           </div>
           {/* Export button */}
           <div className="flex justify-end mt-4">
-            <button className="flex items-center gap-2 px-4 py-2 bg-[#f6aa54] text-white rounded-md hover:bg-[#e59843] transition-colors">
+            <button className="flex items-center gap-2 px-4 py-2 bg-[#00509d] text-white rounded-md hover:bg-[#003f88] transition-colors">
               <Download size={16} />
               <span>Export Report</span>
             </button>
@@ -762,7 +786,10 @@ export default function ReportsPage() {
         </div>
 
         {/* Performance Graph Section */}
-        <div id="performance-section" className="bg-[#0F283D] border border-[#e8594a]/30 rounded-lg p-6 scroll-mt-8">
+        <div
+          id="performance-section"
+          className="bg-white border border-[#e8594a]/30 rounded-lg p-6 scroll-mt-8 shadow-sm"
+        >
           <h2 className="text-xl font-semibold text-[#e8594a] mb-4">Performance Graph</h2>
 
           {/* Month selector with navigation */}
@@ -786,15 +813,15 @@ export default function ReportsPage() {
                   e.stopPropagation()
                   setIsGraphCalendarOpen(!isGraphCalendarOpen)
                 }}
-                className="flex items-center justify-center gap-2 rounded-md border px-4 py-2 text-center font-medium bg-[#163c5a] border-[#e8594a]/30 text-white hover:bg-[#0F283D] hover:border-[#e8594a] cursor-pointer"
+                className="flex items-center justify-center gap-2 rounded-md border px-4 py-2 text-center font-medium bg-[#e8594a] border-[#e8594a]/30 text-white hover:bg-[#d04b3e] hover:border-[#e8594a] cursor-pointer"
               >
-                <Calendar className="h-4 w-4 text-[#e8594a]" />
+                <Calendar className="h-4 w-4 text-white" />
                 {format(graphDate, "MMMM yyyy")}
               </button>
 
               {isGraphCalendarOpen && (
                 <div className="absolute z-50 mt-1 left-1/2 transform -translate-x-1/2">
-                  <div className="bg-[#163c5a] rounded-lg shadow-lg border border-[#e8594a]/30">
+                  <div className="bg-[#e8594a] rounded-lg shadow-lg border border-[#e8594a]/30">
                     <MonthPicker
                       selectedDate={graphDate}
                       onChange={(newDate) => {
@@ -802,6 +829,7 @@ export default function ReportsPage() {
                         setIsGraphCalendarOpen(false)
                       }}
                       onClose={() => setIsGraphCalendarOpen(false)}
+                      colorScheme="red"
                     />
                   </div>
                 </div>
@@ -821,201 +849,199 @@ export default function ReportsPage() {
           </div>
 
           {/* Graph */}
-          <div className="bg-[#0F283D] border border-[#e8594a]/20 rounded-lg p-4 h-[400px] relative">
+          <div className="bg-white border border-[#e8594a]/20 rounded-lg p-4 relative shadow-sm overflow-hidden">
             {/* Graph header with legend */}
             <div className="flex flex-wrap justify-between mb-4">
-              <div className="flex items-center gap-4">
-                <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 rounded-full bg-[#50adb6]"></div>
-                  <span className="text-white/80 text-sm">Addition</span>
+              <div className="flex flex-wrap gap-2 sm:gap-4">
+                <div className="flex items-center gap-1">
+                  <div className="w-3 h-3 rounded-full bg-[#00509d]"></div>
+                  <span className="text-[#00509d] text-xs sm:text-sm">Addition</span>
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1">
                   <div className="w-3 h-3 rounded-full bg-[#f6aa54]"></div>
-                  <span className="text-white/80 text-sm">Subtraction</span>
+                  <span className="text-[#f6aa54] text-xs sm:text-sm">Subtraction</span>
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1">
                   <div className="w-3 h-3 rounded-full bg-[#e8594a]"></div>
-                  <span className="text-white/80 text-sm">Multiplication</span>
+                  <span className="text-[#e8594a] text-xs sm:text-sm">Multiplication</span>
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1">
                   <div className="w-3 h-3 rounded-full bg-[#4CAF50]"></div>
-                  <span className="text-white/80 text-sm">Division</span>
+                  <span className="text-[#4CAF50] text-xs sm:text-sm">Division</span>
                 </div>
               </div>
               <div className="flex items-center gap-2 mt-2 sm:mt-0">
-                <span className="text-white/80 text-sm">Showing: Accuracy (%)</span>
+                <span className="text-[#e8594a] text-xs sm:text-sm">Showing: Accuracy (%)</span>
               </div>
             </div>
 
-            {/* SVG Graph */}
-            <svg width={"100%"} height={320} className="mt-2">
-              {/* X and Y axes */}
-              <line x1="40" y1="280" x2="40" y2="40" stroke="rgba(255,255,255,0.2)" strokeWidth="1" />
-              <line x1="40" y1="280" x2="900" y2="280" stroke="rgba(255,255,255,0.2)" strokeWidth="1" />
+            {/* SVG Graph - Responsive version */}
+            <div className="w-full" style={{ aspectRatio: "16/9" }}>
+              <svg className="w-full h-full" viewBox="0 0 800 450" preserveAspectRatio="xMidYMid meet">
+                {/* Background */}
+                <rect x="0" y="0" width="800" height="450" fill="white" />
 
-              {/* Y-axis labels */}
-              <text x="35" y="40" textAnchor="end" fill="rgba(255,255,255,0.6)" fontSize="10">
-                100%
-              </text>
-              <text x="35" y="100" textAnchor="end" fill="rgba(255,255,255,0.6)" fontSize="10">
-                80%
-              </text>
-              <text x="35" y="160" textAnchor="end" fill="rgba(255,255,255,0.6)" fontSize="10">
-                60%
-              </text>
-              <text x="35" y="220" textAnchor="end" fill="rgba(255,255,255,0.6)" fontSize="10">
-                40%
-              </text>
-              <text x="35" y="280" textAnchor="end" fill="rgba(255,255,255,0.6)" fontSize="10">
-                20%
-              </text>
+                {/* X and Y axes */}
+                <line x1="80" y1="350" x2="80" y2="50" stroke="rgba(0,0,0,0.2)" strokeWidth="1.5" />
+                <line x1="80" y1="350" x2="750" y2="350" stroke="rgba(0,0,0,0.2)" strokeWidth="1.5" />
 
-              {/* X-axis labels (days) */}
-              {[5, 10, 15, 20, 25, 30].map((day) => (
-                <text
-                  key={day}
-                  x={40 + day * 28}
-                  y="295"
-                  textAnchor="middle"
-                  fill="rgba(255,255,255,0.6)"
-                  fontSize="10"
-                >
-                  {day}
+                {/* Y-axis labels */}
+                <text x="75" y="50" textAnchor="end" fill="rgba(0,0,0,0.6)" fontSize="12">
+                  100%
                 </text>
-              ))}
+                <text x="75" y="125" textAnchor="end" fill="rgba(0,0,0,0.6)" fontSize="12">
+                  80%
+                </text>
+                <text x="75" y="200" textAnchor="end" fill="rgba(0,0,0,0.6)" fontSize="12">
+                  60%
+                </text>
+                <text x="75" y="275" textAnchor="end" fill="rgba(0,0,0,0.6)" fontSize="12">
+                  40%
+                </text>
+                <text x="75" y="350" textAnchor="end" fill="rgba(0,0,0,0.6)" fontSize="12">
+                  20%
+                </text>
 
-              {/* Grid lines */}
-              {[40, 100, 160, 220, 280].map((y, i) => (
-                <line
-                  key={`grid-y-${i}`}
-                  x1="40"
-                  y1={y}
-                  x2="900"
-                  y2={y}
-                  stroke="rgba(255,255,255,0.1)"
-                  strokeWidth="1"
-                  strokeDasharray="5,5"
-                />
-              ))}
+                {/* X-axis labels (days) */}
+                {[5, 10, 15, 20, 25, 30].map((day) => (
+                  <text key={day} x={80 + day * 22} y="370" textAnchor="middle" fill="rgba(0,0,0,0.6)" fontSize="12">
+                    {day}
+                  </text>
+                ))}
 
-              {/* Addition line */}
-              {performanceData.byGameType.Addition.length > 0 && (
-                <>
-                  <polyline
-                    points={performanceData.byGameType.Addition.map(
-                      (data) => `${40 + data.day * 28},${280 - data.accuracy * 2.4}`,
-                    ).join(" ")}
-                    fill="none"
-                    stroke="#50adb6"
-                    strokeWidth="2"
+                {/* Axis titles */}
+                <text x="400" y="400" textAnchor="middle" fill="#e8594a" fontSize="14">
+                  Day of Month
+                </text>
+                <text x="30" y="200" textAnchor="middle" fill="#e8594a" fontSize="14" transform="rotate(-90, 30, 200)">
+                  Accuracy (%)
+                </text>
+
+                {/* Grid lines */}
+                {[50, 125, 200, 275, 350].map((y, i) => (
+                  <line
+                    key={`grid-y-${i}`}
+                    x1="80"
+                    y1={y}
+                    x2="750"
+                    y2={y}
+                    stroke="rgba(0,0,0,0.1)"
+                    strokeWidth="1"
+                    strokeDasharray="5,5"
                   />
+                ))}
 
-                  {/* Data points for Addition */}
-                  {performanceData.byGameType.Addition.map((data) => (
-                    <circle
-                      key={`add-${data.day}`}
-                      cx={40 + data.day * 28}
-                      cy={280 - data.accuracy * 2.4}
-                      r="4"
-                      fill="#50adb6"
+                {/* Addition line */}
+                {performanceData.byGameType.Addition.length > 0 && (
+                  <>
+                    <polyline
+                      points={performanceData.byGameType.Addition.map(
+                        (data) => `${80 + data.day * 22},${350 - data.accuracy * 3}`,
+                      ).join(" ")}
+                      fill="none"
+                      stroke="#00509d"
+                      strokeWidth="2"
                     />
-                  ))}
-                </>
-              )}
 
-              {/* Subtraction line */}
-              {performanceData.byGameType.Subtraction.length > 0 && (
-                <>
-                  <polyline
-                    points={performanceData.byGameType.Subtraction.map(
-                      (data) => `${40 + data.day * 28},${280 - data.accuracy * 2.4}`,
-                    ).join(" ")}
-                    fill="none"
-                    stroke="#f6aa54"
-                    strokeWidth="2"
-                  />
+                    {/* Data points for Addition */}
+                    {performanceData.byGameType.Addition.map((data) => (
+                      <circle
+                        key={`add-${data.day}`}
+                        cx={80 + data.day * 22}
+                        cy={350 - data.accuracy * 3}
+                        r="4"
+                        fill="#00509d"
+                      />
+                    ))}
+                  </>
+                )}
 
-                  {/* Data points for Subtraction */}
-                  {performanceData.byGameType.Subtraction.map((data) => (
-                    <circle
-                      key={`sub-${data.day}`}
-                      cx={40 + data.day * 28}
-                      cy={280 - data.accuracy * 2.4}
-                      r="4"
-                      fill="#f6aa54"
+                {/* Subtraction line */}
+                {performanceData.byGameType.Subtraction.length > 0 && (
+                  <>
+                    <polyline
+                      points={performanceData.byGameType.Subtraction.map(
+                        (data) => `${80 + data.day * 22},${350 - data.accuracy * 3}`,
+                      ).join(" ")}
+                      fill="none"
+                      stroke="#f6aa54"
+                      strokeWidth="2"
                     />
-                  ))}
-                </>
-              )}
 
-              {/* Multiplication line */}
-              {performanceData.byGameType.Multiplication.length > 0 && (
-                <>
-                  <polyline
-                    points={performanceData.byGameType.Multiplication.map(
-                      (data) => `${40 + data.day * 28},${280 - data.accuracy * 2.4}`,
-                    ).join(" ")}
-                    fill="none"
-                    stroke="#e8594a"
-                    strokeWidth="2"
-                  />
+                    {/* Data points for Subtraction */}
+                    {performanceData.byGameType.Subtraction.map((data) => (
+                      <circle
+                        key={`sub-${data.day}`}
+                        cx={80 + data.day * 22}
+                        cy={350 - data.accuracy * 3}
+                        r="4"
+                        fill="#f6aa54"
+                      />
+                    ))}
+                  </>
+                )}
 
-                  {/* Data points for Multiplication */}
-                  {performanceData.byGameType.Multiplication.map((data) => (
-                    <circle
-                      key={`mul-${data.day}`}
-                      cx={40 + data.day * 28}
-                      cy={280 - data.accuracy * 2.4}
-                      r="4"
-                      fill="#e8594a"
+                {/* Multiplication line */}
+                {performanceData.byGameType.Multiplication.length > 0 && (
+                  <>
+                    <polyline
+                      points={performanceData.byGameType.Multiplication.map(
+                        (data) => `${80 + data.day * 22},${350 - data.accuracy * 3}`,
+                      ).join(" ")}
+                      fill="none"
+                      stroke="#e8594a"
+                      strokeWidth="2"
                     />
-                  ))}
-                </>
-              )}
 
-              {/* Division line */}
-              {performanceData.byGameType.Division.length > 0 && (
-                <>
-                  <polyline
-                    points={performanceData.byGameType.Division.map(
-                      (data) => `${40 + data.day * 28},${280 - data.accuracy * 2.4}`,
-                    ).join(" ")}
-                    fill="none"
-                    stroke="#4CAF50"
-                    strokeWidth="2"
-                  />
+                    {/* Data points for Multiplication */}
+                    {performanceData.byGameType.Multiplication.map((data) => (
+                      <circle
+                        key={`mul-${data.day}`}
+                        cx={80 + data.day * 22}
+                        cy={350 - data.accuracy * 3}
+                        r="4"
+                        fill="#e8594a"
+                      />
+                    ))}
+                  </>
+                )}
 
-                  {/* Data points for Division */}
-                  {performanceData.byGameType.Division.map((data) => (
-                    <circle
-                      key={`div-${data.day}`}
-                      cx={40 + data.day * 28}
-                      cy={280 - data.accuracy * 2.4}
-                      r="4"
-                      fill="#4CAF50"
+                {/* Division line */}
+                {performanceData.byGameType.Division.length > 0 && (
+                  <>
+                    <polyline
+                      points={performanceData.byGameType.Division.map(
+                        (data) => `${80 + data.day * 22},${350 - data.accuracy * 3}`,
+                      ).join(" ")}
+                      fill="none"
+                      stroke="#4CAF50"
+                      strokeWidth="2"
                     />
-                  ))}
-                </>
-              )}
-            </svg>
 
-            {/* X and Y axis labels */}
-            <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-white/60 text-xs">
-              Day of Month
-            </div>
-            <div className="absolute top-1/2 left-4 transform -translate-y-1/2 -rotate-90 text-white/60 text-xs whitespace-nowrap">
-              Accuracy (%)
+                    {/* Data points for Division */}
+                    {performanceData.byGameType.Division.map((data) => (
+                      <circle
+                        key={`div-${data.day}`}
+                        cx={80 + data.day * 22}
+                        cy={350 - data.accuracy * 3}
+                        r="4"
+                        fill="#4CAF50"
+                      />
+                    ))}
+                  </>
+                )}
+              </svg>
             </div>
           </div>
 
           {/* Performance metrics by game type */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mt-6">
-            <div className="bg-[#0F283D] border border-[#50adb6]/30 rounded-lg p-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2 sm:gap-4 mt-6">
+            <div className="bg-white border border-[#00509d]/30 rounded-lg p-4 shadow-sm">
               <div className="flex items-center gap-2 mb-2">
-                <CheckCircle size={18} className="text-[#50adb6]" />
-                <h3 className="text-sm text-white/80">Addition</h3>
+                <CheckCircle size={18} className="text-[#00509d]" />
+                <h3 className="text-sm text-[#00509d]">Addition</h3>
               </div>
-              <div className="text-2xl font-bold text-white">
+              <div className="text-2xl font-bold text-[#00509d]">
                 {performanceData.byGameType.Addition.length > 0
                   ? Math.round(
                       performanceData.byGameType.Addition.reduce((sum, data) => sum + data.accuracy, 0) /
@@ -1024,17 +1050,17 @@ export default function ReportsPage() {
                   : 0}
                 %
               </div>
-              <p className="text-sm text-white/60 mt-1">
+              <p className="text-sm text-[#00509d]/80 mt-1">
                 {performanceData.byGameType.Addition.reduce((sum, data) => sum + data.questionsAnswered, 0)} questions
               </p>
             </div>
 
-            <div className="bg-[#0F283D] border border-[#f6aa54]/30 rounded-lg p-4">
+            <div className="bg-white border border-[#f6aa54]/30 rounded-lg p-4 shadow-sm">
               <div className="flex items-center gap-2 mb-2">
                 <CheckCircle size={18} className="text-[#f6aa54]" />
-                <h3 className="text-sm text-white/80">Subtraction</h3>
+                <h3 className="text-sm text-[#f6aa54]">Subtraction</h3>
               </div>
-              <div className="text-2xl font-bold text-white">
+              <div className="text-2xl font-bold text-[#f6aa54]">
                 {performanceData.byGameType.Subtraction.length > 0
                   ? Math.round(
                       performanceData.byGameType.Subtraction.reduce((sum, data) => sum + data.accuracy, 0) /
@@ -1043,18 +1069,18 @@ export default function ReportsPage() {
                   : 0}
                 %
               </div>
-              <p className="text-sm text-white/60 mt-1">
+              <p className="text-sm text-[#f6aa54]/80 mt-1">
                 {performanceData.byGameType.Subtraction.reduce((sum, data) => sum + data.questionsAnswered, 0)}{" "}
                 questions
               </p>
             </div>
 
-            <div className="bg-[#0F283D] border border-[#e8594a]/30 rounded-lg p-4">
+            <div className="bg-white border border-[#e8594a]/30 rounded-lg p-4 shadow-sm">
               <div className="flex items-center gap-2 mb-2">
                 <CheckCircle size={18} className="text-[#e8594a]" />
-                <h3 className="text-sm text-white/80">Multiplication</h3>
+                <h3 className="text-sm text-[#e8594a]">Multiplication</h3>
               </div>
-              <div className="text-2xl font-bold text-white">
+              <div className="text-2xl font-bold text-[#e8594a]">
                 {performanceData.byGameType.Multiplication.length > 0
                   ? Math.round(
                       performanceData.byGameType.Multiplication.reduce((sum, data) => sum + data.accuracy, 0) /
@@ -1063,18 +1089,18 @@ export default function ReportsPage() {
                   : 0}
                 %
               </div>
-              <p className="text-sm text-white/60 mt-1">
+              <p className="text-sm text-[#e8594a]/80 mt-1">
                 {performanceData.byGameType.Multiplication.reduce((sum, data) => sum + data.questionsAnswered, 0)}{" "}
                 questions
               </p>
             </div>
 
-            <div className="bg-[#0F283D] border border-[#4CAF50]/30 rounded-lg p-4">
+            <div className="bg-white border border-[#4CAF50]/30 rounded-lg p-4 shadow-sm">
               <div className="flex items-center gap-2 mb-2">
                 <CheckCircle size={18} className="text-[#4CAF50]" />
-                <h3 className="text-sm text-white/80">Division</h3>
+                <h3 className="text-sm text-[#4CAF50]">Division</h3>
               </div>
-              <div className="text-2xl font-bold text-white">
+              <div className="text-2xl font-bold text-[#4CAF50]">
                 {performanceData.byGameType.Division.length > 0
                   ? Math.round(
                       performanceData.byGameType.Division.reduce((sum, data) => sum + data.accuracy, 0) /
@@ -1083,7 +1109,7 @@ export default function ReportsPage() {
                   : 0}
                 %
               </div>
-              <p className="text-sm text-white/60 mt-1">
+              <p className="text-sm text-[#4CAF50]/80 mt-1">
                 {performanceData.byGameType.Division.reduce((sum, data) => sum + data.questionsAnswered, 0)} questions
               </p>
             </div>
@@ -1091,23 +1117,26 @@ export default function ReportsPage() {
         </div>
 
         {/* Time Tables Performance Section */}
-        <div id="times-tables-section" className="bg-[#0F283D] border border-[#50adb6]/30 rounded-lg p-6 scroll-mt-8">
-          <h2 className="text-xl font-semibold text-[#50adb6] mb-4">Time Tables Performance</h2>
-          <p className="text-white/80 mb-6">Average response time (seconds) for multiplication facts</p>
+        <div
+          id="times-tables-section"
+          className="bg-white border border-[#00509d]/30 rounded-lg p-6 scroll-mt-8 shadow-sm"
+        >
+          <h2 className="text-xl font-semibold text-[#00509d] mb-4">Time Tables Performance</h2>
+          <p className="text-[#00509d]/80 mb-6">Average response time (seconds) for multiplication facts</p>
 
           {/* Time Tables Grid */}
           <div className="overflow-x-auto">
-            <div className="min-w-[900px]">
+            <div className="min-w-[900px] max-w-full">
               <table className="w-full border-collapse">
                 <thead>
                   <tr>
-                    <th className="p-2 bg-[#0F283D] border border-[#50adb6]/30 text-[#50adb6] font-bold sticky left-0 z-10">
+                    <th className="p-2 bg-gray-50 border border-[#00509d]/30 text-[#00509d] font-bold sticky left-0 z-10">
                       ×
                     </th>
                     {Array.from({ length: 19 }, (_, i) => i + 2).map((num) => (
                       <th
                         key={`header-${num}`}
-                        className="p-2 bg-[#0F283D] border border-[#50adb6]/30 text-[#50adb6] font-bold"
+                        className="p-2 bg-gray-50 border border-[#00509d]/30 text-[#00509d] font-bold"
                       >
                         {num}
                       </th>
@@ -1117,7 +1146,7 @@ export default function ReportsPage() {
                 <tbody>
                   {Array.from({ length: 19 }, (_, i) => i + 2).map((rowNum) => (
                     <tr key={`row-${rowNum}`}>
-                      <th className="p-2 bg-[#0F283D] border border-[#50adb6]/30 text-[#50adb6] font-bold sticky left-0 z-10">
+                      <th className="p-2 bg-gray-50 border border-[#00509d]/30 text-[#00509d] font-bold sticky left-0 z-10">
                         {rowNum}
                       </th>
                       {Array.from({ length: 19 }, (_, j) => j + 2).map((colNum) => {
@@ -1125,7 +1154,7 @@ export default function ReportsPage() {
                         return (
                           <td
                             key={`cell-${rowNum}-${colNum}`}
-                            className="p-2 border border-[#50adb6]/20 text-center"
+                            className="p-2 border border-[#00509d]/20 text-center"
                             style={{
                               backgroundColor: `${getSpeedColor(speed)}20`,
                               color: getSpeedColor(speed),
@@ -1146,25 +1175,28 @@ export default function ReportsPage() {
           <div className="flex items-center justify-center gap-6 mt-6">
             <div className="flex items-center gap-2">
               <div className="w-4 h-4 rounded-full bg-[#4CAF50]"></div>
-              <span className="text-white/80 text-sm">Fast (≤ 2.0s)</span>
+              <span className="text-[#4CAF50] text-sm">Fast (≤ 2.0s)</span>
             </div>
             <div className="flex items-center gap-2">
               <div className="w-4 h-4 rounded-full bg-[#f6aa54]"></div>
-              <span className="text-white/80 text-sm">Medium (≤ 3.5s)</span>
+              <span className="text-[#f6aa54] text-sm">Medium (≤ 3.5s)</span>
             </div>
             <div className="flex items-center gap-2">
               <div className="w-4 h-4 rounded-full bg-[#e8594a]"></div>
-              <span className="text-white/80 text-sm">Slow ({">"}3.5s)</span>
+              <span className="text-[#e8594a] text-sm">Slow ({">"}3.5s)</span>
             </div>
           </div>
         </div>
 
         {/* Space Journey Progress Section */}
-        <div id="space-journey-section" className="bg-[#0F283D] border border-[#e8594a]/30 rounded-lg p-6 scroll-mt-8">
+        <div
+          id="space-journey-section"
+          className="bg-white border border-[#e8594a]/30 rounded-lg p-6 scroll-mt-8 shadow-sm"
+        >
           <h2 className="text-xl font-semibold text-[#e8594a] mb-4">Space Journey Progress</h2>
-          <p className="text-white/80 mb-6">Track your progress through the solar system</p>
+          <p className="text-[#e8594a]/80 mb-6">Track your progress through the solar system</p>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3 sm:gap-6">
             {/* Planets with progress status */}
             <div className="flex flex-col items-center">
               <div className="w-20 h-20 mb-2">
@@ -1174,7 +1206,7 @@ export default function ReportsPage() {
                   className="w-full h-full object-contain"
                 />
               </div>
-              <span className="text-sm text-white">Mercury</span>
+              <span className="text-sm text-[#e8594a]">Mercury</span>
               <span className="text-xs text-[#4CAF50]">Unlocked</span>
             </div>
 
@@ -1186,7 +1218,7 @@ export default function ReportsPage() {
                   className="w-full h-full object-contain"
                 />
               </div>
-              <span className="text-sm text-white">Venus</span>
+              <span className="text-sm text-[#e8594a]">Venus</span>
               <span className="text-xs text-[#4CAF50]">Unlocked</span>
             </div>
 
@@ -1198,7 +1230,7 @@ export default function ReportsPage() {
                   className="w-full h-full object-contain"
                 />
               </div>
-              <span className="text-sm text-white">Earth</span>
+              <span className="text-sm text-[#e8594a]">Earth</span>
               <span className="text-xs text-[#4CAF50]">Unlocked</span>
             </div>
 
@@ -1210,7 +1242,7 @@ export default function ReportsPage() {
                   className="w-full h-full object-contain"
                 />
               </div>
-              <span className="text-sm text-white">Mars</span>
+              <span className="text-sm text-[#e8594a]">Mars</span>
               <span className="text-xs text-[#4CAF50]">Unlocked</span>
             </div>
 
@@ -1222,8 +1254,8 @@ export default function ReportsPage() {
                   className="w-full h-full object-contain"
                 />
               </div>
-              <span className="text-sm text-white/40">Jupiter</span>
-              <span className="text-xs text-white/40">Locked</span>
+              <span className="text-sm text-gray-600">Jupiter</span>
+              <span className="text-xs text-gray-600">Locked</span>
             </div>
 
             <div className="flex flex-col items-center">
@@ -1234,17 +1266,17 @@ export default function ReportsPage() {
                   className="w-full h-full object-contain"
                 />
               </div>
-              <span className="text-sm text-white/40">Saturn</span>
-              <span className="text-xs text-white/40">Locked</span>
+              <span className="text-sm text-gray-600">Saturn</span>
+              <span className="text-xs text-gray-600">Locked</span>
             </div>
           </div>
 
           <div className="mt-6 pt-6 border-t border-[#e8594a]/20">
             <div className="flex items-center justify-between mb-2">
-              <span className="text-white/80 text-sm">Space Journey Progress</span>
-              <span className="text-white font-medium text-sm">40%</span>
+              <span className="text-[#e8594a] text-sm">Space Journey Progress</span>
+              <span className="text-[#e8594a] font-medium text-sm">40%</span>
             </div>
-            <div className="h-2 bg-white/10 rounded-full overflow-hidden">
+            <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
               <div
                 className="h-full rounded-full transition-all duration-500"
                 style={{
@@ -1257,34 +1289,37 @@ export default function ReportsPage() {
         </div>
 
         {/* Learning Path Section */}
-        <div id="learning-path-section" className="bg-[#0F283D] border border-[#50adb6]/30 rounded-lg p-6 scroll-mt-8">
-          <h2 className="text-xl font-semibold text-[#50adb6] mb-4">Learning Path</h2>
-          <p className="text-white/80 mb-6">Your personalized math learning journey</p>
+        <div
+          id="learning-path-section"
+          className="bg-white border border-[#00509d]/30 rounded-lg p-6 scroll-mt-8 shadow-sm"
+        >
+          <h2 className="text-xl font-semibold text-[#00509d] mb-4">Learning Path</h2>
+          <p className="text-[#00509d]/80 mb-6">Your personalized math learning journey</p>
 
           <div className="relative">
             {/* Timeline line */}
-            <div className="absolute left-6 top-0 bottom-0 w-0.5 bg-[#50adb6]/30"></div>
+            <div className="absolute left-6 top-0 bottom-0 w-0.5 bg-[#00509d]/30"></div>
 
             {/* Timeline items */}
             <div className="space-y-8">
               <div className="relative pl-14">
-                <div className="absolute left-0 w-12 h-12 rounded-full bg-[#50adb6] flex items-center justify-center text-white">
+                <div className="absolute left-0 w-12 h-12 rounded-full bg-[#00509d] flex items-center justify-center text-white">
                   <CheckCircle size={24} />
                 </div>
-                <div className="bg-[#0F283D] border border-[#50adb6]/20 rounded-lg p-4">
-                  <h4 className="text-white font-medium">Addition & Subtraction</h4>
-                  <p className="text-white/60 text-sm mt-1">Completed on January 15, 2024</p>
+                <div className="bg-white border border-[#00509d]/20 rounded-lg p-4 shadow-sm">
+                  <h4 className="text-[#00509d] font-medium">Addition & Subtraction</h4>
+                  <p className="text-[#00509d]/80 text-sm mt-1">Completed on January 15, 2024</p>
                   <div className="mt-2 flex items-center gap-2">
-                    <div className="h-1.5 bg-white/10 rounded-full overflow-hidden flex-1">
+                    <div className="h-1.5 bg-gray-100 rounded-full overflow-hidden flex-1">
                       <div
                         className="h-full rounded-full"
                         style={{
                           width: "100%",
-                          backgroundColor: "#50adb6",
+                          backgroundColor: "#00509d",
                         }}
                       />
                     </div>
-                    <span className="text-[#50adb6] text-sm">100%</span>
+                    <span className="text-[#00509d] text-sm">100%</span>
                   </div>
                 </div>
               </div>
@@ -1307,11 +1342,11 @@ export default function ReportsPage() {
                     <path d="M12 17v4" />
                   </svg>
                 </div>
-                <div className="bg-[#0F283D] border border-[#f6aa54]/20 rounded-lg p-4">
-                  <h4 className="text-white font-medium">Multiplication & Division</h4>
-                  <p className="text-white/60 text-sm mt-1">In progress</p>
+                <div className="bg-white border border-[#f6aa54]/20 rounded-lg p-4 shadow-sm">
+                  <h4 className="text-[#f6aa54] font-medium">Multiplication & Division</h4>
+                  <p className="text-[#f6aa54]/80 text-sm mt-1">In progress</p>
                   <div className="mt-2 flex items-center gap-2">
-                    <div className="h-1.5 bg-white/10 rounded-full overflow-hidden flex-1">
+                    <div className="h-1.5 bg-gray-100 rounded-full overflow-hidden flex-1">
                       <div
                         className="h-full rounded-full"
                         style={{
@@ -1326,7 +1361,7 @@ export default function ReportsPage() {
               </div>
 
               <div className="relative pl-14">
-                <div className="absolute left-0 w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-white/40">
+                <div className="absolute left-0 w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center text-gray-600">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
@@ -1342,11 +1377,11 @@ export default function ReportsPage() {
                     <path d="M7 11V7a5 5 0 0 1 10 0v4" />
                   </svg>
                 </div>
-                <div className="bg-[#0F283D] border border-white/10 rounded-lg p-4">
-                  <h4 className="text-white/60 font-medium">Fractions & Decimals</h4>
-                  <p className="text-white/40 text-sm mt-1">Locked - Complete previous modules first</p>
+                <div className="bg-white border border-gray-100 rounded-lg p-4">
+                  <h4 className="text-gray-600 font-medium">Fractions & Decimals</h4>
+                  <p className="text-gray-400 text-sm mt-1">Locked - Complete previous modules first</p>
                   <div className="mt-2 flex items-center gap-2">
-                    <div className="h-1.5 bg-white/10 rounded-full overflow-hidden flex-1">
+                    <div className="h-1.5 bg-gray-100 rounded-full overflow-hidden flex-1">
                       <div
                         className="h-full rounded-full"
                         style={{
@@ -1355,7 +1390,7 @@ export default function ReportsPage() {
                         }}
                       />
                     </div>
-                    <span className="text-white/40 text-sm">0%</span>
+                    <span className="text-gray-400 text-sm">0%</span>
                   </div>
                 </div>
               </div>

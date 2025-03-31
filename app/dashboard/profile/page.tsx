@@ -5,9 +5,18 @@ import Link from "next/link"
 import { ArrowLeft, Edit, Award, Trophy, Star, Calendar, Clock, CheckCircle, BookOpen, Zap, Medal } from "lucide-react"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { ScrollToTop } from "@/components/scroll-to-top"
+import { AvatarSelector } from "@/components/avatar-selector"
 
 export default function ProfilePage() {
   const [activeTab, setActiveTab] = useState("overview")
+  const [avatarSelectorOpen, setAvatarSelectorOpen] = useState(false)
+  const [currentAvatar, setCurrentAvatar] = useState<string>(
+    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/avatar1-wMHzrNtYtrgzNTcTsxTNtHGW3U4KgG.png",
+  ) // Default avatar
+  const [tempAvatar, setTempAvatar] = useState<string>(
+    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/avatar1-wMHzrNtYtrgzNTcTsxTNtHGW3U4KgG.png",
+  )
+  const [showSuccessToast, setShowSuccessToast] = useState(false)
 
   // Mock data for student profile
   const studentData = {
@@ -135,20 +144,20 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="w-full sm:max-w-6xl sm:mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div className="w-full sm:max-w-6xl sm:mx-auto pt-3 sm:pt-4 lg:pt-6 pb-8">
       <ScrollToTop />
-      <div className="flex flex-col space-y-8 bg-[#0F283D] p-8 rounded-xl border border-[#50adb6]/20">
+      <div className="flex flex-col space-y-8 bg-[#ffffff] p-6 rounded-xl">
         {/* Header with back button and centered title */}
         <div className="relative flex items-start justify-center">
           <Link
             href="/dashboard"
-            className="absolute left-0 top-0 w-10 h-10 rounded-full bg-[#50adb6] flex items-center justify-center text-white hover:bg-[#3d8a91] transition-colors"
+            className="absolute left-0 top-0 w-10 h-10 rounded-full bg-[#00509d] flex items-center justify-center text-white hover:bg-[#003f88] transition-colors"
           >
             <ArrowLeft size={20} strokeWidth={3} />
           </Link>
           <div className="text-center mb-4 sm:mb-8 pt-8 sm:pt-0">
-            <h1 className="text-3xl font-bold text-[#50adb6]">Student Profile</h1>
-            <p className="text-white/80">View and manage your profile information</p>
+            <h1 className="text-3xl font-bold text-[#00509d]">Student Profile</h1>
+            <p className="text-gray-500">View and manage your profile information</p>
           </div>
         </div>
 
@@ -156,21 +165,44 @@ export default function ProfilePage() {
         <div className="flex flex-col md:flex-row gap-8 items-center md:items-start">
           {/* Avatar */}
           <div className="relative">
-            <div className="w-32 h-32 rounded-full bg-[#50adb6] flex items-center justify-center text-white text-4xl font-bold overflow-hidden">
-              <img src="/placeholder.svg" alt="Profile" className="w-full h-full object-cover" />
+            <div className="w-32 h-32 rounded-full bg-[#00509d] flex items-center justify-center text-white text-4xl font-bold overflow-hidden">
+              <img src={currentAvatar || "/placeholder.svg"} alt="Profile" className="w-full h-full object-cover" />
             </div>
-            <button className="absolute bottom-0 right-0 w-10 h-10 rounded-full bg-[#f6aa54] flex items-center justify-center text-white hover:bg-[#e59843] transition-colors">
+            <button
+              onClick={() => setAvatarSelectorOpen(true)}
+              className="absolute bottom-0 right-0 w-10 h-10 rounded-full bg-[#ffc145] flex items-center justify-center text-white hover:bg-[#e5a935] transition-colors"
+            >
               <Edit size={16} strokeWidth={2} />
             </button>
           </div>
 
+          <AvatarSelector
+            open={avatarSelectorOpen}
+            onOpenChange={setAvatarSelectorOpen}
+            onSelect={setTempAvatar}
+            onSave={(avatar) => {
+              setCurrentAvatar(avatar)
+              setShowSuccessToast(true)
+              setTimeout(() => setShowSuccessToast(false), 3000)
+            }}
+            currentAvatar={currentAvatar}
+          />
+
+          {/* Success Toast */}
+          {showSuccessToast && (
+            <div className="fixed bottom-4 right-4 bg-green-500 text-white px-4 py-2 rounded-md shadow-lg flex items-center gap-2 z-50 animate-in fade-in slide-in-from-bottom-5">
+              <CheckCircle size={18} />
+              <span>Avatar updated successfully!</span>
+            </div>
+          )}
+
           {/* Profile Info */}
           <div className="flex-1 text-center md:text-left">
-            <h2 className="text-2xl font-bold text-white">{studentData.name}</h2>
-            <p className="text-[#50adb6] mb-2">{studentData.username}</p>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-white/80">
+            <h2 className="text-2xl font-bold text-[#00509d]">{studentData.name}</h2>
+            <p className="text-[#00509d] mb-2">{studentData.username}</p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-gray-600">
               <div className="flex items-center gap-2">
-                <BookOpen size={16} className="text-[#50adb6]" />
+                <BookOpen size={16} className="text-[#00509d]" />
                 <span>
                   {studentData.grade}, {studentData.section}
                 </span>
@@ -186,7 +218,7 @@ export default function ProfilePage() {
                   strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  className="text-[#50adb6]"
+                  className="text-[#00509d]"
                 >
                   <path d="M3 9h18v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9Z" />
                   <path d="M3 9V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v4" />
@@ -198,7 +230,7 @@ export default function ProfilePage() {
                 <span>{studentData.school}</span>
               </div>
               <div className="flex items-center gap-2">
-                <Calendar size={16} className="text-[#50adb6]" />
+                <Calendar size={16} className="text-[#00509d]" />
                 <span>Joined: {studentData.joinDate}</span>
               </div>
               <div className="flex items-center gap-2">
@@ -212,7 +244,7 @@ export default function ProfilePage() {
                   strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  className="text-[#50adb6]"
+                  className="text-[#00509d]"
                 >
                   <rect width="20" height="16" x="2" y="4" rx="2" />
                   <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
@@ -224,17 +256,17 @@ export default function ProfilePage() {
 
           {/* Quick Stats */}
           <div className="flex flex-wrap justify-center md:justify-end gap-4">
-            <div className="bg-[#0F283D] border border-[#50adb6]/30 rounded-lg p-3 text-center min-w-[100px]">
-              <div className="text-2xl font-bold text-[#50adb6]">{studentData.stats.totalScore}</div>
-              <div className="text-xs text-white/60">Total Score</div>
+            <div className="bg-white border border-gray-200 rounded-lg p-3 text-center min-w-[100px] shadow-sm">
+              <div className="text-2xl font-bold text-[#00509d]">{studentData.stats.totalScore}</div>
+              <div className="text-xs text-gray-500">Total Score</div>
             </div>
-            <div className="bg-[#0F283D] border border-[#f6aa54]/30 rounded-lg p-3 text-center min-w-[100px]">
-              <div className="text-2xl font-bold text-[#f6aa54]">{studentData.stats.accuracy}%</div>
-              <div className="text-xs text-white/60">Accuracy</div>
+            <div className="bg-white border border-gray-200 rounded-lg p-3 text-center min-w-[100px] shadow-sm">
+              <div className="text-2xl font-bold text-[#ffc145]">{studentData.stats.accuracy}%</div>
+              <div className="text-xs text-gray-500">Accuracy</div>
             </div>
-            <div className="bg-[#0F283D] border border-[#e8594a]/30 rounded-lg p-3 text-center min-w-[100px]">
+            <div className="bg-white border border-gray-200 rounded-lg p-3 text-center min-w-[100px] shadow-sm">
               <div className="text-2xl font-bold text-[#e8594a]">{studentData.stats.averageTime}s</div>
-              <div className="text-xs text-white/60">Average Time</div>
+              <div className="text-xs text-gray-500">Average Time</div>
             </div>
           </div>
         </div>
@@ -250,29 +282,29 @@ export default function ProfilePage() {
           <TabsContent value="overview" className="space-y-6 pt-6">
             {/* Stats Overview */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              <div className="bg-[#0F283D] border border-[#50adb6]/30 rounded-lg p-4">
+              <div className="bg-white border border-gray-200 rounded-lg p-4 shadow-sm">
                 <div className="flex items-center gap-2 mb-2">
-                  <CheckCircle size={18} className="text-[#50adb6]" />
-                  <h3 className="text-sm text-white/80">Questions Answered</h3>
+                  <CheckCircle size={18} className="text-[#00509d]" />
+                  <h3 className="text-sm text-gray-600">Questions Answered</h3>
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-2xl font-bold text-white">{studentData.stats.questionsAnswered}</span>
+                  <span className="text-2xl font-bold text-[#00509d]">{studentData.stats.questionsAnswered}</span>
                   <span className="text-sm text-[#4CAF50]">+168 this week</span>
                 </div>
               </div>
 
-              <div className="bg-[#0F283D] border border-[#50adb6]/30 rounded-lg p-4">
+              <div className="bg-white border border-gray-200 rounded-lg p-4 shadow-sm">
                 <div className="flex items-center gap-2 mb-2">
-                  <Clock size={18} className="text-[#50adb6]" />
-                  <h3 className="text-sm text-white/80">Average Time</h3>
+                  <Clock size={18} className="text-[#00509d]" />
+                  <h3 className="text-sm text-gray-600">Average Time</h3>
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-2xl font-bold text-white">{studentData.stats.averageTime}s</span>
+                  <span className="text-2xl font-bold text-[#00509d]">{studentData.stats.averageTime}s</span>
                   <span className="text-sm text-[#4CAF50]">-0.3s from last week</span>
                 </div>
               </div>
 
-              <div className="bg-[#0F283D] border border-[#50adb6]/30 rounded-lg p-4">
+              <div className="bg-white border border-gray-200 rounded-lg p-4 shadow-sm">
                 <div className="flex items-center gap-2 mb-2">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -284,41 +316,41 @@ export default function ProfilePage() {
                     strokeWidth="2"
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    className="text-[#50adb6]"
+                    className="text-[#00509d]"
                   >
                     <path d="M12 2v20" />
                     <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
                   </svg>
-                  <h3 className="text-sm text-white/80">Practice Time</h3>
+                  <h3 className="text-sm text-gray-600">Practice Time</h3>
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-2xl font-bold text-white">{studentData.stats.practiceTime} hrs</span>
+                  <span className="text-2xl font-bold text-[#00509d]">{studentData.stats.practiceTime} hrs</span>
                   <span className="text-sm text-[#4CAF50]">+2.3 hrs this week</span>
                 </div>
               </div>
 
-              <div className="bg-[#0F283D] border border-[#50adb6]/30 rounded-lg p-4">
+              <div className="bg-white border border-gray-200 rounded-lg p-4 shadow-sm">
                 <div className="flex items-center gap-2 mb-2">
-                  <Trophy size={18} className="text-[#50adb6]" />
-                  <h3 className="text-sm text-white/80">Best Streak</h3>
+                  <Trophy size={18} className="text-[#00509d]" />
+                  <h3 className="text-sm text-gray-600">Best Streak</h3>
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-2xl font-bold text-white">{studentData.stats.bestStreak} days</span>
-                  <span className="text-sm text-white/60">Current: {studentData.stats.streak} days</span>
+                  <span className="text-2xl font-bold text-[#00509d]">{studentData.stats.bestStreak} days</span>
+                  <span className="text-sm text-gray-500">Current: {studentData.stats.streak} days</span>
                 </div>
               </div>
             </div>
 
             {/* Recent Activity */}
-            <div className="bg-[#0F283D] border border-[#50adb6]/30 rounded-lg p-6">
-              <h3 className="text-xl font-semibold text-[#50adb6] mb-4">Recent Activity</h3>
+            <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
+              <h3 className="text-xl font-semibold text-[#00509d] mb-4">Recent Activity</h3>
               <div className="space-y-4">
                 {studentData.recentActivity.map((activity, index) => (
                   <div
                     key={index}
-                    className="flex items-start gap-4 pb-4 border-b border-[#50adb6]/10 last:border-0 last:pb-0"
+                    className="flex items-start gap-4 pb-4 border-b border-gray-200 last:border-0 last:pb-0"
                   >
-                    <div className="w-12 h-12 rounded-full bg-[#50adb6]/20 flex items-center justify-center text-[#50adb6] shrink-0">
+                    <div className="w-12 h-12 rounded-full bg-[#00509d]/20 flex items-center justify-center text-[#00509d] shrink-0">
                       {activity.activity.includes("achievement") ? (
                         <Award size={20} />
                       ) : activity.activity.includes("planet") ? (
@@ -345,10 +377,10 @@ export default function ProfilePage() {
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1">
-                        <h4 className="text-white font-medium">{activity.activity}</h4>
-                        {activity.score && <span className="text-[#f6aa54] text-sm font-medium">{activity.score}</span>}
+                        <h4 className="text-gray-800 font-medium">{activity.activity}</h4>
+                        {activity.score && <span className="text-[#ffc145] text-sm font-medium">{activity.score}</span>}
                       </div>
-                      <div className="flex items-center gap-2 text-white/60 text-sm mt-1">
+                      <div className="flex items-center gap-2 text-gray-500 text-sm mt-1">
                         <span>{activity.date}</span>
                         <span>•</span>
                         <span>{activity.time}</span>
@@ -362,10 +394,10 @@ export default function ProfilePage() {
             {/* Badges and Planets */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Badges */}
-              <div className="bg-[#0F283D] border border-[#f6aa54]/30 rounded-lg p-6">
+              <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
                 <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-xl font-semibold text-[#f6aa54]">Badges Earned</h3>
-                  <span className="text-white/60 text-sm">{studentData.badges.length} of 12</span>
+                  <h3 className="text-xl font-semibold text-[#00509d]">Badges Earned</h3>
+                  <span className="text-gray-500 text-sm">{studentData.badges.length} of 12</span>
                 </div>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                   {studentData.badges.map((badge, index) => (
@@ -383,10 +415,10 @@ export default function ProfilePage() {
               </div>
 
               {/* Planets */}
-              <div className="bg-[#0F283D] border border-[#e8594a]/30 rounded-lg p-6">
+              <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
                 <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-xl font-semibold text-[#e8594a]">Planets Unlocked</h3>
-                  <span className="text-white/60 text-sm">
+                  <h3 className="text-xl font-semibold text-[#00509d]">Planets Unlocked</h3>
+                  <span className="text-gray-500 text-sm">
                     {studentData.planets.filter((p) => p.unlocked).length} of 10
                   </span>
                 </div>
@@ -400,7 +432,7 @@ export default function ProfilePage() {
                           className="w-full h-full object-contain"
                         />
                       </div>
-                      <span className={`text-xs ${planet.unlocked ? "text-white" : "text-white/40"}`}>
+                      <span className={`text-xs ${planet.unlocked ? "text-gray-800" : "text-gray-400"}`}>
                         {planet.name}
                       </span>
                     </div>
@@ -412,13 +444,13 @@ export default function ProfilePage() {
 
           {/* Achievements Tab */}
           <TabsContent value="achievements" className="space-y-6 pt-6">
-            <div className="bg-[#0F283D] border border-[#50adb6]/30 rounded-lg p-6">
-              <h3 className="text-xl font-semibold text-[#50adb6] mb-6">Your Achievements</h3>
+            <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
+              <h3 className="text-xl font-semibold text-[#00509d] mb-6">Your Achievements</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {studentData.achievements.map((achievement) => (
                   <div
                     key={achievement.id}
-                    className="bg-[#0F283D] border border-white/10 rounded-lg p-4 relative overflow-hidden group hover:border-[#50adb6]/30 transition-colors"
+                    className="bg-white border border-gray-200 rounded-lg p-4 relative overflow-hidden group hover:border-[#50adb6]/30 transition-colors shadow-sm"
                   >
                     <div className="flex items-start gap-4">
                       <div
@@ -428,10 +460,10 @@ export default function ProfilePage() {
                         <achievement.icon className="w-6 h-6" style={{ color: achievement.color }} />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <h3 className="text-lg font-semibold text-white mb-1">{achievement.name}</h3>
-                        <p className="text-sm text-white/70 mb-2">{achievement.description}</p>
+                        <h3 className="text-lg font-semibold text-gray-800 mb-1">{achievement.name}</h3>
+                        <p className="text-sm text-gray-600 mb-2">{achievement.description}</p>
                         <div className="flex items-center gap-2">
-                          <div className="flex-1 h-1.5 bg-white/10 rounded-full overflow-hidden">
+                          <div className="flex-1 h-1.5 bg-gray-200 rounded-full overflow-hidden">
                             <div
                               className="h-full rounded-full transition-all duration-500"
                               style={{
@@ -457,10 +489,10 @@ export default function ProfilePage() {
             </div>
 
             {/* Badges Section */}
-            <div className="bg-[#0F283D] border border-[#f6aa54]/30 rounded-lg p-6">
+            <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
               <div className="flex items-center justify-between mb-6">
-                <h3 className="text-xl font-semibold text-[#f6aa54]">Badges Collection</h3>
-                <span className="text-white/60 text-sm">{studentData.badges.length} of 12</span>
+                <h3 className="text-xl font-semibold text-[#00509d]">Badges Collection</h3>
+                <span className="text-gray-500 text-sm">{studentData.badges.length} of 12</span>
               </div>
               <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-6">
                 {studentData.badges.map((badge, index) => (
@@ -472,14 +504,14 @@ export default function ProfilePage() {
                         className="w-full h-full object-contain"
                       />
                     </div>
-                    <span className="text-white text-sm text-center">Badge {index + 1}</span>
-                    <span className="text-white/60 text-xs">Earned Mar 2024</span>
+                    <span className="text-gray-800 text-sm text-center">Badge {index + 1}</span>
+                    <span className="text-gray-500 text-xs">Earned Mar 2024</span>
                   </div>
                 ))}
                 {/* Placeholder for locked badges */}
                 {Array.from({ length: 8 }).map((_, index) => (
                   <div key={`locked-${index}`} className="flex flex-col items-center opacity-40">
-                    <div className="w-20 h-20 mb-2 bg-white/10 rounded-full flex items-center justify-center">
+                    <div className="w-20 h-20 mb-2 bg-gray-200 rounded-full flex items-center justify-center">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="24"
@@ -490,13 +522,13 @@ export default function ProfilePage() {
                         strokeWidth="2"
                         strokeLinecap="round"
                         strokeLinejoin="round"
-                        className="text-white/40"
+                        className="text-gray-400"
                       >
                         <rect width="18" height="11" x="3" y="11" rx="2" ry="2" />
                         <path d="M7 11V7a5 5 0 0 1 10 0v4" />
                       </svg>
                     </div>
-                    <span className="text-white/40 text-sm text-center">Locked</span>
+                    <span className="text-gray-400 text-sm text-center">Locked</span>
                   </div>
                 ))}
               </div>
@@ -504,17 +536,17 @@ export default function ProfilePage() {
           </TabsContent>
         </Tabs>
 
-        {/*        {/* Action Buttons */}
+        {/* Action Buttons */}
         <div className="flex justify-center gap-4 pt-4">
-          <Link
-            href="/dashboard/settings"
-            className="px-6 py-3 bg-[#50adb6] text-white rounded-lg hover:bg-[#3d8a91] transition-colors"
+          <button
+            onClick={() => setAvatarSelectorOpen(true)}
+            className="px-6 py-3 bg-[#00509d] text-white rounded-lg hover:bg-[#003f88] transition-colors"
           >
-            Edit Profile
-          </Link>
+            Change Avatar
+          </button>
           <Link
             href="/dashboard/play/space-quiz"
-            className="px-6 py-3 bg-[#f6aa54] text-white rounded-lg hover:bg-[#e59843] transition-colors"
+            className="px-6 py-3 bg-[#ffc145] text-white rounded-lg hover:bg-[#e5a935] transition-colors"
           >
             Continue Learning
           </Link>

@@ -2,6 +2,7 @@
 
 import type React from "react"
 import { useRouter } from "next/navigation"
+
 import { useState, useEffect, useMemo, useRef } from "react"
 import { useQuiz } from "@/contexts/quiz-context"
 
@@ -9,61 +10,70 @@ const allPlanets = [
   {
     name: "Mercury",
     size: 100,
-    imageUrl: "/images/PlanetMercury-new.png",
+    imageUrl:
+      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/PlanetMercury-new-5gfvNnpxPKapf4pRLEmCvJOV98IRgS.png",
   },
   {
     name: "Venus",
     size: 100,
-    imageUrl: "/images/PlanetVenus-new.png",
+    imageUrl:
+      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/PlanetVenus-new-n782DfV26Qc4GVxQzkfVH202MsKr6Q.png",
   },
   {
     name: "Earth",
     size: 100,
-    imageUrl: "/images/PlanetEarth-new.png",
+    imageUrl:
+      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/PlanetEarth-new-aG11YKqAnLBL4DT4JVm6tsW3wIgsn6.png",
   },
   {
     name: "Moon",
     size: 100,
-    imageUrl: "/images/moon.png",
+    imageUrl: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/moon-9vzPcZ7zT1ivWy3kYHTMzQJ3zjiByO.png",
   },
   {
     name: "Mars",
     size: 100,
-    imageUrl: "/images/planetMars-new.png",
+    imageUrl:
+      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/planetMars-new-15bGgKhmvPMI0nkv67okVy8CPZ7zLS.png",
   },
   {
     name: "Jupiter",
     size: 100,
-    imageUrl: "/images/PlanetJupiter-new.png",
+    imageUrl:
+      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/PlanetJupiter-new-k59GAemqTd30XTyQWnnh9ctpSn9X22.png",
   },
   {
     name: "Saturn",
     size: 100,
-    imageUrl: "/images/planetSaturn-new.png",
+    imageUrl:
+      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/planetSaturn-new-nK9Xh7eiUhr0EjlW0pfxmAhlEJO3da.png",
   },
   {
     name: "Uranus",
     size: 100,
-    imageUrl: "/images/planetUranus-new.png",
+    imageUrl:
+      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/planetUranus-new-QpCLsWQCA0iMiP3nZJw2vDRQ3FsErb.png",
   },
   {
     name: "Neptune",
     size: 100,
-    imageUrl: "/images/PlanetNeptune-new.png",
+    imageUrl:
+      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/PlanetNeptune-new-9WXF99Ctzum84LgtiPygT9vxD80drU.png",
   },
   {
     name: "Pluto",
     size: 100,
-    imageUrl: "/images/PlanetPluto-new.png",
+    imageUrl:
+      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/PlanetPluto-new-IOjiLiSqiEMZmCTz25HOB4Ej1xOqDS.png",
   },
 ]
 
 const badges = [
-  "/images/badge2.png",
-  "/images/badge3.png",
-  "/images/badge4.png",
-  "/images/badge5.png",
-  "/images/badge6.png",
+  "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/badge2-8jkXxrzEVJETguvAkpuUcMAIrJljV6.png",
+  "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/badge3-RdVBodJdETf3uqtkKAB2BB39op1s8Q.png",
+  "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/badge4-Mkvhtzz7EUrgnJJPWG0jnvHPmrXZjZ.png",
+  "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/badge5-22zsYUJ5nzs96l0JWFZyxS8O7l2boL.png",
+  "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/badge6-gLvzPUComgAafhX8NGqlQV05Kkc3RE.png",
 ]
 
 const generateStars = (count: number) => {
@@ -82,8 +92,8 @@ const generateStars = (count: number) => {
 
 const generateQuestion = () => {
   // Generate random numbers between 1 and 12 for both factors
-  const num1 = 1
-  const num2 = 1
+  const num1 = Math.floor(Math.random() * 12) + 1
+  const num2 = Math.floor(Math.random() * 12) + 1
   return {
     display: `${num1} × ${num2}`,
     speech: `${num1} times ${num2}`,
@@ -103,7 +113,7 @@ export default function SpaceMathQuiz() {
   const { isKeypadVisible, isMuted, setIsMuted } = useQuiz()
   const router = useRouter()
   const [score, setScore] = useState(0)
-  const [timeLeft, setTimeLeft] = useState(30)
+  const [timeLeft, setTimeLeft] = useState(600)
   const [question, setQuestion] = useState("")
   const [answer, setAnswer] = useState("")
   const [nextQuestion, setNextQuestion] = useState("")
@@ -120,7 +130,7 @@ export default function SpaceMathQuiz() {
   const [fireworksVisible, setFireworksVisible] = useState(false)
   const [availablePlanets, setAvailablePlanets] = useState([]) // Start with no planets
   const [goldenStars, setGoldenStars] = useState<Array<{ x: number; y: number; blinking: boolean }>>([])
-  const [orderedPlanets] = useState(() => allPlanets) //Fixed: declared orderedPlanets
+  const [orderedPlanets] = useState(() => allPlanets)
   const stars = useMemo(() => generateStars(40), [])
   const inputRef = useRef<HTMLInputElement>(null)
   const galaxyRef = useRef<HTMLDivElement>(null)
@@ -344,26 +354,29 @@ export default function SpaceMathQuiz() {
 
     if (num1 * num2 === Number.parseFloat(answer)) {
       setScore((prevScore) => prevScore + 1)
-      const newConsecutiveCount = consecutiveCorrect + 1
-      // Only add a badge when exactly hitting 5 consecutive correct answers
-      if (newConsecutiveCount === 5) {
-        const randomBadge = badges[Math.floor(Math.random() * badges.length)]
-        const newPosition = calculateBadgePosition(earnedBadges.length)
-        // Only add the badge if we found a safe position
-        if (newPosition) {
-          setEarnedBadges([
-            ...earnedBadges,
-            {
-              x: newPosition.x,
-              y: newPosition.y,
-              badge: randomBadge,
-            },
-          ])
+      setConsecutiveCorrect((prev) => {
+        const newCount = prev + 1
+        if (newCount === 5) {
+          const randomBadge = badges[Math.floor(Math.random() * badges.length)]
+          setEarnedBadges((prev) => {
+            const newPosition = calculateBadgePosition(prev.length)
+            // Only add the badge if we found a safe position
+            if (newPosition) {
+              return [
+                ...prev,
+                {
+                  x: newPosition.x,
+                  y: newPosition.y,
+                  badge: randomBadge,
+                },
+              ]
+            }
+            return prev
+          })
+          return 0 // Reset consecutive count
         }
-        setConsecutiveCorrect(0) // Reset consecutive count
-      } else {
-        setConsecutiveCorrect(newConsecutiveCount)
-      }
+        return newCount
+      })
       setCorrectAnswers((prev) => {
         const newCorrectAnswers = prev + 1
 
@@ -379,26 +392,17 @@ export default function SpaceMathQuiz() {
           ])
         }
 
-        // Add new planet every 10 correct answers, but only if we don't already have this planet
+        // Add new planet every 10 correct answers
         if (newCorrectAnswers % 10 === 0 && availablePlanets.length < allPlanets.length) {
           const nextPlanetIndex = availablePlanets.length
           if (nextPlanetIndex < orderedPlanets.length) {
-            // First update the planet positions
             setPlanetPositions((prev) =>
               prev.map((pos, idx) => ({
                 ...pos,
                 revealed: idx <= nextPlanetIndex,
               })),
             )
-
-            // Then update the available planets array, but only add the new planet
-            setAvailablePlanets((prev) => {
-              // Only add if this planet isn't already in the array
-              if (prev.length === nextPlanetIndex) {
-                return [...prev, orderedPlanets[nextPlanetIndex]]
-              }
-              return prev
-            })
+            setAvailablePlanets((prev) => [...prev, orderedPlanets[nextPlanetIndex]])
           }
         }
 
@@ -519,18 +523,8 @@ export default function SpaceMathQuiz() {
     </div>
   )
 
-  useEffect(() => {
-    // Ensure availablePlanets stays in sync with the number of correct answers
-    if (correctAnswers > 0 && correctAnswers % 10 === 0) {
-      const expectedPlanets = Math.min(Math.floor(correctAnswers / 10), allPlanets.length)
-      if (availablePlanets.length !== expectedPlanets) {
-        setAvailablePlanets(orderedPlanets.slice(0, expectedPlanets))
-      }
-    }
-  }, [correctAnswers, availablePlanets.length, orderedPlanets, allPlanets.length])
-
   return (
-    <div className="flex flex-col h-[100dvh] w-full bg-black text-white relative overflow-hidden overscroll-none touch-none">
+    <div className="flex flex-col h-[100dvh] w-full bg-[#00296b] text-white relative overflow-hidden overscroll-none touch-none">
       <div className="flex flex-col md:flex-row flex-1 w-full relative z-10 px-1 md:px-4">
         <div className="absolute inset-0 overflow-hidden z-0">
           {stars.map((star, index) => (
@@ -553,13 +547,13 @@ export default function SpaceMathQuiz() {
         {/* Quiz area - unchanged */}
         <div className="w-full md:max-lg:w-[60%] lg:w-[50%] flex flex-col justify-start mb-12 py-2 px-4 md:py-4 md:pr-2 md:pl-0 h-[calc(100dvh-6rem)] md:h-[calc(100dvh-2rem)] overflow-hidden">
           <div
-            className={`w-full h-full bg-black bg-opacity-80 rounded-lg z-10 relative md:pr-2 md:pl-0 pt-1 pb-4 flex flex-col ${!isKeypadVisible ? "items-center justify-center" : ""}`}
+            className={`w-full h-full bg-[#00296b] bg-opacity-90 rounded-lg z-10 relative md:pr-2 md:pl-0 pt-1 pb-4 flex flex-col ${!isKeypadVisible ? "items-center justify-center" : ""}`}
           >
-            <h2 className="text-xl sm:text-lg md:text-xl lg:text-2xl font-bold mb-2 text-[#fec35e] text-center">
+            <h2 className="text-xl sm:text-lg md:text-xl lg:text-2xl font-bold mb-2 text-white text-center">
               Next: {nextQuestion}
             </h2>
             <div className="relative w-full mx-auto mt-1">
-              <div className="w-full h-full text-4xl sm:text-3xl md:text-4xl lg:text-5xl py-4 sm:py-4 md:py-6 lg:py-6 px-4 bg-[#0F283D] text-white flex items-center justify-center font-bold">
+              <div className="w-full h-full text-4xl sm:text-3xl md:text-4xl lg:text-5xl py-4 sm:py-4 md:py-6 lg:py-6 px-4 text-[#003f88] flex items-center justify-center font-bold bg-[#e6f1ff]">
                 <span className="mr-4">{question}</span>
                 <span>=</span>
                 <input
@@ -567,21 +561,21 @@ export default function SpaceMathQuiz() {
                   type="text"
                   value={answer}
                   onKeyDown={handleKeyDown}
-                  className="w-24 sm:w-24 md:w-28 lg:w-32 h-16 sm:h-14 md:h-16 lg:h-18 bg-transparent border-b-2 border-white text-center focus:outline-none text-3xl sm:text-3xl md:text-4xl lg:text-5xl font-bold pl-0"
+                  className="w-24 sm:w-24 md:w-28 lg:w-32 h-16 sm:h-14 md:h-16 lg:h-18 bg-transparent border-b-2 border-[#003f88] text-center focus:outline-none text-3xl sm:text-3xl md:text-4xl lg:text-5xl text-[#003f88] font-bold pl-0"
                   readOnly
                 />
               </div>
-              <div className="absolute -top-[2.5rem] -right-4 w-16 h-16 rounded-full bg-black border-2 border-[#f6aa54] flex items-center justify-center">
-                <span className="text-2xl sm:text-xl md:text-2xl font-bold text-[#f6aa54]">{timeLeft}</span>
+              <div className="absolute -top-[2.5rem] -right-4 w-16 h-16 rounded-full bg-[#ffa500] border-2 border-white flex items-center justify-center">
+                <span className="text-2xl sm:text-xl md:text-2xl font-bold text-white">{timeLeft}</span>
               </div>
-              <div className="absolute -bottom-[2rem] -right-4 w-16 h-16 rounded-full bg-black border-2 border-[#50adb6] flex flex-col items-center justify-center">
-                <span className="text-2xl sm:text-xl md:text-2xl font-bold text-[#50adb6] -mb-1">{correctAnswers}</span>
-                <div className="w-8 border-b border-[#50adb6]"></div>
-                <span className="text-2xl sm:text-xl md:text-2xl font-bold text-[#50adb6] -mt-1">{totalQuestions}</span>
+              <div className="absolute -bottom-[2rem] -right-4 w-16 h-16 rounded-full bg-[#4caf50] border-2 border-white flex flex-col items-center justify-center">
+                <span className="text-2xl sm:text-xl md:text-2xl font-bold text-white -mb-1">{correctAnswers}</span>
+                <div className="w-8 border-b border-white"></div>
+                <span className="text-2xl sm:text-xl md:text-2xl font-bold text-white -mt-1">{totalQuestions}</span>
               </div>
             </div>
             <div
-              className={`grid ${isKeypadVisible ? "grid-cols-3" : "hidden"} gap-2 mt-8 bg-black bg-opacity-20 pt-2 md:pb-4 rounded-lg w-full ml-0 mr-auto flex-grow`}
+              className={`grid ${isKeypadVisible ? "grid-cols-3" : "hidden"} gap-2 mt-8 bg-[#00296b] bg-opacity-20 pt-2 md:pb-4 rounded-lg w-full ml-0 mr-auto flex-grow`}
               style={{
                 height: "calc(100dvh - 18rem)",
                 maxHeight: window.innerWidth >= 768 ? "calc(100dvh - 16rem)" : undefined,
@@ -593,26 +587,26 @@ export default function SpaceMathQuiz() {
                     <button
                       key={num}
                       onClick={() => handleKeypadClick(num.toString())}
-                      className="w-full h-full bg-[#50adb6] text-white text-2xl sm:text-2xl md:text-3xl lg:text-4xl hover:bg-[#3d8a91] transition-colors flex items-center justify-center"
+                      className="w-full h-full bg-[#e6f1ff] text-[#003f88] text-2xl sm:text-2xl md:text-3xl lg:text-4xl hover:bg-[#c9e0ff] transition-colors flex items-center justify-center font-bold"
                     >
                       {num}
                     </button>
                   ))}
                   <button
                     onClick={() => handleKeypadClick("submit")}
-                    className="w-full h-full row-span-2 bg-[#f6aa54] text-white text-2xl sm:text-2xl md:text-3xl lg:text-4xl hover:bg-[e59843] transition-colors flex items-center justify-center"
+                    className="w-full h-full row-span-2 bg-[#90e0ef] text-[#003f88] text-2xl sm:text-2xl md:text-3xl lg:text-4xl hover:bg-[#48cae4] transition-colors flex items-center justify-center font-bold"
                   >
                     Submit
                   </button>
                   <button
                     onClick={() => handleKeypadClick("delete")}
-                    className="w-full h-full bg-[#e8594a] text-white text-2xl sm:text-2xl md:text-3xl lg:text-4xl hover:bg-[#d64a3d] transition-colors flex items-center justify-center"
+                    className="w-full h-full bg-[#ffccd5] text-[#d90429] text-2xl sm:text-2xl md:text-3xl lg:text-4xl hover:bg-[#ffb3c1] transition-colors flex items-center justify-center font-bold"
                   >
                     Delete
                   </button>
                   <button
                     onClick={() => handleKeypadClick("-")}
-                    className="w-full h-full bg-[#50adb6] text-white text-2xl sm:text-2xl md:text-3xl lg:text-4xl hover:bg-[#3d8a91] transition-colors flex items-center justify-center"
+                    className="w-full h-full bg-[#e6f1ff] text-[#003f88] text-2xl sm:text-2xl md:text-3xl lg:text-4xl hover:bg-[#c9e0ff] transition-colors flex items-center justify-center font-bold"
                   >
                     -
                   </button>
@@ -648,7 +642,7 @@ export default function SpaceMathQuiz() {
               <g>
                 {/* Static Sun in center */}
                 <image
-                  href="/images/sun.png"
+                  href="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/sun-kxaQ8AY00eyIP4EzSS8AF6qytzlrUv.png"
                   x={viewBoxSize / 2 - 70}
                   y={viewBoxSize / 2 - 70}
                   width={140}
@@ -663,7 +657,7 @@ export default function SpaceMathQuiz() {
                       y={viewBoxSize / 2 - 150}
                       textAnchor="middle"
                       className="text-2xl font-bold"
-                      fill="#50adb6"
+                      fill="#FFFFFF"
                       opacity={1}
                       fontSize="32"
                     >
@@ -680,10 +674,10 @@ export default function SpaceMathQuiz() {
                     </text>
                     <text
                       x={viewBoxSize / 2}
-                      y={viewBoxSize / 2 + 150}
+                      y={viewBoxSize / 2 - 110}
                       textAnchor="middle"
                       className="text-xl"
-                      fill="#e8594a"
+                      fill="#FFFFFF"
                       opacity={1}
                       fontSize="28"
                     >

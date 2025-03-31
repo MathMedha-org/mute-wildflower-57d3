@@ -24,7 +24,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" style={{ scrollBehavior: "auto" }}>
-      <body className={`${inter.className} bg-black min-h-screen`} style={{ scrollBehavior: "auto" }}>
+      <body className={`${inter.className} bg-white min-h-screen`} style={{ scrollBehavior: "auto" }}>
         <QuizProvider>
           <ScrollToTop />
           <div className="relative flex min-h-screen flex-col">
