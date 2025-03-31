@@ -77,7 +77,7 @@ const generateStars = (count: number) => {
 
 export function SpaceBackground() {
   const [viewBoxSize, setViewBoxSize] = useState(1000)
-  const stars = useMemo(() => generateStars(00), [])
+  const stars = useMemo(() => generateStars(100), [])
 
   const planets = useMemo(
     () => [
